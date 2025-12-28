@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
+import { ToastService } from '../../../services/toast.service';
 import { IngredientRow } from './ingredients-form.types';
 
 @Component({
@@ -25,7 +26,8 @@ export class IngredientsForm {
 
   constructor(
     private fb: FormBuilder, 
-    private recipeRepo: RecipeFirestoreService
+    private firestoreService: RecipeFirestoreService,
+    private toastService: ToastService
   ) {
     this.ingredientsForm = this.fb.group({
       ingredients: this.fb.array([this.createIngredient()]),
@@ -64,8 +66,8 @@ export class IngredientsForm {
   }
 
   editIngredient(index: number) {
-    const item = this.ingredients.at(index);
-    item.patchValue({ isEditing: true });
+    const ingredient = this.ingredients.at(index);
+    ingredient.patchValue({ isEditing: true });
   }
 
   saveIngredient(index: number) {
