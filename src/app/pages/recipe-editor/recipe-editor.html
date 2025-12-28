@@ -56,10 +56,15 @@
     >
     </app-instructions-form>
 
-    <!-- TODO: submit button for saving data to Firestore here  -->
     <button 
         type="button" 
         class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-med-blue"
         (click)="saveRecipe()"
     >Save</button>
+
+    <button 
+        type="button" 
+        class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-accent-dark"
+        (click)="deleteRecipe()"
+    >Delete</button>
 </div>

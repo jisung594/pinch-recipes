@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
+import { ToastService } from '../../services/toast.service';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
 import { InstructionRow } from './instructions-form/instructions-form.types';
@@ -41,8 +42,8 @@ export class RecipeEditor {
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder,
-    private recipeRepo: RecipeFirestoreService,
+    private firestoreService: RecipeFirestoreService,
+    private toastService: ToastService,
     private router: Router
   ) {}
 
@@ -92,7 +93,7 @@ export class RecipeEditor {
     try {
       // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
-        await this.recipeRepo.updateRecipe(
+        await this.firestoreService.updateRecipe(
           user.uid, 
           this.recipeId,
           recipeData
@@ -101,7 +102,7 @@ export class RecipeEditor {
         return;
       } else {
         // Creates new recipe if none exists
-        const newDocRef = await this.recipeRepo.addRecipe(user.uid, {
+        const newDocRef = await this.firestoreService.addRecipe(user.uid, {
           ...recipeData,
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
@@ -116,5 +117,15 @@ export class RecipeEditor {
     } catch (err) {
       console.error('Error saving recipe:', err);
     }
+  }
+
+  async deleteRecipe() {
+    const recipeData: Partial<Recipe> = {
+      title: this.title,
+      ingredients: mapIngredientRows(this.ingredients),
+      instructions: mapInstructionRows(this.instructions),
+    }
+
+    this.toastService.showToastDelete(`${recipeData.title} removed!`, 10000);
   }
 }
