@@ -27,8 +27,7 @@ export class InstructionsForm {
   instructionsForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private recipeRepo: RecipeFirestoreService
+    private fb: FormBuilder
   ) {
     this.instructionsForm = this.fb.group({
       instructions: this.fb.array([this.createInstruction(1)]) // starts first step in order at 1

@@ -6,8 +6,6 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
-import { ToastService } from '../../../services/toast.service';
 import { IngredientRow } from './ingredients-form.types';
 
 @Component({
@@ -25,9 +23,7 @@ export class IngredientsForm {
   ingredientsForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
-    private firestoreService: RecipeFirestoreService,
-    private toastService: ToastService
+    private fb: FormBuilder
   ) {
     this.ingredientsForm = this.fb.group({
       ingredients: this.fb.array([this.createIngredient()]),
