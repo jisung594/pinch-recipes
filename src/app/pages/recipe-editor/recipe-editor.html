@@ -56,15 +56,17 @@
     >
     </app-instructions-form>
 
-    <button 
-        type="button" 
-        class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-med-blue"
-        (click)="saveRecipe()"
-    >Save</button>
+    <div class="flex gap-2 mt-4">
+        <button 
+            type="button" 
+            class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-med-blue"
+            (click)="saveRecipe()"
+        >Save</button>
 
-    <button 
-        type="button" 
-        class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-accent-dark"
-        (click)="deleteRecipe()"
-    >Delete</button>
+        <button 
+            type="button" 
+            class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-accent-light"
+            (click)="deleteRecipe()"
+        >Delete</button>
+    </div>
 </div>
