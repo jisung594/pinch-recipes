@@ -71,6 +71,32 @@ export class RecipeEditor {
     this.instructions = rows;
   }
 
+  // Removes an ingredient or instruction
+  removeRow (type: 'ingredient' | 'instruction', index: number) {
+    if (type === 'ingredient') {
+      this.ingredients.splice(index, 1);
+    } else if (type === 'instruction') {
+      this.instructions.splice(index, 1);
+    }
+
+    // Toast notification upon removal
+    this.toastService.showToast(`${type === 'ingredient' ? 'Ingredient' : 'Instruction'} removed.`, 10000);
+  }
+
+  async archiveRecipe() {
+    const recipeData: Partial<Recipe> = {
+      title: this.title,
+      ingredients: mapIngredientRows(this.ingredients),
+      instructions: mapInstructionRows(this.instructions),
+    }
+
+    // TODO: confirmation dialog when "Archive" button is clicked
+    
+
+    // Toast notification upon archival
+    this.toastService.showToast(`${recipeData.title} has been archived.`, 10000);
+  }
+
   async saveRecipe() {
     // Requires at least a valid recipe title upon submit
     if (!this.title) {
@@ -117,15 +143,5 @@ export class RecipeEditor {
     } catch (err) {
       console.error('Error saving recipe:', err);
     }
-  }
-
-  async deleteRecipe() {
-    const recipeData: Partial<Recipe> = {
-      title: this.title,
-      ingredients: mapIngredientRows(this.ingredients),
-      instructions: mapInstructionRows(this.instructions),
-    }
-
-    this.toastService.showToastDelete(`${recipeData.title} removed!`, 10000);
   }
 }
