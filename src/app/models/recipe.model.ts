@@ -22,6 +22,7 @@ export interface Recipe {
   title: string;
   ingredients: Ingredient[];
   instructions: Instruction[];
+  archived: boolean;
   createdAt?: any;
   updatedAt?: any;
 }
@@ -43,6 +44,7 @@ export const recipeConverter: FirestoreDataConverter<Recipe> = {
       title: data['title'],
       ingredients: data['ingredients'],
       instructions: data['instructions'],
+      archived: data['archived'],
       createdAt: data['createdAt'],
       updatedAt: data['updatedAt'],
     };
