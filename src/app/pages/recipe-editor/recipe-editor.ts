@@ -71,18 +71,6 @@ export class RecipeEditor {
     this.instructions = rows;
   }
 
-  // Removes an ingredient or instruction
-  removeRow (type: 'ingredient' | 'instruction', index: number) {
-    if (type === 'ingredient') {
-      this.ingredients.splice(index, 1);
-    } else if (type === 'instruction') {
-      this.instructions.splice(index, 1);
-    }
-
-    // Toast notification upon removal
-    this.toastService.showToast(`${type === 'ingredient' ? 'Ingredient' : 'Instruction'} removed.`, 10000);
-  }
-
   async archiveRecipe() {
     const recipeData: Partial<Recipe> = {
       title: this.title,
@@ -91,10 +79,10 @@ export class RecipeEditor {
     }
 
     // TODO: confirmation dialog when "Archive" button is clicked
-    
+
 
     // Toast notification upon archival
-    this.toastService.showToast(`${recipeData.title} has been archived.`, 10000);
+    this.toastService.notify(`${recipeData.title} has been archived.`, 10000);
   }
 
   async saveRecipe() {
@@ -133,6 +121,7 @@ export class RecipeEditor {
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
+          archived: recipeData.archived!,
           createdAt: new Date(),
         });
 

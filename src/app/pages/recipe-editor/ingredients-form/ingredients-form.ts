@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IngredientRow } from './ingredients-form.types';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-ingredients-form',
@@ -23,7 +24,8 @@ export class IngredientsForm {
   ingredientsForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastService: ToastService
   ) {
     this.ingredientsForm = this.fb.group({
       ingredients: this.fb.array([this.createIngredient()]),
@@ -59,6 +61,9 @@ export class IngredientsForm {
 
   removeIngredient(index: number) {
     this.ingredients.removeAt(index);
+
+    // Toast notification upon removal
+    this.toastService.notifyUndoable("Ingredient removed.");
   }
 
   editIngredient(index: number) {

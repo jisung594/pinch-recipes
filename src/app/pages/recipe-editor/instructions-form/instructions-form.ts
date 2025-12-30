@@ -6,8 +6,8 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
 import { InstructionRow } from './instructions-form.types';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-instructions-form',
@@ -27,7 +27,8 @@ export class InstructionsForm {
   instructionsForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastService: ToastService
   ) {
     this.instructionsForm = this.fb.group({
       instructions: this.fb.array([this.createInstruction(1)]) // starts first step in order at 1
@@ -64,6 +65,9 @@ export class InstructionsForm {
 
   removeInstruction(index: number) {
     this.instructions.removeAt(index);
+
+    // Toast notification upon removal
+    this.toastService.notifyUndoable("Instruction removed.", 10000);
   }
 
   editInstruction(index: number) {
