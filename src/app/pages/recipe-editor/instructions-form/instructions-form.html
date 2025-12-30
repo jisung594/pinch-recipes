@@ -1,5 +1,4 @@
 <form [formGroup]="instructionsForm" class="mb-2">
-  <!-- <form [formGroup]="instructionsForm" (ngSubmit)="onSubmit()"></form> -->
   <div formArrayName="instructions" class="mb-1">
     <div
       *ngFor="let instruction of instructions.controls; let i = index"
