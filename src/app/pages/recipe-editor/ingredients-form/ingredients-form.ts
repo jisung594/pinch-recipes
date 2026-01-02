@@ -46,7 +46,10 @@ export class IngredientsForm {
     return this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
   }
 
-  createIngredient(): IngredientRow {
+  createIngredient(removedItemValue?: Partial<IngredientRow>): IngredientRow {
+
+    // TODO: check for removedItemValue param and create accordingly
+
     return this.fb.group({
       name: this.fb.control('', { nonNullable: true }),
       quantity: this.fb.control('', { nonNullable: true }),
@@ -55,15 +58,29 @@ export class IngredientsForm {
     });
   }
 
-  addIngredient() {
+  addIngredient(removedItemIndex?: number, removedItemValue?: Partial<any>) {
+    if (removedItemIndex !== undefined) {
+      return this.ingredients.insert(removedItemIndex, this.createIngredient(removedItemValue));
+    }
+
     this.ingredients.push(this.createIngredient());
   }
 
   removeIngredient(index: number) {
+    const removedItemValue = this.ingredients.at(index).value;
+
     this.ingredients.removeAt(index);
 
     // Toast notification upon removal
-    this.toastService.notifyUndoable("Ingredient removed.");
+    this.toastService.notifyUndoable(
+      `${removedItemValue.name} removed.`,
+      () => reinsertIngredient() 
+    );
+
+    const reinsertIngredient = () => {
+      // this.ingredients.push(this.createIngredient());
+      this.addIngredient(index, removedItemValue);
+    }
   }
 
   editIngredient(index: number) {

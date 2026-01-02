@@ -31,7 +31,8 @@ export class InstructionsForm {
     private toastService: ToastService
   ) {
     this.instructionsForm = this.fb.group({
-      instructions: this.fb.array([this.createInstruction(1)]) // starts first step in order at 1
+      // instructions: this.fb.array([this.createInstruction(1)]) // starts first step in order at 1
+      instructions: this.fb.array([this.createInstruction()])
     })
   }
 
@@ -48,26 +49,41 @@ export class InstructionsForm {
     return this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
   }
 
-  createInstruction(order: number): InstructionRow {
+  createInstruction(removedItemValue?: Partial<InstructionRow>): InstructionRow {
+
+    // TODO: check for removedItemValue param and create accordingly
+
     return this.fb.group({
       step: this.fb.control('', { nonNullable: true }),
-      order: this.fb.control(order, { nonNullable: true }),
+      // order: this.fb.control(order, { nonNullable: true }),
+      order: this.fb.control(0, { nonNullable: true }), // previously 'order'
       isEditing: this.fb.control(true, { nonNullable: true }),
     });
   }
 
-  addInstruction(): void {
-    const instructionsArray = this.instructions;
-    const nextOrder = instructionsArray.length + 1;
+  addInstruction(removedItemIndex?: number, removedItemValue?: Partial<any>) {
+    if (removedItemIndex !== undefined) {
+      return this.instructions.insert(removedItemIndex, this.createInstruction(removedItemValue));
+    }
 
-    this.instructions.push(this.createInstruction(nextOrder));
+    this.instructions.push(this.createInstruction());
   }
 
   removeInstruction(index: number) {
+    const removedItemValue = this.instructions.at(index).value;
+
     this.instructions.removeAt(index);
 
     // Toast notification upon removal
-    this.toastService.notifyUndoable("Instruction removed.", 10000);
+    this.toastService.notifyUndoable(
+      `${removedItemValue.step} removed.`,
+      () => reinsertInstruction() 
+    );
+
+    const reinsertInstruction = () => {
+      // this.instructions.push(this.createInstruction());
+      this.addInstruction(index, removedItemValue);
+    }
   }
 
   editInstruction(index: number) {
