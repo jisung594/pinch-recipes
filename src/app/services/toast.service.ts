@@ -17,7 +17,11 @@ export class ToastService {
 			});
   }
 
-	notifyUndoable(message: string, duration: number = 10000) {
+	notifyUndoable(
+		message: string, 
+		onUndo: () => void, // the callback passed in when user clicks "Undo"
+		duration: number = 10000
+	) {
 		// Setting a variable here allows for interacting with the opened snackbar
     const snackBarRef: MatSnackBarRef<any> = this.snackBar.open(
 			message, 
@@ -26,19 +30,21 @@ export class ToastService {
 				duration, 
 				panelClass: ['snackbar-undo'], 
 				horizontalPosition: 'right',
-			});
+			}
+		);
 
 		snackBarRef.onAction().subscribe(() => {
 			console.log('UNDO clicked.');
 
 			// Runs when the "Undo" button is clicked
-			// TODO: callback logic for undo here
+			onUndo();
 		})
   }
 
 
 	// 1. undo func for removing single ingredient/instruction (SNACKBAR / toastService)
-	// - store removed item temporarily
+	// X show toast w/ confirmation of remove action
+	// X store removed item temporarily
 	// - restore item if "Undo" clicked within snackbar duration
 	// - otherwise, finalize removal after duration expires
 	// - ensure proper re-indexing of ingredient/instruction orders after undo
