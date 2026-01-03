@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { InstructionRow } from './instructions-form.types';
+import { InstructionRow, InstructionValue } from './instructions-form.types';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -49,19 +49,25 @@ export class InstructionsForm {
     return this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
   }
 
-  createInstruction(removedItemValue?: Partial<InstructionRow>): InstructionRow {
+  createInstruction(removedItemValue?: Partial<InstructionValue>): InstructionRow {
+    // Checks for removeItemValue to prefill fields upon undo
+    if (removedItemValue !== undefined) {
+      return this.fb.group({
+        step: this.fb.control(removedItemValue.step ?? '', { nonNullable: true }),
+        order: this.fb.control(removedItemValue.order ?? 0, { nonNullable: true }),
+        isEditing: this.fb.control(removedItemValue.isEditing ?? true, { nonNullable: true }),
+      });
+    }
 
-    // TODO: check for removedItemValue param and create accordingly
-
+    // Creates blank instruction row (default)
     return this.fb.group({
       step: this.fb.control('', { nonNullable: true }),
-      // order: this.fb.control(order, { nonNullable: true }),
-      order: this.fb.control(0, { nonNullable: true }), // previously 'order'
+      order: this.fb.control(0, { nonNullable: true }),
       isEditing: this.fb.control(true, { nonNullable: true }),
     });
   }
 
-  addInstruction(removedItemIndex?: number, removedItemValue?: Partial<any>) {
+  addInstruction(removedItemIndex?: number, removedItemValue?: Partial<InstructionValue>) {
     if (removedItemIndex !== undefined) {
       return this.instructions.insert(removedItemIndex, this.createInstruction(removedItemValue));
     }
