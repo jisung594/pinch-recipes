@@ -34,8 +34,6 @@ export class ToastService {
 		);
 
 		snackBarRef.onAction().subscribe(() => {
-			console.log('UNDO clicked.');
-
 			// Runs when the "Undo" button is clicked
 			onUndo();
 		})
@@ -45,10 +43,9 @@ export class ToastService {
 	// 1. undo func for removing single ingredient/instruction (SNACKBAR / toastService)
 	// X show toast w/ confirmation of remove action
 	// X store removed item temporarily
-	// - restore item if "Undo" clicked within snackbar duration
-	// - otherwise, finalize removal after duration expires
-	// - ensure proper re-indexing of ingredient/instruction orders after undo
-	// - show toast w/ confirmation of undo action
+	// X restore item if "Undo" clicked within snackbar duration
+	// X otherwise, finalize removal after duration expires
+	// X ensure proper re-indexing of ingredient/instruction orders after undo
 
 
 	// 2. archive func for removing entire recipe (CONFIRMATION DIALOG BOX / soft)
