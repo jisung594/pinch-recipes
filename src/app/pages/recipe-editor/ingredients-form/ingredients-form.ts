@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IngredientRow } from './ingredients-form.types';
+import { IngredientRow, IngredientValue } from './ingredients-form.types';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -46,10 +46,18 @@ export class IngredientsForm {
     return this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
   }
 
-  createIngredient(removedItemValue?: Partial<IngredientRow>): IngredientRow {
+  createIngredient(removedItemValue?: Partial<IngredientValue>): IngredientRow {
+    // Checks for removeItemValue to prefill fields upon undo
+    if (removedItemValue !== undefined) {
+      return this.fb.group({
+        name: this.fb.control(removedItemValue.name ?? '', { nonNullable: true }),
+        quantity: this.fb.control(removedItemValue.quantity ?? '', { nonNullable: true }),
+        unit: this.fb.control(removedItemValue.unit ?? '', { nonNullable: true }),
+        isEditing: this.fb.control(removedItemValue.isEditing ?? true, { nonNullable: true }),
+      });
+    }
 
-    // TODO: check for removedItemValue param and create accordingly
-
+    // Creates blank ingredient row (default)
     return this.fb.group({
       name: this.fb.control('', { nonNullable: true }),
       quantity: this.fb.control('', { nonNullable: true }),
@@ -58,7 +66,7 @@ export class IngredientsForm {
     });
   }
 
-  addIngredient(removedItemIndex?: number, removedItemValue?: Partial<any>) {
+  addIngredient(removedItemIndex?: number, removedItemValue?: Partial<IngredientValue>) {
     if (removedItemIndex !== undefined) {
       return this.ingredients.insert(removedItemIndex, this.createIngredient(removedItemValue));
     }
