@@ -69,10 +69,17 @@ export class InstructionsForm {
 
   addInstruction(removedItemIndex?: number, removedItemValue?: Partial<InstructionValue>) {
     if (removedItemIndex !== undefined) {
-      return this.instructions.insert(removedItemIndex, this.createInstruction(removedItemValue));
+      this.instructions.insert(removedItemIndex, this.createInstruction(removedItemValue));
+
+      // Notifies parent when an instruction has been added back
+      this.emitChange();
+      return;
     }
 
     this.instructions.push(this.createInstruction());
+
+    // Notifies parent when an instruction has been created
+    this.emitChange();
   }
 
   removeInstruction(index: number) {
@@ -80,16 +87,18 @@ export class InstructionsForm {
 
     this.instructions.removeAt(index);
 
-    // Toast notification upon removal
-    this.toastService.notifyUndoable(
-      `${removedItemValue.step} removed.`,
-      () => reinsertInstruction() 
-    );
-
     const reinsertInstruction = () => {
-      // this.instructions.push(this.createInstruction());
       this.addInstruction(index, removedItemValue);
     }
+
+    // Toast notification upon removal
+    this.toastService.notifyUndoable(
+      `${removedItemValue.step || 'Step'} removed.`,
+      reinsertInstruction
+    );
+
+    // Notifies parent when instruction has been removed or reinserted
+    this.emitChange();
   }
 
   editInstruction(index: number) {
