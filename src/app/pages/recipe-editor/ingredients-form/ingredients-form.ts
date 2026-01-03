@@ -68,10 +68,17 @@ export class IngredientsForm {
 
   addIngredient(removedItemIndex?: number, removedItemValue?: Partial<IngredientValue>) {
     if (removedItemIndex !== undefined) {
-      return this.ingredients.insert(removedItemIndex, this.createIngredient(removedItemValue));
+      this.ingredients.insert(removedItemIndex, this.createIngredient(removedItemValue));
+      
+      // Notifies parent when an ingredient has been added back
+      this.emitChange();
+      return;
     }
 
     this.ingredients.push(this.createIngredient());
+
+    // Notifies parent when an ingredient has been created
+    this.emitChange();
   }
 
   removeIngredient(index: number) {
@@ -79,16 +86,18 @@ export class IngredientsForm {
 
     this.ingredients.removeAt(index);
 
-    // Toast notification upon removal
-    this.toastService.notifyUndoable(
-      `${removedItemValue.name} removed.`,
-      () => reinsertIngredient() 
-    );
-
     const reinsertIngredient = () => {
-      // this.ingredients.push(this.createIngredient());
       this.addIngredient(index, removedItemValue);
     }
+
+    // Toast notification upon removal
+    this.toastService.notifyUndoable(
+      `${removedItemValue.name || 'Ingredient'} removed.`,
+      reinsertIngredient
+    );
+
+    // Notifies parent when ingredient has been removed or reinserted
+    this.emitChange();
   }
 
   editIngredient(index: number) {
