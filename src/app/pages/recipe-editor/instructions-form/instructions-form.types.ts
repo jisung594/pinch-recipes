@@ -7,3 +7,10 @@ export interface InstructionFormGroup {
 }
 
 export type InstructionRow = FormGroup<InstructionFormGroup>;
+
+// Plain object value of an instruction row
+export interface InstructionValue {
+  step: string;
+  order: number;
+  isEditing: boolean;
+}
