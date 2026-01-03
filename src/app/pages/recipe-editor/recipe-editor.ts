@@ -35,7 +35,7 @@ export class RecipeEditor {
   @Input() instructions: InstructionRow[] = [];
   @Input() editable: boolean = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
 
-  isEditingTitle = true;
+  isEditingTitle = false;
   editingIngredients: boolean[] = []; 
   editingInstructions: boolean[] = [];
   currentRecipeId: string | null = null;
