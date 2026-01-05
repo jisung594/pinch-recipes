@@ -1,13 +1,14 @@
 <div class="recipe-editor">
-  <div *ngIf="isEditingTitle; else viewMode" class="mb-2">
-    <div>
+  <!-- Edit mode -->
+  <div *ngIf="isEditingTitle; else viewMode" class="flex mb-4">
+    <div class="grow">
       <input
         type="text"
         id="recipe-title"
         [(ngModel)]="title"
         [readonly]="!editable"
         placeholder="Title"
-        class="font-heading text-2xl px-2 py-1 w-full mb-1 bg-light-blue rounded-sm"
+        class="font-heading text-2xl px-0 py-1 w-full mb-2 border-b-2"
       />
     </div>
     <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
@@ -22,40 +23,48 @@
     </div>
   </div>
 
+  <!-- View mode -->
   <ng-template #viewMode>
-    <div class="mb-2">
-      <div class="mb-1 bg-light-gray rounded-sm">
-        <h2 class="font-heading text-2xl px-2 py-1 w-full">
+    <div class="flex mb-4">
+      <div class="grow">
+        <h2 class="font-heading text-2xl px-0 py-1 w-full">
           {{ title || 'Untitled Recipe' }}
         </h2>
       </div>
       <div class="editing-options-viewmode">
-        <button
-          class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue"
-          type="button"
-          (click)="editTitle()"
+        <button 
+          mat-icon-button 
+          matTooltip="Click to Edit" 
+          (click)="editTitle()" 
+          class="iconbutton"
         >
-          edit
+          <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
       </div>
     </div>
   </ng-template>
 
-  <h3>INGREDIENTS</h3>
-  <app-ingredients-form
-    [initialIngredients]="ingredients"
-    [editable]="editable"
-    (ingredientsChange)="onIngredientsChange($event)"
-  >
-  </app-ingredients-form>
+  <div class="mb-4">
+    <h3 class="font-semibold mb-2">Ingredients</h3>
 
-  <h3>INSTRUCTIONS</h3>
-  <app-instructions-form
-    [initialInstructions]="instructions"
-    [editable]="editable"
-    (instructionsChange)="onInstructionsChange($event)"
-  >
-  </app-instructions-form>
+    <app-ingredients-form
+      [initialIngredients]="ingredients"
+      [editable]="editable"
+      (ingredientsChange)="onIngredientsChange($event)"
+    >
+    </app-ingredients-form>
+  </div>
+
+  <div class="mb-2">
+    <h3 class="font-semibold mb-2">Instructions</h3>
+
+    <app-instructions-form
+      [initialInstructions]="instructions"
+      [editable]="editable"
+      (instructionsChange)="onInstructionsChange($event)"
+    >
+    </app-instructions-form>
+  </div>
 
   <div class="flex gap-1 mt-4">
     <button

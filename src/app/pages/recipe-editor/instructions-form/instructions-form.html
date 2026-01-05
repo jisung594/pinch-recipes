@@ -5,40 +5,65 @@
       [formGroupName]="i"
       class="instruction-row mb-1"
     >
+      <!-- Edit mode -->
       <div *ngIf="instruction.value.isEditing && editable" class="flex flex-col space-y-2">
-        <div class="flex w-full px-2 py-2 gap-2 mb-1 items-center bg-light-blue">
+        <div class="flex w-full gap-2 items-center px-2 py-1 mb-1 bg-light-blue">
           <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
-          <textarea
+
+          <mat-form-field class="instruction-input w-full">
+            <mat-label>Step {{ i + 1 }}</mat-label>
+            <textarea 
+              matInput  
+              placeholder="" 
+              formControlName="step">
+            </textarea>
+          </mat-form-field>
+
+          <!-- <textarea
             formControlName="step"
             placeholder="Step {{ i + 1 }}:"
-            class="instruction-input flex grow gap-2 rounded-sm"
-          ></textarea>
+            class="instruction-input flex gap-2 rounded-sm"
+          ></textarea> -->
         </div>
 
-        <div class="editing-options-editmode flex shrink-0 gap-1">
+        <div class="editing-options-editmode flex shrink-0 gap-2">
           <button
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-med-blue"
+            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
             type="button" 
             (click)="saveInstruction(i)"
           >&check;</button>
           <button 
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm"
+            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm"
             type="button" 
             (click)="removeInstruction(i)">remove</button>
         </div>
       </div>
 
-      <div *ngIf="!instruction.value.isEditing || !editable">
-        <div class="flex px-2 py-2 gap-2 mb-1 rounded-sm bg-light-gray">
+      <!-- View mode -->
+      <div 
+        *ngIf="!instruction.value.isEditing || !editable" 
+        class="flex justify-between border-b"
+      >
+        <div class="flex px-0 py-1">
           <p class="font-body">{{ instruction.value.step }}</p>
         </div>
 
-        <div class="editing-options-viewmode flex gap-2 mb-1">
-          <button 
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue"
+        <div class="editing-options-viewmode flex shrink-0 mb-1">
+          <!-- <button
+            matButton 
+            class="font-body font-medium text-sm px-1 py-0.5"
             type="button" 
             (click)="editInstruction(i)"
-          >edit</button>
+          >edit</button> -->
+
+          <button 
+            mat-icon-button 
+            matTooltip="Click to Edit" 
+            (click)="editInstruction(i)" 
+            class="iconbutton"
+          >
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
         </div>
       </div>
     </div>

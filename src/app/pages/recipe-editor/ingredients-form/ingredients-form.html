@@ -5,32 +5,58 @@
       [formGroupName]="i"
       class="ingredient-row mb-1"
     >
+      <!-- Edit mode -->
       <div *ngIf="ingredient.value.isEditing && editable" class="flex flex-col space-y-2">
-        <div class="flex w-full gap-2 items-center px-2 py-2 mb-1 bg-light-blue">
+        <div class="flex w-full gap-2 items-center px-2 py-1 mb-1 bg-light-blue">
           <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
-          <input
+
+
+          <mat-form-field class="ingredient-input">
+            <mat-label>Quantity</mat-label>
+            <input matInput placeholder="ie. 1 1/3" formControlName="quantity">
+          </mat-form-field>
+
+          <mat-form-field class="ingredient-input">
+            <mat-label>Unit</mat-label>
+            <mat-select formControlName="unit">
+              <mat-option value="">Unit</mat-option>
+              <mat-option value="cup">cup</mat-option>
+              <mat-option value="tbsp">tbsp</mat-option>
+              <mat-option value="tsp">tsp</mat-option>
+              <mat-option value="g">g</mat-option>
+              <mat-option value="oz">oz</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field class="ingredient-input">
+            <mat-label>Item</mat-label>
+            <input matInput placeholder="ie. dry milk powder" formControlName="name">
+          </mat-form-field>
+
+          <!-- <input
             type="text"
             formControlName="quantity"
-            placeholder="Quantity (e.g. 1 1/2)"
+            placeholder="Quantity"
             class="ingredient-input flex-none w-16 bg-white"
-          />
-          <select
+          /> -->
+          <!-- <select
             formControlName="unit"
             class="ingredient-input flex-none w-20 appearance-none bg-white"
           >
-            <option value="">-- Unit --</option>
+            <option value="">Unit</option>
             <option value="cup">cup</option>
             <option value="tbsp">tbsp</option>
             <option value="tsp">tsp</option>
             <option value="g">g</option>
             <option value="oz">oz</option>
-          </select>
-          <input
+          </select> -->
+          <!-- <input
             type="text"
             formControlName="name"
-            placeholder="Ingredient name"
-            class="ingredient-input grow bg-white"
-          />
+            placeholder="Ingredient"
+            class="ingredient-input flex bg-white"
+          /> -->
         </div>
 
         <div class="editing-options-editmode flex shrink-0 gap-2">
@@ -46,20 +72,35 @@
           >remove</button>
         </div>
       </div>
-      <div *ngIf="!ingredient.value.isEditing || !editable">
-        <div class="flex px-2 py-2 gap-2 mb-1 rounded-sm bg-light-gray">
+
+      <!-- View mode -->
+      <div 
+        *ngIf="!ingredient.value.isEditing || !editable" 
+        class="flex justify-between border-b"
+      >
+        <div class="flex px-0 py-1">
           <p class="font-body">
             {{ ingredient.value.quantity }}
             {{ ingredient.value.unit }}
             {{ ingredient.value.name }}
           </p>
         </div>
-        <div class="editing-options-viewmode flex shrink-0 gap-2">
-          <button 
-            class="font-body font-medium text-sm px-2 py-0.5 rounded-sm bg-light-blue"
+        <div class="editing-options-viewmode flex shrink-0">
+          <!-- <button
+            matButton
+            class="font-body font-medium text-sm px-1 py-0.5"
             type="button" 
             (click)="editIngredient(i)"
-          >edit</button>
+          >edit</button> -->
+
+          <button 
+            mat-icon-button 
+            matTooltip="Click to Edit" 
+            (click)="editIngredient(i)" 
+            class="iconbutton"
+          >
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
         </div>
       </div>
     </div>
