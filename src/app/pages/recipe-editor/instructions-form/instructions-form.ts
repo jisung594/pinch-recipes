@@ -6,6 +6,9 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { InstructionRow, InstructionValue } from './instructions-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -14,7 +17,10 @@ import { ToastService } from '../../../services/toast.service';
   standalone: true,
   imports: [
     CommonModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule
   ],
   templateUrl: './instructions-form.html',
   styleUrl: './instructions-form.css'

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
@@ -19,7 +20,8 @@ import { Recipe } from '../../models/recipe.model';
     CommonModule, 
     FormsModule, 
     IngredientsForm, 
-    InstructionsForm
+    InstructionsForm,
+    MatIconModule
   ],
   templateUrl: './recipe-editor.html',
   styleUrl: './recipe-editor.css'
