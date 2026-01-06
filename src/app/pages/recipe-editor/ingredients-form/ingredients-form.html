@@ -76,7 +76,7 @@
       <!-- View mode -->
       <div 
         *ngIf="!ingredient.value.isEditing || !editable" 
-        class="flex justify-between border-b"
+        class="flex justify-between border-b border-light"
       >
         <div class="flex px-0 py-1">
           <p class="font-body">
@@ -99,7 +99,7 @@
             (click)="editIngredient(i)" 
             class="iconbutton"
           >
-            <mat-icon aria-label="Edit">edit</mat-icon>
+            <mat-icon aria-label="Edit" class="color-d-gray">edit</mat-icon>
           </button>
         </div>
       </div>
