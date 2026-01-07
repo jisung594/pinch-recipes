@@ -25,13 +25,13 @@
 
   <!-- View mode -->
   <ng-template #viewMode>
-    <div class="flex mb-4">
+    <div class="flex mb-6">
       <div class="grow">
-        <h2 class="font-heading text-2xl px-0 py-1 w-full">
+        <h2 class="font-heading font-black text-4xl px-0 py-1 w-full">
           {{ title || 'Untitled Recipe' }}
         </h2>
       </div>
-      <div class="editing-options-viewmode">
+      <div class="editing-options-viewmode flex shrink-0">
         <button 
           mat-icon-button 
           matTooltip="Click to Edit" 
@@ -44,8 +44,8 @@
     </div>
   </ng-template>
 
-  <div class="mb-4">
-    <h3 class="font-semibold mb-2">Ingredients</h3>
+  <div class="mb-6">
+    <h3 class="font-heading font-bold text-lg mb-2">Ingredients</h3>
 
     <app-ingredients-form
       [initialIngredients]="ingredients"
@@ -55,8 +55,8 @@
     </app-ingredients-form>
   </div>
 
-  <div class="mb-2">
-    <h3 class="font-semibold mb-2">Instructions</h3>
+  <div class="mb-6">
+    <h3 class="font-heading font-bold text-lg mb-2">Instructions</h3>
 
     <app-instructions-form
       [initialInstructions]="instructions"
@@ -66,10 +66,10 @@
     </app-instructions-form>
   </div>
 
-  <div class="flex gap-1 mt-4">
+  <div class="flex gap-1">
     <button
       type="button"
-      class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm bg-cta-blue text-white"
+      class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-cta-blue text-white"
       (click)="saveRecipe()"
     >
       SAVE
@@ -77,7 +77,7 @@
 
     <button
       type="button"
-      class="font-body font-semibold text-sm tracking-wide px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
+      class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
       (click)="archiveRecipe()"
     >
       ARCHIVE

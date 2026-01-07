@@ -16,10 +16,6 @@
   background-color: var(--cta-blue);
 }
 
-@utility bg-white {
-  background-color: var(--white);
-}
-
 @utility bg-light-blue {
   background-color: var(--light-blue);
 }
@@ -64,7 +60,7 @@ html, body {
 }
 body { 
   margin: 0; 
-  /* font-family: Roboto, "Helvetica Neue", sans-serif;  */
+  background-color: white;
 }
 
 .color-light-gray {
@@ -75,6 +71,10 @@ body {
   color: var(--dark-gray);
 }
 
+.color-blue {
+  color: var(--cta-blue);
+}
+
 .border-light {
   border-color: var(--light-gray);
 }
@@ -82,3 +82,16 @@ body {
 .border-dark {
   border-color: var(--dark-gray);
 }
+
+.border-blue {
+  border-color: var(--cta-blue);
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: var(--light-gray) !important;
+}
+
+.mat-mdc-form-field-infix {
+  background-color: var(--light-gray) !important;
+}
+  

@@ -1,5 +1,5 @@
-<form [formGroup]="ingredientsForm" class="mb-2">
-  <div formArrayName="ingredients" class="mb-1">
+<form [formGroup]="ingredientsForm" class="">
+  <div formArrayName="ingredients" class="mb-2">
     <div
       *ngFor="let ingredient of ingredients.controls; let i = index"
       [formGroupName]="i"
@@ -7,7 +7,7 @@
     >
       <!-- Edit mode -->
       <div *ngIf="ingredient.value.isEditing && editable" class="flex flex-col space-y-2">
-        <div class="flex w-full gap-2 items-center px-2 py-1 mb-1 bg-light-blue">
+        <div class="flex w-full gap-2 items-center mb-1">
           <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
 
 
@@ -79,7 +79,7 @@
         class="flex justify-between border-b border-light"
       >
         <div class="flex px-0 py-1">
-          <p class="font-body">
+          <p class="font-body text-base">
             {{ ingredient.value.quantity }}
             {{ ingredient.value.unit }}
             {{ ingredient.value.name }}
@@ -106,7 +106,7 @@
     </div>
   </div>
   <button 
-    class="font-body font-medium text-sm px-2 py-0.5 rounded-sm outline-1"
+    class="font-body font-medium text-sm color-blue px-2 py-0.5 rounded-sm border-2 border-blue"
     type="button" 
     (click)="addIngredient()"
   >Item +</button>
