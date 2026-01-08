@@ -8,8 +8,6 @@
       <!-- Edit mode -->
       <div *ngIf="ingredient.value.isEditing && editable" class="flex flex-col space-y-2">
         <div class="flex w-full gap-2 items-center mb-1">
-          <!-- <div class="flex grow-3 min-w-60 items-start space-x-2"> -->
-
 
           <mat-form-field class="ingredient-input">
             <mat-label>Quantity</mat-label>
@@ -28,35 +26,10 @@
             </mat-select>
           </mat-form-field>
 
-
           <mat-form-field class="ingredient-input">
             <mat-label>Item</mat-label>
             <input matInput placeholder="ie. dry milk powder" formControlName="name">
           </mat-form-field>
-
-          <!-- <input
-            type="text"
-            formControlName="quantity"
-            placeholder="Quantity"
-            class="ingredient-input flex-none w-16 bg-white"
-          /> -->
-          <!-- <select
-            formControlName="unit"
-            class="ingredient-input flex-none w-20 appearance-none bg-white"
-          >
-            <option value="">Unit</option>
-            <option value="cup">cup</option>
-            <option value="tbsp">tbsp</option>
-            <option value="tsp">tsp</option>
-            <option value="g">g</option>
-            <option value="oz">oz</option>
-          </select> -->
-          <!-- <input
-            type="text"
-            formControlName="name"
-            placeholder="Ingredient"
-            class="ingredient-input flex bg-white"
-          /> -->
         </div>
 
         <div class="editing-options-editmode flex shrink-0 gap-2">
@@ -86,20 +59,13 @@
           </p>
         </div>
         <div class="editing-options-viewmode flex shrink-0">
-          <!-- <button
-            matButton
-            class="font-body font-medium text-sm px-1 py-0.5"
-            type="button" 
-            (click)="editIngredient(i)"
-          >edit</button> -->
-
           <button 
             mat-icon-button 
             matTooltip="Click to Edit" 
             (click)="editIngredient(i)" 
             class="iconbutton"
           >
-            <mat-icon aria-label="Edit" class="color-dark-gray">edit</mat-icon>
+            <!-- <mat-icon aria-label="Edit" class="color-dark-gray">edit</mat-icon> -->
           </button>
         </div>
       </div>
