@@ -27,7 +27,7 @@
   <ng-template #viewMode>
     <div class="flex mb-4">
       <div class="grow">
-        <h2 class="font-heading font-medium text-4xl px-0 py-1 w-full">
+        <h2 class="font-heading font-semibold text-4xl px-0 py-1 w-full">
           {{ title || 'Untitled Recipe' }}
         </h2>
       </div>
@@ -44,8 +44,9 @@
     </div>
   </ng-template>
 
-  <div class="recipe-forms flex gap-4">
-    <div class="ingredients-form min-w-30 mb-6">
+  <!-- <div class="recipe-forms flex gap-6"> -->
+  <div [ngClass]="recipeId ? 'recipe-forms flex gap-6' : 'recipe-forms'">
+    <div class="ingredients-form min-w-20 mb-6">
       <h3 class="font-subheading font-bold text-xl mb-2">Ingredients</h3>
 
       <app-ingredients-form

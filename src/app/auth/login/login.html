@@ -2,7 +2,25 @@
 <button *ngIf="!user" (click)="handleGoogleSignIn()">Sign in with Google</button>
 
 <div *ngIf="user" class="logged-in">
-    <span>Hello, {{ user.displayName }}!</span>
+  <!-- User avatar button to open menu -->
+  <button mat-button [matMenuTriggerFor]="userMenu" class="user-avatar-btn flex">
+    <img
+      *ngIf="user.photoURL; else defaultAvatar"
+      [src]="user.photoURL"
+      alt="User Avatar"
+      class="user-avatar-img rounded-full w-2 h-2"
+    />
+    <ng-template #defaultAvatar>
+      <mat-icon class="user-avatar-icon">account_circle</mat-icon>
+    </ng-template>
+  </button>
 
-    <button (click)="handleSignOut()">Sign Out</button>
+  <!-- Dropdown menu for user options -->
+  <mat-menu #userMenu="matMenu">
+
+    <span>Hello, {{ user.displayName }}!</span>
+    
+    <!-- <button mat-menu-item (click)="handleProfile()">Profile</button> -->
+    <button mat-menu-item (click)="handleSignOut()">Sign Out</button>
+  </mat-menu>   
 </div>

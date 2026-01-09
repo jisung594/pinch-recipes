@@ -49,9 +49,9 @@
       <!-- View mode -->
       <div 
         *ngIf="!ingredient.value.isEditing || !editable" 
-        class="flex justify-between border-b border-light"
+        class="flex border-b border-light"
       >
-        <div class="flex">
+        <div class="flex mb-1">
           <p class="font-body text-base">
             {{ ingredient.value.quantity }}
             {{ ingredient.value.unit }}
@@ -59,14 +59,14 @@
           </p>
         </div>
         <div class="editing-options-viewmode flex shrink-0">
-          <button 
+          <!-- <button 
             mat-icon-button 
             matTooltip="Click to Edit" 
             (click)="editIngredient(i)" 
             class="iconbutton"
           >
-            <!-- <mat-icon aria-label="Edit" class="color-dark-gray">edit</mat-icon> -->
-          </button>
+            <mat-icon aria-label="Edit" class="color-dark-gray">edit</mat-icon>
+          </button> -->
         </div>
       </div>
     </div>

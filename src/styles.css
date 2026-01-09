@@ -16,6 +16,10 @@
   background-color: var(--cta-blue);
 }
 
+@utility bg-cta-orange {
+  background-color: var(--cta-orange);
+}
+
 @utility bg-light-blue {
   background-color: var(--light-blue);
 }
@@ -32,26 +36,18 @@
   background-color: var(--med-blue);
 }
 
-@utility bg-accent-light {
-  background-color: var(--accent-light);
-}
-
-@utility bg-accent-dark {
-  background-color: var(--accent-dark);
-}
-
 @theme {
-  --font-heading: "Spectral", serif;
+  --font-heading: "Work Sans", sans-serif;
+  --font-subheading: "Spectral", serif;
   --font-body: "Work Sans", sans-serif;
 
   --cta-blue: #3069d4;
+  --cta-orange: #FFA500;
   --white: #ffffff;
   --light-blue: #eef7ff;
   --med-blue: #a2d3ff;
   --light-gray: #f2f2f2;
   --dark-gray: #767676;
-  --accent-light: #f6dad5;
-  --accent-dark: #d44930;
   --border-radius: 8px;
   --spacing: 0.75rem;
 }
@@ -75,6 +71,10 @@ body {
   color: var(--cta-blue);
 }
 
+.color-orange {
+  color: var(--cta-orange);
+}
+
 .border-light {
   border-color: var(--light-gray);
 }
@@ -87,11 +87,22 @@ body {
   border-color: var(--cta-blue);
 }
 
+.border-cta-orange {
+  border-color: var(--cta-orange);
+}
+
+/* Material text field overrides */
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: var(--light-gray) !important;
 }
 
+/* Material select field overrides */
 .mat-mdc-form-field-infix {
   background-color: var(--light-gray) !important;
+}
+
+/* size of "Edit" icon */
+.material-icons {
+  font-size: 20px;
 }
   
