@@ -44,3 +44,4 @@ Thumbs.db
 
 # Ignore environment configs
 src/environments/environment*.ts
+.firebase/
