@@ -123,7 +123,7 @@ export class RecipeEditor {
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
-          archived: recipeData.archived!,
+          archived: false,
           createdAt: new Date(),
         });
 
