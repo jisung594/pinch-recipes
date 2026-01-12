@@ -91,18 +91,22 @@ body {
   border-color: var(--cta-orange);
 }
 
-/* Material text field overrides */
+/* Material overrides */
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: var(--light-gray) !important;
+  background-color: var(--light-blue) !important;
+}
+.mat-mdc-form-field-infix {
+  background-color: var(--light-blue) !important;
+}
+.mat-mdc-form-field-subscript-wrapper::before {
+  content: none !important;
+}
+.mat-mdc-floating-label > mat-label {
+  font-size: small;
 }
 
-/* Material select field overrides */
-.mat-mdc-form-field-infix {
-  background-color: var(--light-gray) !important;
-}
 
 /* size of "Edit" icon */
 .material-icons {
   font-size: 20px;
 }
-  
