@@ -6,20 +6,19 @@
       class="instruction-row mb-1"
     >
       <!-- Edit mode -->
-      <div *ngIf="instruction.value.isEditing && editable" class="flex flex-col space-y-2">
-        <div class="flex w-full gap-2 items-center mb-1">
-
-          <mat-form-field class="instruction-input w-full">
+      <div 
+        *ngIf="instruction.value.isEditing && editable" 
+        class="flex flex-col md:flex-row space-y-2"
+      >
+        <div class="flex gap-2 items-center mb-1 w-full">
+          <mat-form-field class="instruction-input w-40 rounded-sm">
             <mat-label>Step {{ i + 1 }}</mat-label>
-            <textarea 
-              matInput  
-              placeholder="" 
-              formControlName="step">
+            <textarea matInput placeholder="" formControlName="step">
             </textarea>
           </mat-form-field>
         </div>
 
-        <div class="editing-options-editmode flex shrink-0 gap-2">
+        <div class="editing-options-editmode flex gap-1 my-1 md:my-3">
           <button
             class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
             type="button" 

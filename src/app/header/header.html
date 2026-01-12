@@ -1,15 +1,20 @@
-<nav class="flex items-center justify-between h-8 px-6 py-1 bg-cta-orange">
+<nav class="flex items-center justify-between h-6 px-2 py-1 md:h-8 md:px-6 bg-cta-orange">
 
-  <div class="flex items-center">
-    <!-- <img src="assets/logo_full.svg" class="h-6 w-auto"> -->
-     <img src="assets/logo_full_black.svg" class="h-6 w-auto">
+  <div class="flex">
+     <img 
+      src="assets/logo_full_black.svg" class="w-8 md:w-10 lg:w-14" 
+      alt="Baker's Logbook logo" 
+     />
   </div>
 
-  <div class="flex items-center justify-between gap-2 font-bold text-sm px-2 py-0.5 rounded-sm border-2 border-black bg-light-gray">
-    <a routerLink="/">home</a>
-    <a routerLink="recipes/new">new recipe</a>
-    <!-- (below) Subscribes to user observable and displays if found valid -->
-    <a *ngIf="user$ | async" routerLink="/profile">my recipes</a>
+  <div class="flex gap-2 px-2 py-0.5 rounded-sm border-2 border-black bg-light-gray">
+
+    <div class="hidden md:flex font-bold text-sm items-center justify-between gap-2">
+      <a routerLink="/">home</a>
+      <a routerLink="recipes/new">new recipe</a>
+      <!-- (below) Subscribes to user observable and displays if found valid -->
+      <a *ngIf="user$ | async" routerLink="/profile">my recipes</a>
+    </div>
 
     <app-login></app-login>
   </div>
