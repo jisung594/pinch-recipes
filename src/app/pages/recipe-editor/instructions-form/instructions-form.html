@@ -10,8 +10,8 @@
         *ngIf="instruction.value.isEditing && editable" 
         class="flex flex-col md:flex-row space-y-2"
       >
-        <div class="flex gap-2 items-center mb-1 w-full">
-          <mat-form-field class="instruction-input w-40 rounded-sm">
+        <div class="flex gap-2 items-center mb-1 w-full border border-dark-gray px-1 py-1 rounded-sm">
+          <mat-form-field class="instruction-input w-40 bg-white rounded-sm">
             <mat-label>Step {{ i + 1 }}</mat-label>
             <textarea matInput placeholder="" formControlName="step">
             </textarea>
