@@ -16,8 +16,8 @@
   background-color: var(--cta-blue);
 }
 
-@utility bg-cta-orange {
-  background-color: var(--cta-orange);
+@utility bg-orange {
+  background-color: var(--orange);
 }
 
 @utility bg-light-blue {
@@ -42,7 +42,7 @@
   --font-body: "Work Sans", sans-serif;
 
   --cta-blue: #3069d4;
-  --cta-orange: #FFA500;
+  --orange: #FFA500;
   --white: #ffffff;
   --light-blue: #eef7ff;
   --med-blue: #a2d3ff;
@@ -72,7 +72,7 @@ body {
 }
 
 .color-orange {
-  color: var(--cta-orange);
+  color: var(--orange);
 }
 
 .border-light {
@@ -87,8 +87,8 @@ body {
   border-color: var(--cta-blue);
 }
 
-.border-cta-orange {
-  border-color: var(--cta-orange);
+.border-orange {
+  border-color: var(--orange);
 }
 
 /* Material overrides */
