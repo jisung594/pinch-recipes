@@ -44,9 +44,9 @@
       <div class="p-6">
 
         <div class="menu-options flex flex-col space-y-4 text-white">
-          <a routerLink="/">home</a>
-          <a routerLink="recipes/new">new recipe</a>
-          <a *ngIf="user$ | async" routerLink="/profile">my recipes</a>
+          <a routerLink="/" (click)="closeMenu()">home</a>
+          <a routerLink="recipes/new" (click)="closeMenu()">new recipe</a>
+          <a *ngIf="user$ | async" routerLink="/profile" (click)="closeMenu()">my recipes</a>
         </div>
 
       </div>
