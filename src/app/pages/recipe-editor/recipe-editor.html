@@ -15,7 +15,7 @@
     <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
     <div class="editing-options-editmode flex my-1 md:my-3">
       <button
-        class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
+        class="font-body font-medium text-sm px-1 py-0.5"
         type="button" 
         (click)="saveTitle()"
       >&check;</button>
@@ -52,19 +52,18 @@
         <div class="editing-options-viewmode flex shrink-0 mb-2">
           <button 
             *ngIf="!isEditingIngredients"
-            icon-button 
-            matTooltip="Click to Edit" 
             (click)="editIngredients()" 
-            class="iconbutton"
+            class="font-semibold"
+            type="button"
           >
-            Edit
+            edit
           </button>
 
           <button
             *ngIf="isEditingIngredients" 
-            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
-            type="button" 
             (click)="saveIngredients()"
+            class="font-body font-medium text-sm px-1 py-0.5"
+            type="button"
           >&check;</button>
         </div>
       </div>
@@ -85,17 +84,15 @@
         <div class="editing-options-viewmode flex shrink-0 mb-2">
           <button 
             *ngIf="!isEditingInstructions"
-            icon-button 
-            matTooltip="Click to Edit" 
             (click)="editInstructions()" 
-            class="iconbutton"
+            class="font-semibold"
           >
-            Edit
+            edit
           </button>
 
           <button
             *ngIf="isEditingInstructions" 
-            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
+            class="font-body font-medium text-sm px-1 py-0.5"
             type="button" 
             (click)="saveInstructions()"
           >&check;</button>
@@ -114,7 +111,7 @@
   <div class="flex gap-1">
     <button
       type="button"
-      class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-cta-orange border-2"
+      class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-orange border-2"
       (click)="saveRecipe()"
     >
       SAVE
