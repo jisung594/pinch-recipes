@@ -13,9 +13,9 @@
       mat-icon-button 
       matTooltip="Click to Toggle Menu" 
       (click)="toggleMenu()" 
-      class="menu-btn"
+      class="menu-btn lg:hidden"
     >
-      <mat-icon aria-label="hamburger-menu" class="">☰</mat-icon>
+      <mat-icon aria-label="hamburger-menu">☰</mat-icon>
     </button>
 
     <div class="menu-options hidden md:flex font-bold text-sm items-center justify-between gap-2">
@@ -23,6 +23,8 @@
       <a routerLink="recipes/new">new recipe</a>
       <!-- (below) Subscribes to user observable and displays if found valid -->
       <a *ngIf="user$ | async" routerLink="/profile">my recipes</a>
+
+      <app-login></app-login>
     </div>
 
 
@@ -42,18 +44,16 @@
       </div>
 
       <div class="p-6">
-
-        <div class="menu-options flex flex-col space-y-4 text-white">
+        <div class="menu-options flex flex-col space-y-2 text-white font-subheading text-2xl">
           <a routerLink="/" (click)="closeMenu()">home</a>
           <a routerLink="recipes/new" (click)="closeMenu()">new recipe</a>
           <a *ngIf="user$ | async" routerLink="/profile" (click)="closeMenu()">my recipes</a>
+
+          <app-login></app-login>
         </div>
-
       </div>
-
-
     </div>
 
-    <app-login></app-login>
+    <!-- <app-login></app-login> -->
   </div>
 </nav>
