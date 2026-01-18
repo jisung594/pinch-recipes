@@ -43,25 +43,68 @@
     </div>
   </ng-template>
 
-  <!-- <div class="recipe-forms flex gap-6"> -->
-  <div [ngClass]="recipeId ? 'recipe-forms flex gap-6' : 'recipe-forms'">
+  <div class="recipe-forms">
+  <!-- <div [ngClass]="recipeId ? 'recipe-forms flex gap-6' : 'recipe-forms'"> -->
     <div class="ingredients-form mb-6">
-      <h3 class="font-subheading font-bold text-xl mb-2">Ingredients</h3>
+      <div class="flex justify-between">
+        <h3 class="font-subheading font-bold text-xl mb-2">Ingredients</h3>
+
+        <div class="editing-options-viewmode flex shrink-0 mb-2">
+          <button 
+            *ngIf="!isEditingIngredients"
+            icon-button 
+            matTooltip="Click to Edit" 
+            (click)="editIngredients()" 
+            class="iconbutton"
+          >
+            Edit
+          </button>
+
+          <button
+            *ngIf="isEditingIngredients" 
+            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
+            type="button" 
+            (click)="saveIngredients()"
+          >&check;</button>
+        </div>
+      </div>
+    
 
       <app-ingredients-form
         [initialIngredients]="ingredients"
-        [editable]="editable"
+        [editable]="isEditingIngredients"
         (ingredientsChange)="onIngredientsChange($event)"
       >
       </app-ingredients-form>
     </div>
 
     <div class="instructions-form mb-6">
-      <h3 class="font-subheading font-bold text-xl mb-2">Instructions</h3>
+      <div class="flex justify-between">
+        <h3 class="font-subheading font-bold text-xl mb-2">Instructions</h3>
+
+        <div class="editing-options-viewmode flex shrink-0 mb-2">
+          <button 
+            *ngIf="!isEditingInstructions"
+            icon-button 
+            matTooltip="Click to Edit" 
+            (click)="editInstructions()" 
+            class="iconbutton"
+          >
+            Edit
+          </button>
+
+          <button
+            *ngIf="isEditingInstructions" 
+            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm bg-med-blue"
+            type="button" 
+            (click)="saveInstructions()"
+          >&check;</button>
+        </div>
+      </div>
 
       <app-instructions-form
         [initialInstructions]="instructions"
-        [editable]="editable"
+        [editable]="isEditingInstructions"
         (instructionsChange)="onInstructionsChange($event)"
       >
       </app-instructions-form>
