@@ -35,11 +35,11 @@ export class RecipeEditor {
   @Input() title: string = '';
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
-  @Input() editable: boolean = true; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
+  @Input() editable: boolean = false; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
 
   isEditingTitle = false;
-  editingIngredients: boolean[] = []; 
-  editingInstructions: boolean[] = [];
+  isEditingIngredients = false;
+  isEditingInstructions = false;
   currentRecipeId: string | null = null;
 
   constructor(
@@ -49,18 +49,30 @@ export class RecipeEditor {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    // initializes editing state arrays to "false" for each row
-    this.editingIngredients = this.ingredients.map(() => false);
-    this.editingInstructions = this.instructions.map(() => false);
-  }
+  ngOnInit() {}
 
   editTitle() {
     this.isEditingTitle = true;
   }
 
+  editIngredients() {
+    this.isEditingIngredients = true;
+  }
+
+  editInstructions() {
+    this.isEditingInstructions = true;
+  }
+
   saveTitle() {
     this.isEditingTitle = false;
+  }
+
+  saveIngredients() {
+    this.isEditingIngredients = false;
+  }
+
+  saveInstructions() {
+    this.isEditingInstructions = false;
   }
 
   // Runs when a IngredientsForm (child) emits an @Output
