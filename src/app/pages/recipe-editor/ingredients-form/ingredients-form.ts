@@ -8,8 +8,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+// import { MatInputModule } from '@angular/material/input';
+// import { MatSelectModule } from '@angular/material/select';
 import { IngredientRow, IngredientValue } from './ingredients-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -23,8 +23,8 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule,
-    MatSelectModule
+    // MatInputModule,
+    // MatSelectModule
   ]
 })
 export class IngredientsForm {
@@ -64,7 +64,6 @@ export class IngredientsForm {
         name: this.fb.control(removedItemValue.name ?? '', { nonNullable: true }),
         quantity: this.fb.control(removedItemValue.quantity ?? '', { nonNullable: true }),
         unit: this.fb.control(removedItemValue.unit ?? '', { nonNullable: true }),
-        isEditing: this.fb.control(removedItemValue.isEditing ?? true, { nonNullable: true }),
       });
     }
 
@@ -73,7 +72,6 @@ export class IngredientsForm {
       name: this.fb.control('', { nonNullable: true }),
       quantity: this.fb.control('', { nonNullable: true }),
       unit: this.fb.control('', { nonNullable: true }),
-      isEditing: this.fb.control(true, { nonNullable: true }),
     });
   }
 
@@ -111,14 +109,15 @@ export class IngredientsForm {
     this.emitChange();
   }
 
-  editIngredient(index: number) {
-    const ingredient = this.ingredients.at(index);
-    ingredient.patchValue({ isEditing: true });
+  editIngredients() {
+    this.editable = true;
+
+    // Notifies parent
+    this.emitChange();
   }
 
-  saveIngredient(index: number) {
-    const ingredient = this.ingredients.at(index);
-    ingredient.patchValue({ isEditing: false });
+  saveIngredients() {
+    this.editable = false;
 
     // Notifies parent
     this.emitChange();

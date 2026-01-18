@@ -52,14 +52,12 @@ export class RecipeDetail {
             name: this.fb.control(i.name, { nonNullable: true }),
             quantity: this.fb.control(i.quantity, { nonNullable: true }),
             unit: this.fb.control(i.unit, { nonNullable: true }),
-            isEditing: this.fb.control(false, { nonNullable: true }),
           })
         );
         this.instructionsRows = this.recipe.instructions.map(i =>
           this.fb.group({
             step: this.fb.control(i.step, { nonNullable: true }),
             order: this.fb.control(i.order, { nonNullable: true }),
-            isEditing: this.fb.control(false, { nonNullable: true }),
           })
         );
       }

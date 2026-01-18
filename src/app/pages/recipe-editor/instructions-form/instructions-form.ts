@@ -61,7 +61,6 @@ export class InstructionsForm {
       return this.fb.group({
         step: this.fb.control(removedItemValue.step ?? '', { nonNullable: true }),
         order: this.fb.control(removedItemValue.order ?? 0, { nonNullable: true }),
-        isEditing: this.fb.control(removedItemValue.isEditing ?? true, { nonNullable: true }),
       });
     }
 
@@ -69,7 +68,6 @@ export class InstructionsForm {
     return this.fb.group({
       step: this.fb.control('', { nonNullable: true }),
       order: this.fb.control(0, { nonNullable: true }),
-      isEditing: this.fb.control(true, { nonNullable: true }),
     });
   }
 
@@ -109,12 +107,10 @@ export class InstructionsForm {
 
   editInstruction(index: number) {
     const item = this.instructions.at(index);
-    item.patchValue({ isEditing: true });
   }
 
   saveInstruction(index: number) {
     const instruction = this.instructions.at(index);
-    instruction.patchValue({ isEditing: false });
 
     // Notifies parent
     this.emitChange();

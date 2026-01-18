@@ -7,13 +7,11 @@ export interface Ingredient {
   name: string;
   quantity: string;
   unit: string;
-  isEditing?: boolean;
 }
 
 export interface Instruction {
   step: string;
   order: number;
-  isEditing?: boolean;
 }
 
 // recipe document structure (saved to Firestore)
