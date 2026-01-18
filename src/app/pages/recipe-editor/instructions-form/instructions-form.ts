@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { InstructionRow, InstructionValue } from './instructions-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -20,7 +19,6 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule
   ],
   templateUrl: './instructions-form.html',
   styleUrl: './instructions-form.css'
@@ -102,17 +100,6 @@ export class InstructionsForm {
     );
 
     // Notifies parent when instruction has been removed or reinserted
-    this.emitChange();
-  }
-
-  editInstruction(index: number) {
-    const item = this.instructions.at(index);
-  }
-
-  saveInstruction(index: number) {
-    const instruction = this.instructions.at(index);
-
-    // Notifies parent
     this.emitChange();
   }
 
