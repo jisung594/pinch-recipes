@@ -5,6 +5,7 @@
       class="w-8 md:w-10"
       src="assets/logo_full_black.svg" 
       alt="Baker's Logbook logo"
+      routerLink="/"
      />
   </div>
 
@@ -38,6 +39,8 @@
           class="w-8 md:w-10"
           src="assets/logo_full_light.svg" 
           alt="Baker's Logbook logo"
+          routerLink="/"
+          (click)="closeMenu()"
         />
 
         <button class="text-white" (click)="closeMenu()">x</button>
