@@ -49,7 +49,12 @@ export class RecipeEditor {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.recipeId === null) {
+      this.isEditingIngredients = true;
+      this.isEditingInstructions = true;
+    }
+  }
 
   editTitle() {
     this.isEditingTitle = true;
