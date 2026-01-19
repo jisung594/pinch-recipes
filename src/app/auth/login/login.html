@@ -18,9 +18,13 @@
   <!-- Dropdown menu for user options -->
   <mat-menu #userMenu="matMenu">
 
-    <span>Hello, {{ user.displayName }}!</span>
+    <div class="flex flex-col p-2">
+      <span>Hi, {{ user.displayName }}!</span>
     
-    <!-- <button mat-menu-item (click)="handleProfile()">Profile</button> -->
-    <button mat-menu-item (click)="handleSignOut()">Sign Out</button>
+      <!-- <button mat-menu-item (click)="handleProfile()">Profile</button> -->
+      <button mat-menu-item (click)="handleSignOut()">Sign Out</button>
+    </div>
+
+
   </mat-menu>   
 </div>
