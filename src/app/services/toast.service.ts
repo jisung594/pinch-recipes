@@ -38,25 +38,4 @@ export class ToastService {
 			onUndo();
 		})
   }
-
-
-	// 1. undo func for removing single ingredient/instruction (SNACKBAR / toastService)
-	// X show toast w/ confirmation of remove action
-	// X store removed item temporarily
-	// X restore item if "Undo" clicked within snackbar duration
-	// X otherwise, finalize removal after duration expires
-	// X ensure proper re-indexing of ingredient/instruction orders after undo
-
-
-	// 2. archive func for removing entire recipe (CONFIRMATION DIALOG BOX / soft)
-	// X create "archived" field in Recipe model
-	// - filter out archived recipes from main recipe list view
-	// - create separate "Archived Recipes" page to view/manage archived recipes
-	// - allow un-archiving from that page
-	
-
-	// 3. hard delete func for permanently deleting archived recipe (CONFIRMATION DIALOG BOX / hard)
-
-
-
 }
