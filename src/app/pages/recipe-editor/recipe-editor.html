@@ -6,7 +6,7 @@
         type="text"
         id="recipe-title"
         [(ngModel)]="title"
-        [readonly]="!editable"
+        [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
         autofocus
         class="font-heading font-medum text-2xl md:text-4xl px-0 py-1 w-full border-b-2 border-gray-400 placeholder-gray-400"
