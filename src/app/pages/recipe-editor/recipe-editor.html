@@ -108,21 +108,23 @@
     </div>
   </div>
 
-  <div class="flex gap-1">
-    <button
-      type="button"
-      class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-orange border-2"
-      (click)="saveRecipe()"
-    >
-      SAVE
-    </button>
+  <div class="fixed top-auto bottom-0 w-full h-6 bg-white">
+    <div class="flex gap-2">
+      <button
+        type="button"
+        class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-orange border-2"
+        (click)="saveRecipe()"
+      >
+        SAVE
+      </button>
 
-    <button
-      type="button"
-      class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
-      (click)="archiveRecipe()"
-    >
-      ARCHIVE
-    </button>
-  </div>
+      <button
+        type="button"
+        class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
+        (click)="archiveRecipe()"
+      >
+        ARCHIVE
+      </button>
+    </div>
+    </div>
 </div>
