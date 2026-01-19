@@ -1,8 +1,12 @@
 <div>
   <h3 class="font-heading text-4xl">my recipes</h3>
 
-  <div *ngIf="recipes$ | async as recipes" class="flex flex-col justify-between h-12 bg-testpink">
-    <a [routerLink]="['/recipes', r.id]" *ngFor="let r of recipes" class="block font-body">
+  <div *ngIf="recipes$ | async as recipes" class="flex flex-col justify-between h-12">
+    <a 
+      [routerLink]="['/recipes', r.id]" 
+      *ngFor="let r of recipes" 
+      class="block font-body underline-offset-10 hover:underline"
+    >
       {{ r.title }}
     </a>
   </div>
