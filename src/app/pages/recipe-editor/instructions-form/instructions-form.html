@@ -1,23 +1,23 @@
 <form [formGroup]="instructionsForm" class="">
-  <div formArrayName="instructions" class="mb-2">
+  <div formArrayName="instructions" class="flex flex-col gap-1 mb-2">
     <div
       *ngFor="let instruction of instructions.controls; let i = index"
       [formGroupName]="i"
-      class="instruction-row mb-1"
+      class="instruction-row"
     >
       <!-- Edit mode -->
       <div 
         *ngIf="editable" 
-        class="flex justify-between space-y-2"
+        class="flex flex-row"
       >
-        <div class="instruction-input flex gap-2 items-center mb-1 w-24 bg-white rounded-sm border border-dark-gray px-1 py-1">
-          <div class="flex flex-col space-y-1 w-full">
+        <div class="flex gap-1 md:gap-4 items-center w-full border border-light px-1 py-1 rounded-sm">
+          <div class="instruction-input flex gap-1 bg-white rounded-sm">
             <label class="font-medium">{{ i + 1 }}.</label>
             <textarea 
               matInput 
               placeholder="" 
               formControlName="step"
-              class="bg-light-blue rounded-sm px-1 py-1">
+              class="w-20 px-1 py-1 bg-light-blue rounded-sm">
             </textarea>
           </div>
         </div>
@@ -33,13 +33,13 @@
       <!-- View mode -->
       <div 
         *ngIf="!editable" 
-        class="flex justify-between border-b border-light"
+        class="flex border-b border-light"
       >
-        <div class="flex">
+        <div class="flex mb-1">
           <div class="mr-2">
             <p class="font-body font-black text-base">{{ i + 1 }}</p>
           </div>
-          <div class="mb-1">
+          <div class="">
             <p class="font-body text-base">{{ instruction.value.step }}</p>
           </div>
         </div>

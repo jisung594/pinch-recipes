@@ -1,16 +1,16 @@
 <form [formGroup]="ingredientsForm" class="">
-  <div formArrayName="ingredients" class="mb-2">
+  <div formArrayName="ingredients" class="flex flex-col gap-1 mb-2">
     <div
       *ngFor="let ingredient of ingredients.controls; let i = index"
       [formGroupName]="i"
-      class="ingredient-row mb-1"
+      class="ingredient-row"
     >
       <!-- Edit mode -->
       <div  
         *ngIf="editable"
-        class="flex flex-row space-y-2"
+        class="flex flex-row"
       >
-        <div class="flex gap-2 md:gap-4 items-center mb-1 w-full border border-dark-gray px-1 py-1 rounded-sm">
+        <div class="flex gap-1 md:gap-4 items-center w-full border border-light px-1 py-1 rounded-sm">
           <div class="ingredient-input w-4 bg-white rounded-sm">
             <label class="font-medium">Quantity</label>
             <input 
@@ -43,9 +43,9 @@
           </div>
         </div>
 
-        <div class="editing-options-editmode flex gap-1 my-1 md:my-3">
+        <div class="editing-options-editmode flex my-1 md:my-3">
           <button
-            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm"
+            class="font-body font-medium text-sm rounded-sm"
             type="button" 
             (click)="removeIngredient(i)"
           >&times;</button>
@@ -55,13 +55,13 @@
       <!-- View mode -->
       <div 
         *ngIf="!editable" 
-        class="flex border-b border-light mb-1"
+        class="flex border-b border-light"
       >
-        <div class="flex">
+        <div class="flex mb-1">
           <div class="mr-2">
             <p class="font-body font-black text-base">&bullet;</p>
           </div>
-          <div class="mb-1">
+          <div class="">
             <p class="font-body text-base">
               {{ ingredient.value.quantity }}
               {{ ingredient.value.unit }}
