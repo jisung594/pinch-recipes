@@ -127,6 +127,12 @@ export class RecipeEditor {
           recipeData
         );
         console.log('Recipe updated successfully.')
+
+        // Toast notification upon update
+        this.toastService.notify(
+          `${recipeData.title || 'Recipe'} updated successfully.`
+        );
+
         return;
       } else {
         // Creates new recipe if none exists
@@ -142,6 +148,11 @@ export class RecipeEditor {
         this.currentRecipeId = newDocRef.id;
         this.router.navigate(['/recipes', this.currentRecipeId]);
         console.log('Recipe created successfully.');
+
+        // Toast notification upon creation
+        this.toastService.notify(
+          `${recipeData.title || 'Recipe'} created successfully.`
+        );
       }
     } catch (err) {
       console.error('Error saving recipe:', err);
