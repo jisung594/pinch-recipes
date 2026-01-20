@@ -1,11 +1,11 @@
 <div>
   <h1 class="font-subheading font-medium text-4xl mb-6">my recipes</h1>
 
-  <div *ngIf="recipes$ | async as recipes" class="flex flex-col justify-between h-12 space-y-2">
+  <div *ngIf="recipes$ | async as recipes" class="flex flex-col gap-2">
     <a 
       [routerLink]="['/recipes', r.id]" 
       *ngFor="let r of recipes" 
-      class="block font-body font-medium text-lg underline-offset-10 hover:underline"
+      class="block font-body font-medium text-base underline-offset-10 hover:underline border-b border-light pb-1"
     >
       {{ r.title }}
     </a>
