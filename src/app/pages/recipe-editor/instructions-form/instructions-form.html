@@ -10,24 +10,24 @@
         *ngIf="editable" 
         class="flex flex-row"
       >
-        <div class="flex gap-1 md:gap-4 items-center w-full border border-light px-1 py-1 rounded-sm">
-          <div class="instruction-input flex gap-1 bg-white rounded-sm">
+        <div class="flex justify-between w-full border border-light px-1 py-1 rounded-sm">
+          <div class="flex gap-1 w-full">
             <label class="font-medium">{{ i + 1 }}.</label>
             <textarea 
               matInput 
-              placeholder="" 
+              placeholder="Step {{ i + 1 }}..."
               formControlName="step"
-              class="w-20 px-1 py-1 bg-light-blue rounded-sm">
+              class="form-field w-18 h-8 bg-light-blue rounded-sm">
             </textarea>
           </div>
-        </div>
 
-        <div class="editing-options-editmode flex gap-1 my-1 md:my-3">
-          <button 
-            class="font-body font-medium text-sm px-1 py-0.5 rounded-sm"
-            type="button" 
-            (click)="removeInstruction(i)">&times;</button>
-        </div>
+          <div class="editing-options-editmode flex p-2 my-1 md:my-3">
+            <button 
+              class="font-body font-medium text-lg rounded-sm"
+              type="button" 
+              (click)="removeInstruction(i)">&times;</button>
+          </div>
+      </div>
       </div>
 
       <!-- View mode -->
