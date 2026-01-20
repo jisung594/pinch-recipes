@@ -9,16 +9,16 @@
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
         autofocus
-        class="font-heading font-medum text-2xl md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
+        class="font-heading font-medum text-2xl leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
       />
     </div>
     <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
     <div class="editing-options-editmode flex my-1 md:my-3">
       <button
-        class="font-body font-medium text-sm px-1 py-0.5"
+        class="font-heading font-bold text-xl px-1 py-0.5"
         type="button" 
         (click)="saveTitle()"
-      >&check;</button>
+      >&#10003;</button>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
-            class="font-semibold underline-offset-10 hover:underline"
+            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
             type="button"
           >
             edit
@@ -62,9 +62,9 @@
           <button
             *ngIf="isEditingIngredients" 
             (click)="saveIngredients()"
-            class="font-body font-medium text-sm px-1 py-0.5"
+            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
             type="button"
-          >&check;</button>
+          >view</button>
         </div>
       </div>
     
@@ -85,17 +85,17 @@
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
-            class="font-semibold underline-offset-10 hover:underline"
+            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
           >
             edit
           </button>
 
           <button
             *ngIf="isEditingInstructions" 
-            class="font-body font-medium text-sm px-1 py-0.5"
+            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
             type="button" 
             (click)="saveInstructions()"
-          >&check;</button>
+          >view</button>
         </div>
       </div>
 
