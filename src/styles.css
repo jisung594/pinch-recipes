@@ -91,22 +91,16 @@ body {
   border-color: var(--orange);
 }
 
-/* Material overrides */
-.mdc-text-field,
-/* .mdc-text-field--filled:not(.mdc-text-field--disabled),  */
-.mat-mdc-select-panel,
-.mat-mdc-form-field-infix {
-  /* background-color: var(--light-blue) !important; */
-  background-color: white !important;
-}
-.mat-mdc-form-field-subscript-wrapper::before {
-  content: none !important;
-}
-.mat-mdc-floating-label > mat-label {
-  font-size: small;
+.form-field {
+  border-radius: var(--radius-sm);
+  padding-block: calc(var(--spacing) * 1);
+  padding-inline: calc(var(--spacing) * 1);
 }
 
-
+.form-field::placeholder {
+  color: var(--dark-gray);
+  /* padding-inline: calc(var(--spacing) * 1); */
+}
 
 /* size of "Edit" icon */
 .material-icons {
