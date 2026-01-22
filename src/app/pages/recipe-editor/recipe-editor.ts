@@ -95,13 +95,29 @@ export class RecipeEditor {
       title: this.title,
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
+      archived: true,
     }
 
-    // TODO: confirmation dialog when "Archive" button is clicked
 
 
-    // Toast notification upon archival
-    this.toastService.notify(`${recipeData.title} has been archived.`, 10000);
+    const user = await this.authService.getCurrentUser();
+
+    if (user && this.recipeId) {
+      await this.firestoreService.updateRecipe(
+        user.uid, 
+        this.recipeId,
+        recipeData
+      );
+      console.log('Recipe updated successfully.')
+
+      // Toast notification upon archival
+      this.toastService.notify(
+        `${recipeData.title || 'Recipe'} has been archived.`
+      );
+    }
+
+        // TODO: confirmation dialog when "Archive" button is clicked
+
   }
 
   async saveRecipe() {
@@ -119,6 +135,9 @@ export class RecipeEditor {
     const user = await this.authService.getCurrentUser();
     
     if (!user) {
+
+      // TODO: toast notification or similar to alert user
+
       console.warn("You must be signed in to save recipes.");
       return;
     }
