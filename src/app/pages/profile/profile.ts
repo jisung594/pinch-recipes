@@ -18,6 +18,7 @@ export class Profile implements OnInit {
   // ! (not initialized in constructor, but
   //   promises to assign value before accessed)
   recipes$!: Observable<Recipe[]>;
+  mainRecipes: Recipe[] = [];
 
   constructor(
     private authService: AuthService,
@@ -30,6 +31,13 @@ export class Profile implements OnInit {
     this.authService.authState$.subscribe(user => {
       if (user) {
         this.recipes$ = this.firestoreService.getUserRecipes(user.uid);
+
+        this.recipes$.subscribe(recipes => {
+          this.mainRecipes = recipes.filter((recipe) => {
+            return recipe.archived === false || recipe.archived === undefined;
+          })
+        });
+
       } else {
         console.warn("No user logged in");
       }

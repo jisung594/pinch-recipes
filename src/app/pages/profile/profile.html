@@ -4,7 +4,7 @@
   <div *ngIf="recipes$ | async as recipes" class="flex flex-col gap-2">
     <a 
       [routerLink]="['/recipes', r.id]" 
-      *ngFor="let r of recipes" 
+      *ngFor="let r of mainRecipes" 
       class="block font-body font-medium text-base underline-offset-10 hover:underline border-b border-light pb-1"
     >
       {{ r.title }}
