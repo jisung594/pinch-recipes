@@ -119,6 +119,7 @@
       </button>
 
       <button
+        *ngIf="recipeId"
         type="button"
         class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
         (click)="archiveRecipe()"
