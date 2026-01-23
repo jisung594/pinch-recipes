@@ -91,12 +91,12 @@ export class RecipeEditor {
     this.instructions = rows;
   }
 
-  async archiveRecipe() {
+  async toggleArchive() {
     const recipeData: Partial<Recipe> = {
       title: this.title,
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
-      archived: true,
+      archived: !this.archived,
     }
 
     const user = await this.authService.getCurrentUser();
@@ -107,43 +107,18 @@ export class RecipeEditor {
         this.recipeId,
         recipeData
       );
-      console.log('Recipe updated successfully.')
 
-      // Toast notification upon archival
+      this.archived = !this.archived;
+
+      console.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
+
+      // Toast notification upon change
       this.toastService.notify(
-        `${recipeData.title || 'Recipe'} has been archived.`
+        `${recipeData.title || 'Recipe'} has been ${recipeData.archived ? 'archived' : 'restored'}.`
       );
     }
 
-        // TODO: confirmation dialog when "Archive" button is clicked
-
-  }
-
-  async restoreRecipe() {
-    const recipeData: Partial<Recipe> = {
-      title: this.title,
-      ingredients: mapIngredientRows(this.ingredients),
-      instructions: mapInstructionRows(this.instructions),
-      archived: false,
-    }
-
-    const user = await this.authService.getCurrentUser();
-
-    if (user && this.recipeId) {
-      await this.firestoreService.updateRecipe(
-        user.uid, 
-        this.recipeId,
-        recipeData
-      );
-      console.log('Recipe updated successfully.')
-
-      // Toast notification upon archival
-      this.toastService.notify(
-        `${recipeData.title || 'Recipe'} has been restored.`
-      );
-    }
-
-        // TODO: confirmation dialog when "Restore" button is clicked
+        // TODO: confirmation dialog when "RESTORE" button is clicked
 
   };
 
