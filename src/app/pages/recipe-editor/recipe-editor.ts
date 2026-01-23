@@ -35,6 +35,7 @@ export class RecipeEditor {
   @Input() title: string = '';
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
+  @Input() archived: boolean = false;
   @Input() editable: boolean = false; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
 
   isEditingTitle = false;
@@ -98,8 +99,6 @@ export class RecipeEditor {
       archived: true,
     }
 
-
-
     const user = await this.authService.getCurrentUser();
 
     if (user && this.recipeId) {
@@ -119,6 +118,37 @@ export class RecipeEditor {
         // TODO: confirmation dialog when "Archive" button is clicked
 
   }
+
+  async restoreRecipe() {
+    const recipeData: Partial<Recipe> = {
+      title: this.title,
+      ingredients: mapIngredientRows(this.ingredients),
+      instructions: mapInstructionRows(this.instructions),
+      archived: false,
+    }
+
+    const user = await this.authService.getCurrentUser();
+
+    if (user && this.recipeId) {
+      await this.firestoreService.updateRecipe(
+        user.uid, 
+        this.recipeId,
+        recipeData
+      );
+      console.log('Recipe updated successfully.')
+
+      // Toast notification upon archival
+      this.toastService.notify(
+        `${recipeData.title || 'Recipe'} has been restored.`
+      );
+    }
+
+        // TODO: confirmation dialog when "Restore" button is clicked
+
+  };
+
+
+
 
   async saveRecipe() {
     // Requires at least a valid recipe title upon submit
