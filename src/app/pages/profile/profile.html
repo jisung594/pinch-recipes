@@ -1,13 +1,41 @@
-<div>
-  <h1 class="font-subheading font-medium text-4xl mb-6">my recipes</h1>
+<div class="recipes-list px-1 py-2">
+  <h1 class="font-subheading font-extrabold text-2xl mb-4">my recipes</h1>
 
-  <div *ngIf="recipes$ | async as recipes" class="flex flex-col gap-2">
+  <div 
+    *ngIf="recipes$ | async as recipes" 
+    class="main-recipes flex flex-col gap-2 mb-6"
+  >
     <a 
       [routerLink]="['/recipes', r.id]" 
       *ngFor="let r of mainRecipes" 
-      class="block font-body font-medium text-base underline-offset-10 hover:underline border-b border-light pb-1"
+      class="block font-body font-normal text-base underline-offset-10 hover:underline border-b border-light"
     >
       {{ r.title }}
     </a>
   </div>
+
+
+
+  <div class="archived-recipes flex flex-col rounded-sm px-1 py-1 border border-light">
+    <!-- <h2 class="font-subheading font-extrabold text-lg">archived</h2> -->
+
+    <details closed class="group">
+      <summary class="flex justify-between list-none font-subheading font-bold text-base color-dark-gray">
+        archived 
+        <span class="transition-transform group-open:rotate-180">&#9661;</span>
+      </summary>
+
+      <div class="flex flex-col gap-2 mt-4">
+        <a 
+          [routerLink]="['/recipes', r.id]" 
+          *ngFor="let r of archivedRecipes" 
+          class="block font-body font-normal text-base color-dark-gray underline-offset-10 hover:underline"
+        >
+          {{ r.title }}
+        </a>
+      </div>
+    </details>
+  </div>
+
+
 </div>
