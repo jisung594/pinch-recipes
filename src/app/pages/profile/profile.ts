@@ -19,6 +19,7 @@ export class Profile implements OnInit {
   //   promises to assign value before accessed)
   recipes$!: Observable<Recipe[]>;
   mainRecipes: Recipe[] = [];
+  archivedRecipes: Recipe[] = [];
 
   constructor(
     private authService: AuthService,
@@ -34,7 +35,10 @@ export class Profile implements OnInit {
 
         this.recipes$.subscribe(recipes => {
           this.mainRecipes = recipes.filter((recipe) => {
-            return recipe.archived === false || recipe.archived === undefined;
+            return recipe.archived === false;
+          })
+          this.archivedRecipes = recipes.filter((recipe) => {
+            return recipe.archived === true || recipe.archived === undefined;
           })
         });
 
