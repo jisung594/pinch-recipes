@@ -101,23 +101,26 @@ export class RecipeEditor {
 
     const user = await this.authService.getCurrentUser();
 
-    if (user && this.recipeId) {
-      await this.firestoreService.updateRecipe(
-        user.uid, 
-        this.recipeId,
-        recipeData
-      );
+    try {
+      if (user && this.recipeId) {
+        await this.firestoreService.updateRecipe(
+          user.uid, 
+          this.recipeId,
+          recipeData
+        );
 
-      this.archived = !this.archived;
+        this.archived = !this.archived;
 
-      console.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
+        console.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
 
-      // Toast notification upon change
-      this.toastService.notify(
-        `${recipeData.title || 'Recipe'} has been ${recipeData.archived ? 'archived' : 'restored'}.`
-      );
+        // Toast notification upon change
+        this.toastService.notify(
+          `${recipeData.title || 'Recipe'} has been ${recipeData.archived ? 'archived' : 'restored'}.`
+        );
+      }
+    } catch(err) {
+      console.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
     }
-
         // TODO: confirmation dialog when "RESTORE" button is clicked
 
   };
