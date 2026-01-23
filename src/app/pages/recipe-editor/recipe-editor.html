@@ -119,7 +119,7 @@
       </button>
 
       <button
-        *ngIf="recipeId && !archived$ | async"
+        *ngIf="recipeId && !archived"
         type="button"
         class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
         (click)="archiveRecipe()"
