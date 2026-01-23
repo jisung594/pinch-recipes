@@ -41,7 +41,6 @@ export class Profile implements OnInit {
             return recipe.archived === true || recipe.archived === undefined;
           })
         });
-
       } else {
         console.warn("No user logged in");
       }

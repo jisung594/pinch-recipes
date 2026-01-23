@@ -121,12 +121,10 @@ export class RecipeEditor {
     } catch(err) {
       console.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
     }
-        // TODO: confirmation dialog when "RESTORE" button is clicked
+
+    // TODO: confirmation dialog when "RESTORE" button is clicked
 
   };
-
-
-
 
   async saveRecipe() {
     // Requires at least a valid recipe title upon submit
@@ -143,8 +141,9 @@ export class RecipeEditor {
     const user = await this.authService.getCurrentUser();
     
     if (!user) {
-
-      // TODO: toast notification or similar to alert user
+      this.toastService.notify(
+        'Please create an account or login to save recipes.'
+      );
 
       console.warn("You must be signed in to save recipes.");
       return;
@@ -162,7 +161,7 @@ export class RecipeEditor {
 
         // Toast notification upon update
         this.toastService.notify(
-          `${recipeData.title || 'Recipe'} updated successfully.`
+          `${recipeData.title || 'Recipe'} saved successfully.`
         );
 
         return;
