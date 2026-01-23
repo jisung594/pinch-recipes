@@ -23,6 +23,7 @@ export class RecipeDetail {
   recipeId: string | null = null;
   ingredientsRows: IngredientRow[] = [];
   instructionsRows: InstructionRow[] = [];
+  archived = false;
   editable = false; // view mode by default
 
   constructor(
@@ -54,12 +55,15 @@ export class RecipeDetail {
             unit: this.fb.control(i.unit, { nonNullable: true }),
           })
         );
+
         this.instructionsRows = this.recipe.instructions.map(i =>
           this.fb.group({
             step: this.fb.control(i.step, { nonNullable: true }),
             order: this.fb.control(i.order, { nonNullable: true }),
           })
         );
+        
+        this.archived = this.recipe.archived;
       }
     });
   }
