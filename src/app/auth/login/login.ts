@@ -12,17 +12,10 @@ import { User } from 'firebase/auth';
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login implements OnInit {
+export class Login {
   user: User | null = null;
 
   constructor(private authService: AuthService) {}
-
-  // Called after input properties are set, but before DOM is ready
-  ngOnInit() {
-    this.authService.authState$.subscribe(user => {
-      this.user = user;
-    });
-  }
 
   async handleGoogleSignIn() {
     try {
@@ -30,16 +23,6 @@ export class Login implements OnInit {
       console.log("Logged in as", userCreds.user);
     } catch (err) {
       console.log("Login error:", err);
-    }
-  }
-
-  async handleSignOut() {
-    try {
-      await this.authService.signOut();
-      this.user = null;
-      console.log("Signed out");
-    } catch (err) {
-      console.log("Sign-out error:", err);
     }
   }
 }
