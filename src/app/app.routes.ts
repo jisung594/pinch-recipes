@@ -7,6 +7,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home').then((module) => module.Home),
   },
   {
+    path: 'login',
+    // Lazy loads the Login component
+    loadComponent: () => import('./auth/login/login').then((module) => module.Login),
+  },
+  {
     path: 'recipes/new',
     loadComponent: () =>
       import('./pages/recipe-editor/recipe-editor').then((module) => module.RecipeEditor),
