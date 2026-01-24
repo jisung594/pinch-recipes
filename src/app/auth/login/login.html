@@ -1,2 +1,24 @@
+<div class="login-page px-1 py-2">
+  <h1 class="font-subheading font-extrabold text-2xl mb-4">login</h1>
 
-<button (click)="handleGoogleSignIn()">sign in w/ Google</button>
+  <div>
+    <form class="flex flex-col">
+      <input 
+        class="form-field w-full h-4 mt-1 bg-light-blue" 
+        placeholder="baker214@gmail.com"
+      />
+      <input 
+        class="form-field w-full h-4 mt-1 bg-light-blue"
+        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+      />
+    </form>
+  </div>
+
+  <div>
+    <h2>- OR -</h2>
+  </div>
+
+  <div>
+    <button (click)="handleGoogleSignIn()">sign in w/ Google</button>
+  </div>
+</div>
