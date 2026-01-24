@@ -4,15 +4,14 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
-import { Login } from '../auth/login/login';
+import { AccountMenu } from '../auth/account-menu/account-menu';
 import { User } from 'firebase/auth';
-import { doc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    Login, 
+    AccountMenu, 
     CommonModule, 
     RouterModule,
     MatIconModule

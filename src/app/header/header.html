@@ -19,13 +19,16 @@
       <mat-icon aria-label="hamburger-menu">☰</mat-icon>
     </button>
 
-    <div class="menu-options hidden md:flex font-bold text-sm items-center justify-between gap-2">
-      <a routerLink="/">home</a>
-      <a routerLink="recipes/new">new recipe</a>
-      <!-- (below) Subscribes to user observable and displays if found valid -->
-      <a *ngIf="user$ | async" routerLink="/profile">my recipes</a>
-
-      <app-login></app-login>
+    <div class="hidden md:flex">
+      <div 
+        *ngIf="user$ | async" 
+        class="menu-options font-bold text-sm items-center justify-between gap-2"
+      >
+        <a routerLink="/">home</a>
+        <a routerLink="recipes/new">new recipe</a>
+        <a routerLink="/profile">my recipes</a>
+      </div>
+      <app-account-menu></app-account-menu>
     </div>
 
 
@@ -46,17 +49,19 @@
         <button class="text-white" (click)="closeMenu()">x</button>
       </div>
 
-      <div class="p-6">
-        <div class="menu-options flex flex-col space-y-2 text-white font-subheading text-2xl">
+      <div class="p-6 text-white">
+        <div 
+          *ngIf="user$ | async" 
+          class="menu-options flex flex-col space-y-2 font-subheading text-2xl"
+        >
           <a routerLink="/" (click)="closeMenu()">home</a>
           <a routerLink="recipes/new" (click)="closeMenu()">new recipe</a>
-          <a *ngIf="user$ | async" routerLink="/profile" (click)="closeMenu()">my recipes</a>
-
-          <app-login></app-login>
+          <a routerLink="/profile" (click)="closeMenu()">my recipes</a>
         </div>
+        <app-account-menu></app-account-menu>
       </div>
     </div>
 
-    <!-- <app-login></app-login> -->
+    <!-- <app-account-menu></app-account-menu> -->
   </div>
 </nav>
