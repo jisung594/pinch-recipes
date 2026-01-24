@@ -1,24 +1,29 @@
-<div class="login-page px-1 py-2">
-  <h1 class="font-subheading font-extrabold text-2xl mb-4">login</h1>
-
+<div class="login-page flex flex-col gap-2 px-1 py-2">
   <div>
-    <form class="flex flex-col">
-      <input 
-        class="form-field w-full h-4 mt-1 bg-light-blue" 
-        placeholder="baker214@gmail.com"
-      />
-      <input 
-        class="form-field w-full h-4 mt-1 bg-light-blue"
-        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-      />
+    <h1 class="font-subheading font-extrabold text-2xl mb-2">Login</h1>
+    <form class="flex flex-col gap-1">
+      <div>
+        <label class="font-medium text-sm">Email</label>
+        <input 
+          class="form-field w-full h-4 mt-1 bg-light-blue" 
+          placeholder="baker214@gmail.com"
+        />
+      </div>
+      <div>
+        <label class="font-medium text-sm">Password</label>
+        <input 
+          class="form-field w-full h-4 mt-1 bg-light-blue"
+          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+        />
+      </div>
     </form>
   </div>
 
-  <div>
-    <h2>- OR -</h2>
+  <div class="px-1 py-1">
+    <h2 class="font-body font-base text-base">- OR -</h2>
   </div>
 
-  <div>
-    <button (click)="handleGoogleSignIn()">sign in w/ Google</button>
+  <div class="px-1 py-1 rounded-sm border border-light">
+    <button (click)="handleGoogleSignIn()">Login w/ Google</button>
   </div>
 </div>
