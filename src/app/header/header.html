@@ -1,5 +1,4 @@
-<nav class="flex items-center justify-between px-2 py-2 md:h-8 md:px-6 bg-white">
-
+<div class="flex items-center justify-between px-2 py-2 md:h-8 md:px-6 bg-white">
   <div class="flex">
      <img 
       class="w-8 md:w-10"
@@ -18,8 +17,7 @@
     >
       <mat-icon aria-label="hamburger-menu">☰</mat-icon>
     </button>
-
-    <div class="hidden md:flex">
+    <nav class="hidden md:flex">
       <div 
         *ngIf="user$ | async" 
         class="menu-options font-bold text-sm items-center justify-between gap-2"
@@ -29,8 +27,7 @@
         <a routerLink="/profile">my recipes</a>
       </div>
       <app-account-menu></app-account-menu>
-    </div>
-
+    </nav>
 
     <!-- Open nav menu on small screens -->
     <div
@@ -45,11 +42,9 @@
           routerLink="/"
           (click)="closeMenu()"
         />
-
         <button class="text-white" (click)="closeMenu()">x</button>
       </div>
-
-      <div class="p-6 text-white">
+      <nav class="p-6 text-white">
         <div 
           *ngIf="user$ | async" 
           class="menu-options flex flex-col space-y-2 font-subheading text-2xl"
@@ -59,9 +54,8 @@
           <a routerLink="/profile" (click)="closeMenu()">my recipes</a>
         </div>
         <app-account-menu></app-account-menu>
-      </div>
+      </nav>
     </div>
 
-    <!-- <app-account-menu></app-account-menu> -->
   </div>
-</nav>
+</div>
