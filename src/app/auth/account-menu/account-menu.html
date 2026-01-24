@@ -1,6 +1,9 @@
 <div class="account-menu">
-  <div *ngIf="!user">
-    <h1>login / sign up</h1>
+  <div 
+    *ngIf="!user"
+    class="font-subheading font-bold text-xl"
+  >
+    <a routerLink="/login" (click)="triggerCloseMenu()">login/<br/>sign up</a>
   </div>
 
   <div *ngIf="user" class="logged-in">
@@ -21,9 +24,7 @@
     <mat-menu #userMenu="matMenu">
       <div class="flex flex-col p-2">
         <span>Hi, {{ user.displayName }}!</span>
-      
-        <!-- <button mat-menu-item (click)="handleProfile()">Profile</button> -->
-        <button mat-menu-item (click)="handleSignOut()">Sign Out</button>
+        <button mat-menu-item (click)="handleSignOut()">sign out</button>
       </div>
     </mat-menu>   
   </div>

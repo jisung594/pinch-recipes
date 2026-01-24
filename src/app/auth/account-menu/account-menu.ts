@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from '../../services/auth.service';
@@ -7,11 +8,19 @@ import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-account-menu',
-  imports: [CommonModule, MatIconModule, MatMenu, MatMenuTrigger],
+  imports: [
+    CommonModule,
+    RouterModule, 
+    MatIconModule, 
+    MatMenu, 
+    MatMenuTrigger
+  ],
   templateUrl: './account-menu.html',
   styleUrl: './account-menu.css',
 })
 export class AccountMenu implements OnInit {
+  @Output() requestClose = new EventEmitter<void>();
+
   user: User | null = null;
 
   constructor(private authService: AuthService) {}
@@ -21,6 +30,14 @@ export class AccountMenu implements OnInit {
     this.authService.authState$.subscribe(user => {
       this.user = user;
     });
+  }
+
+  triggerCloseMenu() {
+    try {
+      this.requestClose.emit();
+    } catch (err) {
+      console.log('ERROR:', err);
+    }
   }
 
   async handleSignOut() {
