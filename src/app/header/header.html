@@ -53,7 +53,7 @@
           <a routerLink="recipes/new" (click)="closeMenu()">new recipe</a>
           <a routerLink="/profile" (click)="closeMenu()">my recipes</a>
         </div>
-        <app-account-menu></app-account-menu>
+        <app-account-menu (requestClose)="closeMenu()"></app-account-menu>
       </nav>
     </div>
 
