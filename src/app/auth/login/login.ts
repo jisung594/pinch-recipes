@@ -36,10 +36,27 @@ export class Login {
     private fb: FormBuilder,
     private router: Router
   ) {
+    // TODO: include strong password validator
     this.loginForm = this.fb.group({
-      email: this.fb.control('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
-      password: this.fb.control('', { nonNullable: true, validators: [Validators.required, Validators.minLength(8)] }),
+      email: this.fb.control(
+        '', { nonNullable: true, validators: [
+          Validators.required, 
+          Validators.email,
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
+        ] }
+      ),
+      password: this.fb.control(
+        '', { nonNullable: true, validators: [Validators.required] }
+      ),
     });
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 
   async handleSignIn() {
