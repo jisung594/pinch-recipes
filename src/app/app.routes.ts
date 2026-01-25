@@ -3,13 +3,15 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    // Lazy loads the Home component
     loadComponent: () => import('./pages/home/home').then((module) => module.Home),
   },
   {
     path: 'login',
-    // Lazy loads the Login component
     loadComponent: () => import('./auth/login/login').then((module) => module.Login),
+  },
+  {
+    path: 'signup',
+    loadComponent: () => import('./auth/signup/signup').then((module) => module.Signup),
   },
   {
     path: 'recipes/new',
@@ -23,7 +25,6 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    // Lazy loads the Profile component
     loadComponent: () => import('./pages/profile/profile').then((module) => module.Profile),
   },
 ];
