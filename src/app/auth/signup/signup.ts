@@ -37,16 +37,35 @@ export class Signup {
     private router: Router
   ) {
     this.signupForm = this.fb.group({
-      email: this.fb.control('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
-      password: this.fb.control('', { nonNullable: true, validators: [Validators.required, Validators.minLength(8)] }),
+      email: this.fb.control(
+        '', { nonNullable: true, validators: [
+          Validators.required, 
+          Validators.email,
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
+        ] }
+      ),
+      password: this.fb.control(
+        '', { nonNullable: true, validators: [
+          Validators.required,
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
+        ] }
+      ),
     });
+  }
+
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  get password() {
+    return this.signupForm.get('password');
   }
 
   async handleSignUp() {
     try {
       const { email, password } = this.signupForm.value;
       await this.authService.signUp(email, password);
-      // this.router.navigate(['/']);
+      this.router.navigate(['/']);
     } catch (err) {
       // window.alert('Invalid credentials - please try again.'); // placeholder
       console.log("Sign-up error:", err);
