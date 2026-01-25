@@ -1,10 +1,10 @@
-<div class="login-page flex flex-col gap-2 px-1 py-2">
+<div class="signup-page flex flex-col gap-2 px-1 py-2">
   <div>
     <h1 class="flex justify-center font-subheading font-extrabold text-2xl mb-2">Create Account</h1>
     <form
       [formGroup]="signupForm"
       (submit)="handleSignUp()"
-      class="flex flex-col gap-1"
+      class="flex flex-col gap-2"
     >
       <div>
         <label class="font-medium text-sm">Email</label>
@@ -15,6 +15,11 @@
           placeholder="baker214@gmail.com"
           required
         />
+
+        <!-- Inline validation error -->
+        <div *ngIf="email!.invalid && email!.touched" class="error font-body text-sm text-red-600">
+          Please enter a valid email address.
+        </div>
       </div>
       <div>
         <label class="font-medium text-sm">Password</label>
@@ -26,6 +31,11 @@
           minlength="8"
           required
         />
+
+        <!-- Inline validation error -->
+        <div *ngIf="password!.invalid && password!.touched" class="error font-body text-sm text-red-600">
+          Please enter a valid password. (TODO: list out requirements)
+        </div>
       </div>
 
       <button 
