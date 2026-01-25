@@ -25,7 +25,13 @@ export class AuthService {
   }
 
   async signIn(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+    try {
+      const result = await signInWithEmailAndPassword(this.auth, email, password);
+      return result;
+    } catch (err) {
+      console.error("Sign-in failed:", err);
+      throw err; 
+    }
   }
 
   async signInWithGoogle() {
@@ -34,9 +40,9 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.auth, provider); // built-in Firebase function for handling signin via Google's popup window
       return result;
-    } catch (error) {
-      console.error("Google sign-in failed:", error);
-      throw error; 
+    } catch (err) {
+      console.error("Google sign-in failed:", err);
+      throw err; 
     }
   }
 
