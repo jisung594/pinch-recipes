@@ -1,1 +1,63 @@
-<p>signup works!</p>
+<div class="login-page flex flex-col gap-2 px-1 py-2">
+  <div>
+    <h1 class="flex justify-center font-subheading font-extrabold text-2xl mb-2">Create Account</h1>
+    <form
+      [formGroup]="signupForm"
+      (submit)="handleSignUp()"
+      class="flex flex-col gap-1"
+    >
+      <div>
+        <label class="font-medium text-sm">Email</label>
+        <input
+          type="email"
+          formControlName="email" 
+          class="form-field w-full h-4 mt-1 bg-light-blue" 
+          placeholder="baker214@gmail.com"
+          required
+        />
+      </div>
+      <div>
+        <label class="font-medium text-sm">Password</label>
+        <input
+          type="password"
+          formControlName="password" 
+          class="form-field w-full h-4 mt-1 bg-light-blue"
+          placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+          minlength="8"
+          required
+        />
+      </div>
+
+      <button 
+        [disabled]="!signupForm.valid"
+        class="font-body font-normal text-sm px-2 py-1 border border-light"
+        type="submit"
+      >Register</button>
+    </form>
+  </div>
+
+  <div class="flex justify-center">
+    <h2 class="font-subheading font-base text-sm">or sign-up with</h2>
+  </div>
+
+  <div class="flex justify-center h-4 w-auto">
+    <button
+      type="button"
+      class="flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border border-light"
+      (click)="handleGoogleSignIn()"
+    >
+      <img
+        src="../../../assets/google.png"
+        alt="Google logo"
+        class="h-2 w-2"
+      />
+      <span>Google</span>
+    </button>
+  </div>
+
+  <div class="flex justify-center">
+    <p class="font-body font-normal text-sm">Already have an account? 
+      <a class="font-bold" routerLink="/login">Login</a>
+    </p>
+  </div>
+</div>
