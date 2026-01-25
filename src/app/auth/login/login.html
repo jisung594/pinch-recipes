@@ -1,21 +1,38 @@
 <div class="login-page flex flex-col gap-2 px-1 py-2">
   <div>
     <h1 class="flex justify-center font-subheading font-extrabold text-2xl mb-2">Welcome back!</h1>
-    <form class="flex flex-col gap-1">
+    <form
+      [formGroup]="loginForm"
+      (submit)="handleSignIn()"
+      class="flex flex-col gap-1"
+    >
       <div>
         <label class="font-medium text-sm">Email</label>
-        <input 
+        <input
+          type="email"
+          formControlName="email" 
           class="form-field w-full h-4 mt-1 bg-light-blue" 
           placeholder="baker214@gmail.com"
+          required
         />
       </div>
       <div>
         <label class="font-medium text-sm">Password</label>
-        <input 
+        <input
+          type="password"
+          formControlName="password" 
           class="form-field w-full h-4 mt-1 bg-light-blue"
           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+          minlength="8"
+          required
         />
       </div>
+
+      <button 
+        [disabled]="!loginForm.valid"
+        class="font-body font-normal text-sm px-2 py-1 border border-light"
+        type="submit"
+      >Login</button>
     </form>
   </div>
 
