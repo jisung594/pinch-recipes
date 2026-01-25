@@ -24,6 +24,16 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
+  async signUp(email: string, password: string) {
+    try {
+      const result = await createUserWithEmailAndPassword(this.auth, email, password);
+      return result;
+    } catch (err) {
+      console.error("Registration failed:", err);
+      throw err;
+    }
+  }
+
   async signIn(email: string, password: string) {
     try {
       const result = await signInWithEmailAndPassword(this.auth, email, password);
@@ -31,16 +41,6 @@ export class AuthService {
     } catch (err) {
       console.error("Sign-in failed:", err);
       throw err; 
-    }
-  }
-
-  async signUp(email: string, password: string) {
-    try {
-      const result = await createUserWithEmailAndPassword(this.auth, email, password);
-      return result;
-    } catch (err) {
-      console.error("Sign-up failed:", err);
-      throw err;
     }
   }
 
