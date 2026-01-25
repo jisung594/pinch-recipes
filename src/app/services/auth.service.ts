@@ -7,7 +7,7 @@ import {
 } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { signInWithEmailAndPassword, User } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,16 @@ export class AuthService {
     } catch (err) {
       console.error("Sign-in failed:", err);
       throw err; 
+    }
+  }
+
+  async signUp(email: string, password: string) {
+    try {
+      const result = await createUserWithEmailAndPassword(this.auth, email, password);
+      return result;
+    } catch (err) {
+      console.error("Sign-up failed:", err);
+      throw err;
     }
   }
 
