@@ -20,24 +20,25 @@
   </div>
 
   <div class="flex justify-center">
-    <h2 class="font-body font-base text-sm">or continue with</h2>
+    <h2 class="font-subheading font-base text-sm">or continue with</h2>
   </div>
 
-  <div class="flex justify-center w-1/2 px-1 py-1 rounded-sm border border-light">
-    <!-- <button (click)="handleGoogleSignIn()"> -->
-      
-      <div class="flex items-center gap-1 h-2" (click)="handleGoogleSignIn()">
-        <img
-          class="h-2" 
-          src="../../../assets/google.png" 
-          alt="Google icon"
-        >
-        <p class="font-normal text-sm">Google</p>
-      </div>
-    <!-- </button> -->
+  <div class="flex justify-center h-4 w-auto">
+    <button
+      type="button"
+      class="flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border border-light"
+      (click)="handleGoogleSignIn()"
+    >
+      <img
+        src="../../../assets/google.png"
+        alt="Google logo"
+        class="h-2 w-2"
+      />
+      <span>Google</span>
+    </button>
   </div>
 
-  <div>
+  <div class="flex justify-center">
     <p class="font-body font-normal text-sm">Don't have an account? <a class="font-bold">Sign up</a></p>
   </div>
 </div>
