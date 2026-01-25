@@ -7,7 +7,7 @@ import {
 } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'firebase/auth';
+import { signInWithEmailAndPassword, User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,10 @@ export class AuthService {
 
   getCurrentUser() {
     return this.auth.currentUser;
+  }
+
+  async signIn(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   async signInWithGoogle() {
