@@ -46,7 +46,7 @@ export class Login {
     try {
       const { email, password } = this.loginForm.value;
       await this.authService.signIn(email, password);
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/']);
     } catch (err) {
       window.alert('Invalid credentials - please try again.'); // placeholder
       console.log("Login error:", err);
