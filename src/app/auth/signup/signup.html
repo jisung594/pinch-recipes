@@ -7,26 +7,31 @@
       class="flex flex-col gap-2"
     >
       <div>
-        <label class="font-medium text-sm">Email</label>
+        <label for="input-email" class="font-medium text-sm">Email</label>
         <input
+          id="input-email"
           type="email"
           formControlName="email" 
-          class="form-field w-full h-4 mt-1 bg-light-blue" 
+          class="form-field w-full h-4 mt-1 bg-light-blue text-base" 
           placeholder="baker214@gmail.com"
           required
         />
 
         <!-- Inline validation error -->
-        <div *ngIf="email!.invalid && email!.touched" class="error font-body text-sm text-red-600">
+        <div 
+          *ngIf="email!.invalid && email!.touched" 
+          class="error font-body text-sm text-red-600"
+        >
           Please enter a valid email address.
         </div>
       </div>
       <div>
-        <label class="font-medium text-sm">Password</label>
+        <label for="input-password" class="font-medium text-sm">Password</label>
         <input
+          id="input-password"
           type="password"
           formControlName="password" 
-          class="form-field w-full h-4 mt-1 bg-light-blue"
+          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
           minlength="8"
           required
@@ -34,7 +39,13 @@
 
         <!-- Inline validation error -->
         <div *ngIf="password!.invalid && password!.touched" class="error font-body text-sm text-red-600">
-          Please enter a valid password. (TODO: list out requirements)
+          <ul>Please enter a valid password that 
+          <li>a minimum of 8 characters</li>
+          <li>a minimum of one uppercase letter</li>
+          <li>a minimum of one lowercase letter</li>
+          <li>a minimum of one number</li>
+          <li>a minimum of one special character</li>
+          </ul>
         </div>
       </div>
 
