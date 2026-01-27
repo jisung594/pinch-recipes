@@ -38,20 +38,21 @@
         />
 
         <!-- Inline validation error -->
-        <div *ngIf="password!.invalid && password!.touched" class="error font-body text-sm text-red-600">
-          <ul>Please enter a valid password that 
-          <li>a minimum of 8 characters</li>
-          <li>a minimum of one uppercase letter</li>
-          <li>a minimum of one lowercase letter</li>
-          <li>a minimum of one number</li>
-          <li>a minimum of one special character</li>
+        <div *ngIf="password!.invalid && password!.touched" class="error font-body text-sm text-red-600 mt-1">
+          <p class="font-semibold mb-1">Please enter a valid password with:</p>
+          <ul class="font-normal list-inside list-disc"> 
+            <li>a minimum of 8 characters</li>
+            <li>a minimum of one uppercase letter</li>
+            <li>a minimum of one lowercase letter</li>
+            <li>a minimum of one number</li>
+            <li>a minimum of one special character</li>
           </ul>
         </div>
       </div>
 
       <button 
         [disabled]="!signupForm.valid"
-        class="font-body font-normal text-sm px-2 py-1 border border-light"
+        class="font-body font-semibold text-sm px-2 py-1 border border-light"
         type="submit"
       >Register</button>
     </form>
