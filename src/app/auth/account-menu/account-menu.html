@@ -1,4 +1,4 @@
-<div class="account-menu">
+<div class="account-menu mt-4">
   <div 
     *ngIf="!user"
     class="font-subheading font-bold text-xl"
@@ -7,25 +7,32 @@
   </div>
 
   <div *ngIf="user" class="logged-in">
-    <!-- User avatar button to open menu -->
-    <button mat-button [matMenuTriggerFor]="userMenu" class="user-avatar-btn flex">
-      <img
-        *ngIf="user.photoURL; else defaultAvatar"
-        [src]="user.photoURL"
-        alt="User Avatar"
-        class="user-avatar-img rounded-full w-2 h-2"
-      />
-      <ng-template #defaultAvatar>
-        <mat-icon class="user-avatar-icon">account_circle</mat-icon>
-      </ng-template>
-    </button>
+    <div class="flex gap-2">
+      <!-- User avatar button to open menu -->
+      <button mat-button [matMenuTriggerFor]="userMenu">
+        <img
+          *ngIf="user.photoURL; else defaultAvatar"
+          [src]="user.photoURL"
+          alt="User Avatar"
+          class="avatar-user"
+        />
+        <ng-template #defaultAvatar>
+          <mat-icon class="avatar-default">account_circle</mat-icon>
+        </ng-template>
+      </button>
+
+      <div class="flex items-center font-subheading font-bold text-base text-white">
+        <span>Hello, {{ user.displayName || 'baker' }}</span>
+      </div>
+    </div>
 
     <!-- Dropdown menu for user options -->
-    <mat-menu #userMenu="matMenu">
-      <div class="flex flex-col p-2">
-        <span>Hi, {{ user.displayName }}!</span>
-        <button mat-menu-item (click)="handleSignOut()">sign out</button>
-      </div>
+    <mat-menu #userMenu="matMenu" class="user-menu flex px-2 py-1 mt-2 border border-light">
+      <button 
+        mat-menu-item 
+        (click)="handleSignOut()"
+        class="font-body font-semibold text-sm px-2 py-1 bg-light-gray rounded-sm border-2"
+      >sign out</button>
     </mat-menu>   
   </div>
 </div>
