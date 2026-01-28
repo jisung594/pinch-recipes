@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { FirebaseError } from '@firebase/util';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
@@ -20,9 +19,7 @@ import { User } from 'firebase/auth';
     CommonModule, 
     MatIconModule,
     ReactiveFormsModule,
-    RouterModule,
-    MatMenu, 
-    MatMenuTrigger
+    RouterModule
   ],
   standalone: true,
   templateUrl: './signup.html',

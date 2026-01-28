@@ -8,7 +8,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { FirebaseError } from '@firebase/util';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
@@ -21,8 +20,6 @@ import { User } from 'firebase/auth';
     MatIconModule,
     ReactiveFormsModule,
     RouterModule,
-    MatMenu, 
-    MatMenuTrigger
   ],
   standalone: true,
   templateUrl: './login.html',
@@ -39,7 +36,6 @@ export class Login {
     private fb: FormBuilder,
     private router: Router
   ) {
-    // TODO: include strong password validator
     this.loginForm = this.fb.group({
       email: this.fb.control(
         '', { nonNullable: true, validators: [
