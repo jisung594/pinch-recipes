@@ -17,12 +17,19 @@
           required
         />
 
-        <!-- Inline validation error -->
+        <!-- Inline validation errors -->
         <div 
           *ngIf="email!.invalid && email!.touched" 
-          class="error font-body text-sm text-red-600"
+          class="error font-body font-medium text-sm color-red"
         >
           Please enter a valid email address.
+        </div>
+
+        <div 
+          *ngIf="errorCode === 'auth/email-already-in-use'" 
+          class="error font-body font-medium text-sm color-red"
+        >
+          Another account already uses this email -- please try another.
         </div>
       </div>
       <div>
@@ -38,8 +45,8 @@
         />
 
         <!-- Inline validation error -->
-        <div *ngIf="password!.invalid && password!.touched" class="error font-body text-sm text-red-600 mt-1">
-          <p class="font-semibold mb-1">Please enter a valid password with:</p>
+        <div *ngIf="password!.invalid && password!.touched" class="error font-body font-medium text-sm color-red">
+          <p class="mb-1">Please enter a valid password with:</p>
           <ul class="font-normal list-inside list-disc"> 
             <li>a minimum of 8 characters</li>
             <li>a minimum of one uppercase letter</li>

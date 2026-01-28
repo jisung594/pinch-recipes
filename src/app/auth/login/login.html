@@ -18,7 +18,10 @@
         />
 
         <!-- Inline validation error -->
-        <div *ngIf="email!.invalid && email!.touched" class="error font-body text-sm text-red-600">
+        <div 
+          *ngIf="email!.invalid && email!.touched" 
+          class="error font-body font-medium text-sm color-red"
+        >
           Please enter a valid email address.
         </div>
       </div>
@@ -36,14 +39,13 @@
         <!-- Inline validation errors -->
         <div 
           *ngIf="password!.invalid && password!.touched" 
-          class="error font-body text-sm text-red-600"
+          class="error font-body font-medium text-sm color-red"
         >
           Please enter your password.
         </div>
-
         <div 
-          *ngIf="error" 
-          class="error font-body text-sm text-red-600"
+          *ngIf="errorCode === 'auth/invalid-credential'" 
+          class="error font-body font-medium text-sm color-red"
         >
           Incorrect email or password -- please try again.
         </div>
