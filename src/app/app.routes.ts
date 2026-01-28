@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/signup/signup').then((module) => module.Signup),
   },
   {
+    path: 'reset',
+    loadComponent: () => import('./auth/forgot-password/forgot-password').then((module) => module.ForgotPassword),
+  },
+  {
     path: 'recipes/new',
     loadComponent: () =>
       import('./pages/recipe-editor/recipe-editor').then((module) => module.RecipeEditor),
