@@ -7,14 +7,16 @@ import { Injectable } from '@angular/core';
 export class ToastService {
   constructor(private snackBar: MatSnackBar) {}
 
-  notify(message: string, duration: number = 3000) {
+  notify(message: string, duration: number = 5000) {
     this.snackBar.open(
 			message, 
 			"Dismiss",
 			{ 
 				duration,
+				panelClass: ['snackbar-dismiss'], 
 				horizontalPosition: 'right'
-			});
+			}
+		);
   }
 
 	notifyUndoable(

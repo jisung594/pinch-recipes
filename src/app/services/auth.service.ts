@@ -5,9 +5,13 @@ import {
   signInWithPopup,
   signOut
 } from '@angular/fire/auth';
+import { 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  User 
+} from 'firebase/auth';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
