@@ -31,10 +31,14 @@
           id="input-password"
           type="password"
           formControlName="password" 
-          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          class="form-field w-full h-4 mt-1 mb-1 bg-light-blue text-base"
           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
           required
         />
+        <!-- TODO: link to /reset page -->
+        <!-- <div class="flex justify-end">
+          <a class="font-subheading font-semibold text-sm">Forgot password?</a>
+        </div> -->
 
         <!-- Inline validation errors -->
         <div 
@@ -50,7 +54,6 @@
           Incorrect email or password -- please try again.
         </div>
       </div>
-
       <button 
         [disabled]="!loginForm.valid"
         class="font-body font-semibold text-sm px-2 py-1 border border-light"
