@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
+import { FirebaseError } from '@firebase/util';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 import { User } from 'firebase/auth';
 
 @Component({
@@ -27,12 +29,13 @@ import { User } from 'firebase/auth';
   styleUrl: './signup.css',
 })
 export class Signup {
+  errorCode: string = '';
   user: User | null = null;
-
   signupForm: FormGroup;
 
   constructor(
     private authService: AuthService,
+    private toastService: ToastService,
     private fb: FormBuilder,
     private router: Router
   ) {
@@ -66,8 +69,11 @@ export class Signup {
       const { email, password } = this.signupForm.value;
       await this.authService.signUp(email, password);
       this.router.navigate(['/']);
+      this.toastService.notify("Welcome to Baker's Logbook! 🍞");
     } catch (err) {
-      // window.alert('Invalid credentials - please try again.'); // placeholder
+      if (err instanceof FirebaseError) {
+        this.errorCode = err.code;
+      }
       console.log("Sign-up error:", err);
     }
   }
@@ -75,7 +81,8 @@ export class Signup {
   async handleGoogleSignIn() {
     try {
       const userCreds = await this.authService.signInWithGoogle();
-      console.log("Logged in as", userCreds.user);
+      this.router.navigate(['/']);
+      this.toastService.notify("Welcome to Baker's Logbook! 🍞");
     } catch (err) {
       console.log("Login error:", err);
     }
