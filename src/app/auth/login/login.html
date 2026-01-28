@@ -33,12 +33,19 @@
           required
         />
 
-        <!-- Inline validation error -->
+        <!-- Inline validation errors -->
         <div 
           *ngIf="password!.invalid && password!.touched" 
           class="error font-body text-sm text-red-600"
         >
           Please enter your password.
+        </div>
+
+        <div 
+          *ngIf="error" 
+          class="error font-body text-sm text-red-600"
+        >
+          Incorrect email or password -- please try again.
         </div>
       </div>
 
