@@ -7,6 +7,7 @@ import {
 } from '@angular/fire/auth';
 import { 
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   User 
 } from 'firebase/auth';
@@ -62,5 +63,15 @@ export class AuthService {
 
   signOut() {
     return signOut(this.auth);
+  }
+
+  async resetPassword(email: string) {
+    try {
+      const result = sendPasswordResetEmail(this.auth, email);
+      return result;
+    } catch (err) {
+      console.error("Password reset failed:", err);
+      throw err; 
+    }
   }
 }
