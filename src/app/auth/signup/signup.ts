@@ -37,6 +37,21 @@ export class Signup {
     private router: Router
   ) {
     this.signupForm = this.fb.group({
+      firstName: this.fb.control(
+        '', { nonNullable: true, validators: [
+          Validators.required,
+        ] }
+      ),
+      lastName: this.fb.control(
+        '', { nonNullable: true, validators: [
+          Validators.required,
+        ] }
+      ),
+      displayName: this.fb.control(
+        '', { nonNullable: true, validators: [
+          Validators.required,
+        ] }
+      ),
       email: this.fb.control(
         '', { nonNullable: true, validators: [
           Validators.required, 
@@ -63,8 +78,14 @@ export class Signup {
 
   async handleSignUp() {
     try {
-      const { email, password } = this.signupForm.value;
-      await this.authService.signUp(email, password);
+      const { 
+        firstName, 
+        lastName, 
+        displayName, 
+        email, 
+        password 
+      } = this.signupForm.value;
+      await this.authService.signUp(firstName, lastName, displayName, email, password);
       this.router.navigate(['/']);
       this.toastService.notify("Welcome to Baker's Logbook! 🍞");
     } catch (err) {

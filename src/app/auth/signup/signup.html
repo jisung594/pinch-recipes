@@ -7,13 +7,49 @@
       class="flex flex-col gap-2"
     >
       <div>
-        <label for="input-email" class="font-medium text-sm">Email</label>
+        <label for="input-first-name" class="font-normal text-sm">First Name</label>
+        <input
+          id="input-first-name"
+          type="text"
+          formControlName="firstName" 
+          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          placeholder="John"
+          minlength="2"
+          required
+        />
+      </div>
+      <div>
+        <label for="input-last-name" class="font-normal text-sm">Last Name</label>
+        <input
+          id="input-last-name"
+          type="text"
+          formControlName="lastName" 
+          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          placeholder="Doe"
+          minlength="2"
+          required
+        />
+      </div>
+      <div>
+        <label for="input-display-name" class="font-normal text-sm">Display Name</label>
+        <input
+          id="input-display-name"
+          type="text"
+          formControlName="displayName" 
+          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          placeholder="Johnny"
+          minlength="2"
+          required
+        />
+      </div>
+      <div>
+        <label for="input-email" class="font-normal text-sm">Email</label>
         <input
           id="input-email"
           type="email"
           formControlName="email" 
           class="form-field w-full h-4 mt-1 bg-light-blue text-base" 
-          placeholder="baker214@gmail.com"
+          placeholder="doeboy@example.com"
           required
         />
 
@@ -27,13 +63,13 @@
 
         <div 
           *ngIf="errorCode === 'auth/email-already-in-use'" 
-          class="error font-body font-medium text-sm color-red"
+          class="error font-body font-normal text-sm color-red"
         >
           Another account already uses this email -- please try another.
         </div>
       </div>
       <div>
-        <label for="input-password" class="font-medium text-sm">Password</label>
+        <label for="input-password" class="font-normal text-sm">Password</label>
         <input
           id="input-password"
           type="password"
@@ -45,7 +81,7 @@
         />
 
         <!-- Inline validation error -->
-        <div *ngIf="password!.invalid && password!.touched" class="error font-body font-medium text-sm color-red">
+        <div *ngIf="password!.invalid && password!.touched" class="error font-body font-normal text-sm color-red">
           <p class="mb-1">Please enter a valid password with:</p>
           <ul class="font-normal list-inside list-disc"> 
             <li>a minimum of 8 characters</li>
