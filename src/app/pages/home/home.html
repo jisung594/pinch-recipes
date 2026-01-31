@@ -1,30 +1,32 @@
 <div class="homepage">
-
-
   <div class="homepage-links flex justify-between gap-4 m-6 font-heading font-semibold text-2xl">
-    <a class="underline lg:no-underline underline-offset-10 hover:underline" routerLink="/profile">BAKE</a>
+    <a class="underline-offset-10 hover:underline" routerLink="/profile">BAKE</a>
     <a class="underline lg:no-underline underline-offset-10 hover:underline" routerLink="recipes/new">LOG</a>
   </div>
 
   <div class="bg-light-gray px-2 py-2">
-    <div class="space-y-2">
-      <h3 class="font-subheading font-bold text-lg">Please note:</h3>
+    <div class="flex flex-col gap-2">
+      <div class="font-subheading text-base mb-2">
+        <h1 class="mb-1">Note:</h1>
+        <p class="">
+          This site is currently work-in-progress. Features may be incomplete or subject to change.
+          Your feedback is very much appreciated -- please feel free to report any bugs or leave suggestions 
+          <a href="https://github.com/jisung594/bakers-logbook/issues/1" class="font-bold underline">here</a>.
+        </p>
+      </div>
 
-      <p class="font-body text-medium">
-        This site is currently work-in-progress. Features may be incomplete or subject to change.
-        Your feedback is very much appreciated -- please feel free to report any bugs or leave suggestions 
-        <a href="https://github.com/jisung594/bakers-logbook/issues/1" class="font-bold">here</a>.
-      </p>
+      <div>
+        <p class="font-body font-medium text-base">Welcome to the Baker's Logbook! Over the past seven months, 
+          I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
+          I've repeatedly practiced, as well as notes on what worked and what didn't. My goal is to digitize 
+          this notebook and create a more refined "logbook" that I can easily reference and share with others.
 
-      <p class="font-body text-medium">Welcome to the Baker's Logbook! Over the course of the past 6 months, 
-        I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
-        I've repeatedly practiced, as well as notes on what worked and what didn't. My goal is to digitize 
-        this notebook and create a more refined "logbook" that I can easily reference and share with others.
-
-        It also serves the purpose of learning frameworks I haven't worked with before. I've been using React
-        professionally for the past couple of years, so I chose to build this project using Angular. The styling is
-        achieved using Tailwind CSS, and the backend is powered by Firebase.
-      </p>
+          It also serves the purpose of learning frameworks I haven't worked with before. I've been using React
+          professionally for the past couple of years, so I chose to build this project using Angular. Styling 
+          is handled with Tailwind CSS, while user authentication and recipe data are managed using Firebase 
+          Authentication and Cloud Firestore.
+        </p>
+      </div>
     </div>
   </div>
 </div>

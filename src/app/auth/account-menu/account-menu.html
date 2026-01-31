@@ -1,38 +1,21 @@
-<div class="account-menu mt-4">
+<div class="account-menu">
   <div 
     *ngIf="!user"
     class="font-subheading font-bold text-xl"
   >
     <a routerLink="/login" (click)="triggerCloseMenu()">login/<br/>sign up</a>
   </div>
-
   <div *ngIf="user" class="logged-in">
-    <div class="flex gap-2">
-      <!-- User avatar button to open menu -->
-      <button mat-button [matMenuTriggerFor]="userMenu">
-        <img
-          *ngIf="user.photoURL; else defaultAvatar"
-          [src]="user.photoURL"
-          alt="User Avatar"
-          class="avatar-user"
-        />
-        <ng-template #defaultAvatar>
-          <mat-icon class="avatar-default">account_circle</mat-icon>
-        </ng-template>
-      </button>
-
-      <div class="flex items-center font-subheading font-bold text-base text-white">
-        <span>Hello, {{ user.displayName || 'baker' }}</span>
-      </div>
+    <div class="mb-2">
+      <span class="font-body font-medium text-base text-white">
+        Hi, {{ user.displayName || 'baker' }}
+      </span>
     </div>
-
-    <!-- Dropdown menu for user options -->
-    <mat-menu #userMenu="matMenu" class="user-menu flex px-2 py-1 mt-2 border border-light">
-      <button 
-        mat-menu-item 
+    <div class="">
+      <button
         (click)="handleSignOut()"
-        class="font-body font-semibold text-sm px-2 py-1 bg-light-gray rounded-sm border-2"
+        class="font-body font-semibold text-sm text-white px-2 py-1 rounded-sm border border-light"
       >sign out</button>
-    </mat-menu>   
+    </div>
   </div>
 </div>
