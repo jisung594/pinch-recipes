@@ -25,10 +25,6 @@ export interface Recipe {
   updatedAt?: any;
 }
 
-export interface User {
-  id?: string; // Firestore auto-generated ID
-}
-
 // Firestore converter
 export const recipeConverter: FirestoreDataConverter<Recipe> = {
   toFirestore(recipe: Recipe): DocumentData {
