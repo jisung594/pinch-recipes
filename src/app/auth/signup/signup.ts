@@ -87,7 +87,7 @@ export class Signup {
       } = this.signupForm.value;
       await this.authService.signUp(firstName, lastName, displayName, email, password);
       this.router.navigate(['/']);
-      this.toastService.notify("Welcome to Baker's Logbook! 🍞");
+      this.toastService.notify("You have been registered. Welcome to Baker's Logbook! 🍞");
     } catch (err) {
       if (err instanceof FirebaseError) {
         this.errorCode = err.code;
