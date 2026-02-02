@@ -6,11 +6,19 @@ import {
   signOut
 } from '@angular/fire/auth';
 import { 
+  doc, 
+  setDoc, 
+  Firestore, 
+  serverTimestamp 
+} from '@angular/fire/firestore';
+import { 
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   User 
 } from 'firebase/auth';
+// import { serverTimestamp } from "firebase/firestore";
+import { UserProfile } from '../models/user-profile.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -20,7 +28,10 @@ import { Observable } from 'rxjs';
 export class AuthService {
   authState$: Observable<User | null>;
 
-  constructor(private auth: Auth) {
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore
+  ) {
     // Initializes observable to make available immediately
     this.authState$ = authState(this.auth); // built-in Firebase Observable (manages + reacts to changes in authentication state)
   }
@@ -29,10 +40,29 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(
+    firstName: string,
+    lastName: string,
+    displayName: string,
+    email: string, 
+    password: string
+  ) {
     try {
-      const result = await createUserWithEmailAndPassword(this.auth, email, password);
-      return result;
+      // Sets up user w/ Firebase auth
+      const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+      const uid = cred.user.uid;
+
+      const userProfile: UserProfile = {
+        uid,
+        firstName,
+        lastName,
+        displayName,
+        createdAt: serverTimestamp() as any,
+      };
+
+      // Stores profile data for appropriate user
+      const userDocRef = doc(this.firestore, 'users', uid);
+      await setDoc(userDocRef, userProfile);
     } catch (err) {
       console.error("Registration failed:", err);
       throw err;
