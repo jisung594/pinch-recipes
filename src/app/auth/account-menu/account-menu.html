@@ -1,6 +1,6 @@
 <div class="account-menu">
   <div 
-    *ngIf="!user$"
+    *ngIf="!(userProfile$ | async)"
     class="font-subheading font-bold text-xl"
   >
     <a routerLink="/login" (click)="triggerCloseMenu()">login/<br/>sign up</a>
