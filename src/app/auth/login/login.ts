@@ -12,6 +12,8 @@ import { FirebaseError } from '@firebase/util';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
 import { User } from 'firebase/auth';
+import { UserProfile } from '../../models/user-profile.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,10 @@ import { User } from 'firebase/auth';
   styleUrl: './login.css'
 })
 export class Login {
+  // Creates references to observables set in AuthService
+  user$: Observable<User | null>;
+  userProfile$: Observable<UserProfile | null>;
+
   errorCode: string = '';
   user: User | null = null;
   loginForm: FormGroup;
@@ -36,6 +42,9 @@ export class Login {
     private fb: FormBuilder,
     private router: Router
   ) {
+    this.user$ = this.authService.authState$;
+    this.userProfile$ = this.authService.userProfile$;
+    
     this.loginForm = this.fb.group({
       email: this.fb.control(
         '', { nonNullable: true, validators: [
@@ -63,7 +72,10 @@ export class Login {
       const { email, password } = this.loginForm.value;
       await this.authService.signIn(email, password);
       this.router.navigate(['/']);
-      this.toastService.notify(`Welcome back, ${email.split('@')[0]}!`); // placeholder
+      this.userProfile$.subscribe(profile => {
+        const firstName = profile?.firstName || 'baker';
+        this.toastService.notify(`Welcome back, ${firstName}!`);
+      });
     } catch (err) {
       if (err instanceof FirebaseError) {
         this.errorCode = err.code;
@@ -76,7 +88,10 @@ export class Login {
     try {
       const userCreds = await this.authService.signInWithGoogle();
       this.router.navigate(['/']);
-      this.toastService.notify(`Welcome back, ${userCreds.user.displayName?.split(' ')[0]}!`);
+      this.userProfile$.subscribe(profile => {
+        const firstName = profile?.firstName || 'baker';
+        this.toastService.notify(`Welcome back, ${firstName}!`);
+      });
     } catch (err) {
       console.log("Login error:", err);
     }
