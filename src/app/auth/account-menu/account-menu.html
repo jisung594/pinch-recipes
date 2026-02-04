@@ -1,21 +1,21 @@
 <div class="account-menu">
   <div 
-    *ngIf="!user"
+    *ngIf="!user$"
     class="font-subheading font-bold text-xl"
   >
     <a routerLink="/login" (click)="triggerCloseMenu()">login/<br/>sign up</a>
   </div>
-  <div *ngIf="user" class="logged-in">
+  <div *ngIf="userProfile$ | async as profile" class="logged-in">
     <div class="mb-2">
       <span class="font-body font-medium text-base text-white">
-        Hi, {{ user.displayName || 'baker' }}
+        Hi, {{ profile.firstName }}!
       </span>
     </div>
     <div class="">
       <button
         (click)="handleSignOut()"
         class="font-body font-semibold text-sm text-white px-2 py-1 rounded-sm border border-light"
-      >sign out</button>
+      >Sign Out</button>
     </div>
   </div>
 </div>
