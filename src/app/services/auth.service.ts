@@ -6,7 +6,8 @@ import {
   signOut
 } from '@angular/fire/auth';
 import { 
-  doc, 
+  doc,
+  docData,
   setDoc, 
   Firestore, 
   serverTimestamp 
@@ -17,16 +18,17 @@ import {
   signInWithEmailAndPassword,
   User 
 } from 'firebase/auth';
-// import { serverTimestamp } from "firebase/firestore";
 import { UserProfile } from '../models/user-profile.model';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { switchMap, of, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  // Creates observables to expose user auth state and profile data (ie. to AccountMenu)
   authState$: Observable<User | null>;
+  userProfile$: Observable<UserProfile | null>;
 
   constructor(
     private auth: Auth,
@@ -34,6 +36,21 @@ export class AuthService {
   ) {
     // Initializes observable to make available immediately
     this.authState$ = authState(this.auth); // built-in Firebase Observable (manages + reacts to changes in authentication state)
+    
+    // .pipe() allows for transforming observable data
+    this.userProfile$ = this.authState$.pipe(
+      // switchMap allows for switching to UserProfile observable when auth state changes 
+      switchMap(user => {
+        if (!user) {
+          // Returns one-and-done observable with null value
+          return of(null);
+        }
+        const userRef = doc(this.firestore, 'users', user.uid);
+
+        // Returns an observable of user's profile data
+        return docData(userRef) as Observable<UserProfile>;
+      })
+    );
   }
 
   getCurrentUser() {
