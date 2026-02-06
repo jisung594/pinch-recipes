@@ -3,7 +3,10 @@
     *ngIf="!user"
     class="font-subheading font-bold text-xl"
   >
-    <a routerLink="/login" (click)="triggerCloseMenu()">login/<br/>sign up</a>
+    <a routerLink="/login" (click)="triggerCloseMenu()" class="flex flex-col lg:flex-row">
+      <span class="whitespace-pre">login / </span>
+      <span>signup</span>
+    </a>
   </div>
   <div *ngIf="user" class="logged-in">
     <div class="mb-2 lg:hidden">
