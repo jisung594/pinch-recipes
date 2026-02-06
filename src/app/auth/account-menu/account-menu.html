@@ -6,15 +6,15 @@
     <a routerLink="/login" (click)="triggerCloseMenu()">login/<br/>sign up</a>
   </div>
   <div *ngIf="user" class="logged-in">
-    <div class="mb-2">
-      <span class="font-body font-medium text-base text-white">
+    <div class="mb-2 lg:hidden">
+      <span class="font-body font-medium text-base text-white lg:text-black">
         Hi, {{ user.displayName || 'baker' }}
       </span>
     </div>
     <div class="">
       <button
         (click)="handleSignOut()"
-        class="font-body font-semibold text-sm text-white px-2 py-1 rounded-sm border border-light"
+        class="font-body font-semibold text-sm text-white lg:text-black px-2 py-1 rounded-sm border border-light"
       >sign out</button>
     </div>
   </div>

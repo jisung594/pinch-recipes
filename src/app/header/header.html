@@ -8,7 +8,7 @@
      />
   </div>
 
-  <div class="flex items-center gap-2 px-1 py-0.5 rounded-sm border border-light">
+  <div class="flex items-center gap-2 px-1 py-0.5 rounded-sm border lg:border-0 border-light">
     <button 
       mat-icon-button 
       matTooltip="Click to Toggle Menu" 
@@ -17,10 +17,10 @@
     >
       <mat-icon aria-label="hamburger-menu">menu</mat-icon>
     </button>
-    <nav class="hidden md:flex">
+    <nav class="hidden lg:flex lg:gap-6">
       <div 
         *ngIf="user$ | async" 
-        class="menu-options font-bold text-sm items-center justify-between gap-2"
+        class="menu-options font-bold text-sm flex items-center justify-between gap-4"
       >
         <a routerLink="/">home</a>
         <a routerLink="recipes/new">new recipe</a>
