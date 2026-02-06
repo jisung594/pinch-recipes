@@ -1,54 +1,54 @@
-<div class="signup-page flex flex-col gap-2 px-1 py-2">
+<div class="signup-page flex flex-col gap-4 px-1 py-2">
   <div>
     <h1 class="flex justify-center font-subheading font-extrabold text-2xl mb-2">Create Account</h1>
     <form
       [formGroup]="signupForm"
       (submit)="handleSignUp()"
-      class="flex flex-col gap-2"
+      class="flex flex-col items-center gap-2"
     >
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-first-name" class="font-normal text-sm">First Name</label>
         <input
           id="input-first-name"
           type="text"
           formControlName="firstName" 
-          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="John"
           minlength="2"
           required
         />
       </div>
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-last-name" class="font-normal text-sm">Last Name</label>
         <input
           id="input-last-name"
           type="text"
           formControlName="lastName" 
-          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="Doe"
           minlength="2"
           required
         />
       </div>
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-display-name" class="font-normal text-sm">Display Name</label>
         <input
           id="input-display-name"
           type="text"
           formControlName="displayName" 
-          class="form-field w-full h-4 mt-1 bg-light-blue text-base"
+          class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="Johnny"
           minlength="2"
           required
         />
       </div>
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-email" class="font-normal text-sm">Email</label>
         <input
           id="input-email"
           type="email"
           formControlName="email" 
-          class="form-field w-full h-4 mt-1 bg-light-blue text-base" 
+          class="form-field h-4 mt-1 bg-light-blue text-base" 
           placeholder="doeboy@example.com"
           required
         />
@@ -68,7 +68,7 @@
           Another account already uses this email -- please try another.
         </div>
       </div>
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-password" class="font-normal text-sm">Password</label>
         <input
           id="input-password"
@@ -95,7 +95,7 @@
 
       <button 
         [disabled]="!signupForm.valid"
-        class="font-body font-semibold text-sm px-2 py-1 border border-light"
+        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 border border-light"
         type="submit"
       >Register</button>
     </form>

@@ -1,18 +1,18 @@
-<div class="login-page flex flex-col gap-2 px-1 py-2">
+<div class="login-page flex flex-col gap-4 px-1 py-2">
   <div>
     <h1 class="flex justify-center font-subheading font-extrabold text-2xl mb-2">Welcome back!</h1>
     <form
       [formGroup]="loginForm"
       (submit)="handleSignIn()"
-      class="flex flex-col gap-2"
+      class="flex flex-col items-center gap-2"
     >
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-email" class="font-medium text-sm">Email</label>
         <input
           id="input-email"
           type="email"
           formControlName="email" 
-          class="form-field w-full h-4 mt-1 bg-light-blue text-base" 
+          class="form-field h-4 mt-1 bg-light-blue text-base" 
           placeholder="baker214@gmail.com"
           required
         />
@@ -25,13 +25,13 @@
           Please enter a valid email address.
         </div>
       </div>
-      <div>
+      <div class="flex flex-col w-full lg:w-1/2">
         <label for="input-password" class="font-medium text-sm">Password</label>
         <input
           id="input-password"
           type="password"
           formControlName="password" 
-          class="form-field w-full h-4 mt-1 mb-1 bg-light-blue text-base"
+          class="form-field h-4 mt-1 mb-1 bg-light-blue text-base"
           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
           required
         />
@@ -55,7 +55,7 @@
       </div>
       <button 
         [disabled]="!loginForm.valid"
-        class="font-body font-semibold text-sm px-2 py-1 border border-light"
+        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 border border-light"
         type="submit"
       >Login</button>
     </form>
