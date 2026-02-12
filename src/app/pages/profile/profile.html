@@ -1,24 +1,23 @@
 <div class="recipes-list px-1 py-2">
-  <h1 class="font-subheading font-extrabold text-2xl mb-4">my recipes</h1>
+  <app-profile-form></app-profile-form>
 
-  <div 
-    *ngIf="recipes$ | async as recipes" 
-    class="main-recipes flex flex-col gap-2 mb-6"
-  >
-    <a 
-      [routerLink]="['/recipes', r.id]" 
-      *ngFor="let r of mainRecipes" 
-      class="block font-body font-normal text-base underline-offset-10 hover:underline border-b border-light"
+  <div class="active-recipes">
+    <h1 class="font-subheading font-extrabold text-2xl mb-4">my recipes</h1>
+    <div 
+      *ngIf="recipes$ | async as recipes" 
+      class="main-recipes flex flex-col gap-2 mb-6"
     >
-      {{ r.title }}
-    </a>
+      <a 
+        [routerLink]="['/recipes', r.id]" 
+        *ngFor="let r of mainRecipes" 
+        class="block font-body font-normal text-base underline-offset-10 hover:underline border-b border-light"
+      >
+        {{ r.title }}
+      </a>
+    </div>
   </div>
 
-
-
   <div class="archived-recipes flex flex-col rounded-sm px-1 py-1 border border-light">
-    <!-- <h2 class="font-subheading font-extrabold text-lg">archived</h2> -->
-
     <details closed class="group">
       <summary class="flex justify-between list-none font-subheading font-bold text-base color-dark-gray">
         archived 
@@ -36,6 +35,5 @@
       </div>
     </details>
   </div>
-
 
 </div>
