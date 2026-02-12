@@ -28,12 +28,10 @@ export class ProfileForm implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService
   ) {
-    // this.userProfile$ = this.authService.userProfile$;
     this.profileForm = this.fb.group({
       displayName: [''],
       firstName: [''],
-      lastName: [''],
-      // email: ['']
+      lastName: ['']
     })
   }
 
@@ -43,12 +41,6 @@ export class ProfileForm implements OnInit {
     // Populate form with current profile data
     this.subscription = this.userProfile$.subscribe(profile => {
       if (profile) {
-
-        // console.log(profile.displayName);
-        // console.log(profile.firstName);
-        // console.log(profile.lastName);
-
-
         this.profileForm.patchValue(profile);
       }
     });
