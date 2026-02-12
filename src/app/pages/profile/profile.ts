@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
+import { ProfileForm } from '../profile/profile-form/profile-form';
+import { UserProfile } from '../../models/user-profile.model';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports:[CommonModule, RouterModule],
+  imports:[CommonModule, RouterModule, ProfileForm],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
@@ -18,6 +20,7 @@ export class Profile implements OnInit {
   // ! (not initialized in constructor, but
   //   promises to assign value before accessed)
   recipes$!: Observable<Recipe[]>;
+  userProfile$!: Observable<UserProfile | null>;
   mainRecipes: Recipe[] = [];
   archivedRecipes: Recipe[] = [];
 
