@@ -1,0 +1,79 @@
+<form [formGroup]="profileForm" class="mb-4">
+
+  <!-- Profile form header -->
+  <div class="flex flex-row justify-between mb-2">
+    <div>
+      <h1>Profile info</h1>
+    </div>
+    <div class="editing-options-editmode">
+      <button
+        *ngIf="isEditingProfile"
+        (click)="saveProfile()"
+        type="button"  
+        class="font-semibold underline lg:no-underline underline-offset-10 hover:underline" 
+      >save</button>
+    </div>
+    <div class="editing-options-viewmode">
+      <button 
+        *ngIf="!isEditingProfile"
+        (click)="editProfile()"
+        type="button" 
+        class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+      >edit</button>
+    </div>
+  </div>
+
+  <!-- Edit mode -->
+  <div *ngIf="isEditingProfile">
+    <div class="flex border border-light px-1 py-1 rounded-sm">
+        <div class="flex flex-col gap-2">
+          <div class="">
+            <label class="font-medium text-sm">Display Name</label>
+            <input 
+              matInput 
+              placeholder="Muffin Man" 
+              formControlName="displayName"
+              class="form-field w-full h-4 mt-1 bg-light-blue"
+            >
+          </div>
+          <div class="">
+            <label class="font-medium text-sm">First Name</label>
+            <input 
+              matInput 
+              placeholder="John" 
+              formControlName="firstName"
+              class="form-field w-full h-4 mt-1 bg-light-blue"
+            >
+          </div>
+          <div class="">
+            <label class="font-medium text-sm">Last Name</label>
+            <input 
+              matInput 
+              placeholder="Doe" 
+              formControlName="lastName"
+              class="form-field w-full h-4 mt-1 bg-light-blue"
+            >
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- View mode -->
+  <div *ngIf="!isEditingProfile">
+    <div 
+      *ngIf="userProfile$ | async as profile" 
+      class="flex border border-light px-1 py-1 rounded-sm"
+    >
+      <div class="flex flex-col gap-2">
+        <div>
+          <label class="font-medium text-sm">Display Name</label>
+          <p class="font-body font-bold text-xl">{{ profile.displayName }}</p>
+        </div>
+        <div>
+          <label class="font-medium text-sm">Full Name</label>
+          <p class="font-body font-normal text-base">{{ profile.firstName }} {{ profile.lastName }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
