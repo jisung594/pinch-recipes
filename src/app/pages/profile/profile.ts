@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { User } from 'firebase/auth';
+import { Observable, Subscription, of, switchMap } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
@@ -15,38 +16,65 @@ import { UserProfile } from '../../models/user-profile.model';
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile implements OnInit {
+export class Profile implements OnInit, OnDestroy {
   // $ (syntax for observable)
   // ! (not initialized in constructor, but
   //   promises to assign value before accessed)
+  isEditingProfile = false;
+  editedProfileData?: UserProfile;
+  private currentUser?: User | null;
   recipes$!: Observable<Recipe[]>;
   userProfile$!: Observable<UserProfile | null>;
   mainRecipes: Recipe[] = [];
   archivedRecipes: Recipe[] = [];
+  private subscriptions = new Subscription();
 
   constructor(
     private authService: AuthService,
     private firestoreService: RecipeFirestoreService
   ) {}
 
-  // Called after input properties are set, but before DOM is ready
   async ngOnInit() {
-    // Reacts to changes to user state
-    this.authService.authState$.subscribe(user => {
-      if (user) {
-        this.recipes$ = this.firestoreService.getUserRecipes(user.uid);
+    const sub = this.authService.authState$.pipe(
+      switchMap(user => {
+        this.currentUser = user;
 
-        this.recipes$.subscribe(recipes => {
-          this.mainRecipes = recipes.filter((recipe) => {
-            return recipe.archived === false;
-          })
-          this.archivedRecipes = recipes.filter((recipe) => {
-            return recipe.archived === true || recipe.archived === undefined;
-          })
-        });
-      } else {
-        console.warn("No user logged in");
-      }
+        if (!user) {
+          return of([]);
+        }
+
+        return this.firestoreService.getUserRecipes(user.uid);
+      })
+    ).subscribe(recipes => {
+      this.mainRecipes = recipes.filter(recipe => recipe.archived === false);
+      this.archivedRecipes = recipes.filter(recipe => recipe.archived === true || recipe.archived === undefined);
     });
+
+    this.subscriptions.add(sub);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  onProfileChange(profileData: UserProfile) {
+    this.editedProfileData = profileData;
+  }
+
+  editProfile() {
+    this.isEditingProfile = true;
+  }
+
+  async saveProfile() {
+    this.isEditingProfile = false;
+
+    // const profileData = this.editedProfileData;
+
+    // console.log(profileData);
+
+    if (this.currentUser && this.editedProfileData) {
+      await this.authService.updateProfile(this.currentUser.uid, this.editedProfileData);
+      this.isEditingProfile = false;
+    }
   }
 }
