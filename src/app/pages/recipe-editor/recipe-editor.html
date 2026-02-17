@@ -47,12 +47,39 @@
 
     <div class="mb-4">
       <div class="flex justify-between mb-2">
-        <h2 class="font-subheading font-bold text-xl">Servings:</h2>
+        <div *ngIf="!isEditingYield">
+          <!-- <h2 class="font-subheading font-bold text-xl">Yields: {{ tempVarForServings }}</h2> -->
+
+          <h2 class="font-subheading font-bold text-xl">Yields: {{ yield }}</h2>
+        </div>
+
+        <div *ngIf="isEditingYield">
+          <h2 class="font-subheading font-bold text-xl">Yields:</h2>
+            <form [formGroup]="yieldForm">
+              <input
+                type="number"
+                id="yield-amount"
+                placeholder=""
+                autofocus
+                formControlName="yieldAmount"
+                class="font-heading font-medum text-2xl leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
+              />
+              <input
+                type="text"
+                id="yield-unit"
+                placeholder=""
+                autofocus
+                formControlName="yieldUnit"
+                class="font-heading font-medum text-2xl leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
+              />
+            </form>
+        </div>
+
 
         <div class="editing-options-viewmode flex shrink-0">
           <button 
-            *ngIf="!isEditingServingSize"
-            (click)="editServingSize()" 
+            *ngIf="!isEditingYield"
+            (click)="editYield()" 
             class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
             type="button"
           >
@@ -60,8 +87,8 @@
           </button>
 
           <button
-            *ngIf="isEditingServingSize" 
-            (click)="saveServingSize()"
+            *ngIf="isEditingYield" 
+            (click)="saveYield()"
             class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
             type="button"
           >view</button>
