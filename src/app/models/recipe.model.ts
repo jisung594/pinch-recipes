@@ -20,6 +20,8 @@ export interface Recipe {
   title: string;
   ingredients: Ingredient[];
   instructions: Instruction[];
+  servingSize: number;
+  tags: string[];
   archived: boolean;
   createdAt?: any;
   updatedAt?: any;
@@ -38,6 +40,8 @@ export const recipeConverter: FirestoreDataConverter<Recipe> = {
       title: data['title'],
       ingredients: data['ingredients'],
       instructions: data['instructions'],
+      servingSize: data['servingSize'],
+      tags: data['tags'],
       archived: data['archived'],
       createdAt: data['createdAt'],
       updatedAt: data['updatedAt'],
