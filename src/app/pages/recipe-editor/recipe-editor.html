@@ -44,7 +44,31 @@
   </ng-template>
 
   <div class="recipe-forms">
-  <!-- <div [ngClass]="recipeId ? 'recipe-forms flex gap-6' : 'recipe-forms'"> -->
+
+    <div class="mb-4">
+      <div class="flex justify-between mb-2">
+        <h2 class="font-subheading font-bold text-xl">Servings:</h2>
+
+        <div class="editing-options-viewmode flex shrink-0">
+          <button 
+            *ngIf="!isEditingServingSize"
+            (click)="editServingSize()" 
+            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            type="button"
+          >
+            edit
+          </button>
+
+          <button
+            *ngIf="isEditingServingSize" 
+            (click)="saveServingSize()"
+            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            type="button"
+          >view</button>
+        </div>
+      </div>
+    </div>
+
     <div class="ingredients-form mb-4">
       <div class="flex justify-between mb-2">
         <h2 class="font-subheading font-bold text-xl">Ingredients</h2>
@@ -104,6 +128,13 @@
       >
       </app-instructions-form>
     </div>
+
+
+    <div>
+      <h2 class="font-subheading font-bold text-xl">PLACEHOLDER for Tags component</h2>
+    </div>
+
+
   </div>
 
   <div class="fixed top-auto bottom-0 w-full h-6 bg-white">
