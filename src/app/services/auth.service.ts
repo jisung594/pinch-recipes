@@ -8,7 +8,8 @@ import {
 import { 
   doc,
   docData, 
-  setDoc, 
+  setDoc,
+  updateDoc, 
   Firestore, 
   serverTimestamp 
 } from '@angular/fire/firestore';
@@ -18,8 +19,8 @@ import {
   signInWithEmailAndPassword,
   User 
 } from 'firebase/auth';
-// import { serverTimestamp } from "firebase/firestore";
 import { UserProfile } from '../models/user-profile.model';
+// import { ProfileForm } from '../pages/profile/profile-form/profile-form';
 import { Injectable } from '@angular/core';
 import { of, switchMap, Observable } from 'rxjs';
 
@@ -49,6 +50,14 @@ export class AuthService {
 
   getCurrentUser() {
     return this.auth.currentUser;
+  }
+
+  updateProfile(uid: string, data: UserProfile) {
+    const userRef = doc(this.firestore, `users/${uid}`);
+    return updateDoc(userRef, { 
+        ...data, 
+        updatedAt: serverTimestamp()
+    });
   }
 
   async signUp(
