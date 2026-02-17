@@ -6,6 +6,7 @@ import { Observable, Subscription, of, switchMap } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
+import { ToastService } from '../../services/toast.service';
 import { ProfileForm } from '../profile/profile-form/profile-form';
 import { UserProfile } from '../../models/user-profile.model';
 
@@ -31,7 +32,8 @@ export class Profile implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private firestoreService: RecipeFirestoreService
+    private firestoreService: RecipeFirestoreService,
+    private toastService: ToastService,
   ) {}
 
   async ngOnInit() {
@@ -68,9 +70,16 @@ export class Profile implements OnInit, OnDestroy {
   async saveProfile() {
     this.isEditingProfile = false;
 
-    if (this.currentUser && this.editedProfileData) {
-      await this.authService.updateProfile(this.currentUser.uid, this.editedProfileData);
-      this.isEditingProfile = false;
+    try {
+      if (this.currentUser && this.editedProfileData) {
+        await this.authService.updateProfile(this.currentUser.uid, this.editedProfileData);
+        this.isEditingProfile = false;
+      }
+
+      // Toast notification upon update
+      this.toastService.notify('Profile updated successfully.');
+    } catch(err) {
+      console.error('Error updating profile:', err);
     }
   }
 }
