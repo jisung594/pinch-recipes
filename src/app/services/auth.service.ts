@@ -53,9 +53,9 @@ export class AuthService {
 
   updateProfile(uid: string, data: UserProfile) {
     const userRef = doc(this.firestore, `users/${uid}`);
-    return updateDoc(userRef, { 
-        ...data, 
-        updatedAt: serverTimestamp()
+    return setDoc(userRef, { 
+      ...data, 
+      updatedAt: serverTimestamp()
     });
   }
 
