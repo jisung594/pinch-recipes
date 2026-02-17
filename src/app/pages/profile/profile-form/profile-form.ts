@@ -27,7 +27,6 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ProfileForm implements OnInit, OnDestroy {
   @Input() isEditingProfile: boolean = false;
-  // @Output() profileChange = new EventEmitter<ProfileForm[]>();
   @Output() profileChange = new EventEmitter<UserProfile>();
 
   userProfile$!: Observable<UserProfile | null>;
@@ -64,8 +63,4 @@ export class ProfileForm implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
-
-  // emitChange() {
-  //   this.profileChange.emit(this.profileForm.value);
-  // }
 }

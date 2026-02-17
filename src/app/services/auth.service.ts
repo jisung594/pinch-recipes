@@ -20,7 +20,6 @@ import {
   User 
 } from 'firebase/auth';
 import { UserProfile } from '../models/user-profile.model';
-// import { ProfileForm } from '../pages/profile/profile-form/profile-form';
 import { Injectable } from '@angular/core';
 import { of, switchMap, Observable } from 'rxjs';
 

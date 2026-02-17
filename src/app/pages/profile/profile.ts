@@ -68,10 +68,6 @@ export class Profile implements OnInit, OnDestroy {
   async saveProfile() {
     this.isEditingProfile = false;
 
-    // const profileData = this.editedProfileData;
-
-    // console.log(profileData);
-
     if (this.currentUser && this.editedProfileData) {
       await this.authService.updateProfile(this.currentUser.uid, this.editedProfileData);
       this.isEditingProfile = false;
