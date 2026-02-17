@@ -39,6 +39,7 @@ export class RecipeEditor {
   @Input() editable: boolean = false; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
 
   isEditingTitle = false;
+  isEditingServingSize = false;
   isEditingIngredients = false;
   isEditingInstructions = false;
   currentRecipeId: string | null = null;
@@ -61,6 +62,10 @@ export class RecipeEditor {
     this.isEditingTitle = true;
   }
 
+  editServingSize() {
+    this.isEditingServingSize = true;
+  }
+
   editIngredients() {
     this.isEditingIngredients = true;
   }
@@ -71,6 +76,10 @@ export class RecipeEditor {
 
   saveTitle() {
     this.isEditingTitle = false;
+  }
+  
+  saveServingSize() {
+    this.isEditingServingSize = false;
   }
 
   saveIngredients() {
@@ -172,6 +181,8 @@ export class RecipeEditor {
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
+          servingSize: recipeData.servingSize ?? 0,
+          tags: recipeData.tags ?? [],
           archived: false,
           createdAt: new Date(),
         });
