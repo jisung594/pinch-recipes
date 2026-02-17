@@ -1,5 +1,33 @@
 <div class="recipes-list px-1 py-2">
-  <app-profile-form></app-profile-form>
+
+  <div>
+    <!-- Profile form header -->
+    <div class="flex flex-row justify-between mb-2">
+      <div>
+        <h1>Profile info</h1>
+      </div>
+      <div class="editing-options-editmode">
+        <button
+          *ngIf="isEditingProfile"
+          (click)="saveProfile()"
+          type="button"  
+          class="flex font-semibold underline lg:no-underline underline-offset-10 hover:underline" 
+        >save</button>
+      </div>
+      <div class="editing-options-viewmode">
+        <button 
+          *ngIf="!isEditingProfile"
+          (click)="editProfile()"
+          type="button" 
+          class="flex font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+        >edit</button>
+      </div>
+    </div>
+    <app-profile-form 
+      [isEditingProfile]="isEditingProfile"
+      (profileChange)="onProfileChange($event)"
+    ></app-profile-form>
+  </div>
 
   <div class="active-recipes">
     <h1 class="font-subheading font-extrabold text-2xl mb-4">my recipes</h1>
