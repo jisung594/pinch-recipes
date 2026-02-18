@@ -1,6 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { 
+  FormBuilder, 
+  FormGroup, 
+  FormsModule, 
+  ReactiveFormsModule 
+} from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
@@ -19,6 +24,7 @@ import { Recipe } from '../../models/recipe.model';
   imports: [
     CommonModule, 
     FormsModule, 
+    ReactiveFormsModule,
     IngredientsForm, 
     InstructionsForm,
     MatIconModule
@@ -33,18 +39,20 @@ export class RecipeEditor {
   // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
+  @Input() yield: { amount: number; unit: string } = { amount: 1, unit: '' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
   @Input() archived: boolean = false;
-  @Input() editable: boolean = false; // defaults as form (enabled/disabled from parent RecipeDetail, when applicable)
+  @Input() editable: boolean = false; // defaults to view mode (enabled/disabled from parent RecipeDetail, when applicable)
 
   isEditingTitle = false;
-  isEditingServingSize = false;
+  isEditingYield = false;
   isEditingIngredients = false;
   isEditingInstructions = false;
   currentRecipeId: string | null = null;
-
+  
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private firestoreService: RecipeFirestoreService,
     private toastService: ToastService,
@@ -62,8 +70,8 @@ export class RecipeEditor {
     this.isEditingTitle = true;
   }
 
-  editServingSize() {
-    this.isEditingServingSize = true;
+  editYield() {
+    this.isEditingYield = true;
   }
 
   editIngredients() {
@@ -78,8 +86,8 @@ export class RecipeEditor {
     this.isEditingTitle = false;
   }
   
-  saveServingSize() {
-    this.isEditingServingSize = false;
+  saveYield() {
+    this.isEditingYield = false;
   }
 
   saveIngredients() {
@@ -181,7 +189,7 @@ export class RecipeEditor {
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
-          servingSize: recipeData.servingSize ?? 0,
+          yield: recipeData.yield ?? {amount: 0, unit: 'N/A'},
           tags: recipeData.tags ?? [],
           archived: false,
           createdAt: new Date(),
