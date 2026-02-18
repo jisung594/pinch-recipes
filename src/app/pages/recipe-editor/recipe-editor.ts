@@ -33,17 +33,13 @@ import { Recipe } from '../../models/recipe.model';
   styleUrl: './recipe-editor.css'
 })
 export class RecipeEditor {
-  // using @Input, instead of local vars, for parent component RecipeDetail 
-  // to pass in recipe data
-
-  // Allows this component to be reused as form with CREATE, EDIT, and READ-ONLY modes
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
   @Input() yield: { amount: number; unit: string } = { amount: 1, unit: '' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
   @Input() archived: boolean = false;
-  @Input() editable: boolean = false; // defaults to view mode (enabled/disabled from parent RecipeDetail, when applicable)
+  @Input() editable: boolean = false; // defaults to view mode
   @Output() yieldChange = new EventEmitter<{ amount: number; unit: string }>();
 
   isEditingTitle = false;
@@ -145,7 +141,6 @@ export class RecipeEditor {
   };
 
   async saveRecipe() {
-    // Requires at least a valid recipe title upon submit
     if (!this.title) {
       console.warn("Recipe title is required before saving.");
       return;
