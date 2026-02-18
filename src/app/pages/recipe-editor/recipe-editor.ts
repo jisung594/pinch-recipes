@@ -44,6 +44,7 @@ export class RecipeEditor {
   @Input() instructions: InstructionRow[] = [];
   @Input() archived: boolean = false;
   @Input() editable: boolean = false; // defaults to view mode (enabled/disabled from parent RecipeDetail, when applicable)
+  @Output() yieldChange = new EventEmitter<{ amount: number; unit: string }>();
 
   isEditingTitle = false;
   isEditingYield = false;

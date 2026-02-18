@@ -4,6 +4,7 @@
   [recipeId]="recipeId"
   [title]="recipe.title"
   [yield]="recipe.yield"
+  (yieldChange)="onYieldChange($event)"
   [ingredients]="ingredientsRows"
   [instructions]="instructionsRows"
   [archived]="archived"

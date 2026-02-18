@@ -67,4 +67,8 @@ export class RecipeDetail {
       }
     });
   }
+
+  onYieldChange(newYield: { amount: number; unit: string }) {
+
+  }
 }
