@@ -1,10 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { 
+  Component, 
+  EventEmitter, 
+  Input, 
+  Output, 
+  OnInit 
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   FormBuilder, 
   FormGroup, 
   FormsModule, 
-  ReactiveFormsModule 
+  ReactiveFormsModule,
+  Validators 
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -32,7 +39,7 @@ import { Recipe } from '../../models/recipe.model';
   templateUrl: './recipe-editor.html',
   styleUrl: './recipe-editor.css'
 })
-export class RecipeEditor {
+export class RecipeEditor implements OnInit {
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
   @Input() yield: { amount: number; unit: string } = { amount: 1, unit: '' };
@@ -40,7 +47,10 @@ export class RecipeEditor {
   @Input() instructions: InstructionRow[] = [];
   @Input() archived: boolean = false;
   @Input() editable: boolean = false; // defaults to view mode
+  @Output() titleChange = new EventEmitter<string>();
   @Output() yieldChange = new EventEmitter<{ amount: number; unit: string }>();
+
+  recipeForm!: FormGroup;
 
   isEditingTitle = false;
   isEditingYield = false;
@@ -57,10 +67,19 @@ export class RecipeEditor {
   ) {}
 
   ngOnInit() {
+    // Display edit mode, if new recipe
     if (this.recipeId === null) {
       this.isEditingIngredients = true;
       this.isEditingInstructions = true;
     }
+
+    this.recipeForm = this.fb.group({
+      title: [this.title, Validators.required],
+      yieldAmount: [this.yield.amount, Validators.min(1)],
+      yieldUnit: [this.yield.unit],
+      ingredients: this.fb.array(this.ingredients),
+      instructions: this.fb.array(this.instructions)
+    });
   }
 
   editTitle() {
