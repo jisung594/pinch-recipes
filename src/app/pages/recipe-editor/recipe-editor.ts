@@ -100,10 +100,23 @@ export class RecipeEditor implements OnInit {
 
   saveTitle() {
     this.isEditingTitle = false;
+
+    const titleData = this.recipeForm.get('title')?.value;
+    
+    // Send new title data to parent
+    this.titleChange.emit(titleData);
   }
   
   saveYield() {
     this.isEditingYield = false;
+
+    const yieldData = {
+      amount: this.recipeForm.get('yieldAmount')?.value,
+      unit: this.recipeForm.get('yieldUnit')?.value
+    };
+    
+    // Send new yield data to parent
+    this.yieldChange.emit(yieldData);
   }
 
   saveIngredients() {

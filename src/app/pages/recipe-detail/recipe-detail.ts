@@ -68,7 +68,11 @@ export class RecipeDetail {
     });
   }
 
-  onYieldChange(newYield: { amount: number; unit: string }) {
+  onTitleChange(newTitle: string) {
+    console.log(newTitle);
+  }
 
+  onYieldChange(newYield: { amount: number; unit: string }) {
+    console.log(newYield);
   }
 }
