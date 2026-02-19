@@ -21,6 +21,8 @@ export class RecipeDetail {
   private authSub?: Subscription; // only accessed/relevant within this scope
   recipe: Recipe | null = null;
   recipeId: string | null = null;
+  editedTitle?: string;
+  editedYield?: { amount: number; unit: string };
   ingredientsRows: IngredientRow[] = [];
   instructionsRows: InstructionRow[] = [];
   archived = false;
@@ -70,9 +72,13 @@ export class RecipeDetail {
 
   onTitleChange(newTitle: string) {
     console.log(newTitle);
+
+    this.editedTitle = newTitle;
   }
 
   onYieldChange(newYield: { amount: number; unit: string }) {
     console.log(newYield);
+
+    this.editedYield = newYield;
   }
 }
