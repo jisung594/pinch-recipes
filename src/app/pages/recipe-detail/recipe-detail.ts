@@ -71,14 +71,10 @@ export class RecipeDetail {
   }
 
   onTitleChange(newTitle: string) {
-    console.log(newTitle);
-
     this.editedTitle = newTitle;
   }
 
   onYieldChange(newYield: { amount: number; unit: string }) {
-    console.log(newYield);
-
     this.editedYield = newYield;
   }
 }

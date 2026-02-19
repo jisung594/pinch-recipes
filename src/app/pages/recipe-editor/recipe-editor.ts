@@ -75,8 +75,8 @@ export class RecipeEditor implements OnInit {
 
     this.recipeForm = this.fb.group({
       title: [this.title, Validators.required],
-      yieldAmount: [this.yield.amount, Validators.min(1)],
-      yieldUnit: [this.yield.unit],
+      yieldAmount: [this.yield.amount || 1, Validators.min(1)],
+      yieldUnit: [this.yield.unit || 'unit'],
       ingredients: this.fb.array(this.ingredients),
       instructions: this.fb.array(this.instructions)
     });
@@ -173,13 +173,14 @@ export class RecipeEditor implements OnInit {
   };
 
   async saveRecipe() {
-    if (!this.title) {
-      console.warn("Recipe title is required before saving.");
-      return;
-    }
+    const formValue = this.recipeForm.value;
 
     const recipeData: Partial<Recipe> = {
-      title: this.title,
+      title: formValue.title,
+      yield: {
+        amount: formValue.yieldAmount || 1,
+        unit: formValue.yieldUnit || 'unit'
+      },
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
     }
