@@ -47,7 +47,7 @@
     <div class="mb-4">
       <div class="flex justify-between mb-2">
         <div *ngIf="!isEditingYield">
-          <h2 class="font-subheading font-bold text-xl">Yields: {{ yield.amount }} {{ yield.unit }}</h2>
+          <h2 class="font-subheading font-bold text-xl">Yields: {{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
         </div>
         <div *ngIf="isEditingYield">
           <h2 class="font-subheading font-bold text-xl">Yields:</h2>
