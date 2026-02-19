@@ -1,18 +1,17 @@
-<div class="recipe-editor pb-6">
+<form [formGroup]="recipeForm" class="recipe-editor pb-6">
   <!-- Edit mode -->
   <div *ngIf="isEditingTitle; else viewMode" class="flex mb-4">
     <div class="grow">
       <input
         type="text"
         id="recipe-title"
-        [(ngModel)]="title"
+        formControlName="title"
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
         autofocus
         class="font-heading font-medum text-2xl leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
       />
     </div>
-    <!--[readonly]="!editable" (evaluates @Input() editable = true;)-->
     <div class="editing-options-editmode flex my-1 md:my-3">
       <button
         class="font-heading font-bold text-xl px-1 py-0.5"
@@ -78,8 +77,7 @@
             (click)="editYield()" 
             class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
             type="button"
-          >edit
-          </button>
+          >edit</button>
           <button
             *ngIf="isEditingYield" 
             (click)="saveYield()"
@@ -152,23 +150,20 @@
 
   </div>
 
+  <!-- Save options (fixed to bottom) -->
   <div class="fixed top-auto bottom-0 w-full h-6 bg-white">
     <div class="flex gap-2">
       <button
         type="button"
         class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-orange border-2"
         (click)="saveRecipe()"
-      >
-        SAVE
-      </button>
+      >SAVE</button>
       <button
         *ngIf="recipeId"
         type="button"
         class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
         (click)="toggleArchive()"
-      >
-        {{ archived ? 'RESTORE' : 'ARCHIVE' }}
-      </button>
+      >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
     </div>
   </div>
 </div>
