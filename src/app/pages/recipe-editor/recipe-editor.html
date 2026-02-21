@@ -1,6 +1,6 @@
 <form [formGroup]="recipeForm" class="recipe-editor pb-6">
-  <!-- Edit mode -->
-  <div *ngIf="isEditingTitle; else viewMode" class="flex mb-4">
+  <!-- Edit mode - title -->
+  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex mb-4">
     <div class="grow">
       <input
         type="text"
@@ -21,12 +21,12 @@
     </div>
   </div>
 
-  <!-- View mode -->
-  <ng-template #viewMode>
+  <!-- View mode - title -->
+  <ng-template #viewModeTitle>
     <div class="flex mb-4">
       <div class="grow">
         <h1 class="font-heading font-semibold text-2xl md:text-4xl w-full">
-          {{ title || 'Untitled Recipe' }}
+          {{ recipeForm.get('title')?.value ?? 'Untitled Recipe' }}
         </h1>
       </div>
       <div class="editing-options-viewmode flex shrink-0">
@@ -45,32 +45,9 @@
   <div class="recipe-forms">
 
     <div class="mb-4">
+      <!-- Yield header -->
       <div class="flex justify-between mb-2">
-        <div *ngIf="!isEditingYield">
-          <h2 class="font-subheading font-bold text-xl">Yields: {{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
-        </div>
-        <div *ngIf="isEditingYield">
-          <h2 class="font-subheading font-bold text-xl">Yields:</h2>
-            <div class="yield-inputs">
-              <input
-                type="number"
-                id="yield-amount"
-                placeholder="'6'"
-                autofocus
-                formControlName="yieldAmount"
-                class="font-heading font-medum text-lg leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
-              />
-              <input
-                type="text"
-                id="yield-unit"
-                placeholder="'loaves'"
-                autofocus
-                formControlName="yieldUnit"
-                class="font-heading font-medum text-lg leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
-              />
-            </div>
-        </div>
-
+        <h2 class="font-subheading font-bold text-xl">Yields:</h2>
         <div class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
@@ -85,8 +62,36 @@
             type="button"
           >view</button>
         </div>
-
       </div>
+
+      <!-- Edit mode - yield -->
+      <div *ngIf="isEditingYield; else viewModeYield">
+        <div class="yield-inputs flex flex-row gap-2 w-1/2">
+          <input
+            type="number"
+            id="yield-amount"
+            placeholder="'6'"
+            autofocus
+            formControlName="yieldAmount"
+            class="form-field w-full h-4 mt-1 bg-light-blue"
+          />
+          <input
+            type="text"
+            id="yield-unit"
+            placeholder="'loaves'"
+            autofocus
+            formControlName="yieldUnit"
+            class="form-field w-full h-4 mt-1 bg-light-blue"
+          />
+        </div>
+      </div>
+
+      <!-- View mode - yield -->
+      <ng-template #viewModeYield>
+        <div class="flex mb-4">
+          <h2 class="font-subheading font-bold text-xl">{{ recipeForm.get('yieldAmount')?.value ?? 'null' }} {{ recipeForm.get('yieldUnit')?.value ?? 'null' }}</h2>
+        </div>
+      </ng-template>
     </div>
 
     <div class="ingredients-form mb-4">
