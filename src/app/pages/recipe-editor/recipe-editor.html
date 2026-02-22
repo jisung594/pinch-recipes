@@ -1,6 +1,6 @@
-<form [formGroup]="recipeForm" class="recipe-editor pb-6">
+<form [formGroup]="recipeForm" class="recipe-editor py-2">
   <!-- Edit mode - title -->
-  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex mb-4">
+  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-1 mb-4">
     <div class="grow">
       <input
         type="text"
@@ -14,22 +14,24 @@
     </div>
     <div class="editing-options-editmode flex my-1 md:my-3">
       <button
-        class="font-heading font-bold text-xl px-1 py-0.5"
+        class="font-heading font-bold text-xl"
         type="button" 
         (click)="saveTitle()"
-      >&#10003;</button>
+      >
+        <mat-icon class="color-dark-gray">check</mat-icon>
+      </button>
     </div>
   </div>
 
   <!-- View mode - title -->
   <ng-template #viewModeTitle>
     <div class="flex mb-4">
-      <div class="grow">
+      <div class="flex grow my-1">
         <h1 class="font-heading font-semibold text-2xl md:text-4xl w-full">
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
-      <div class="editing-options-viewmode flex shrink-0">
+      <div class="editing-options-viewmode flex my-1 md:my-3">
         <button 
           mat-icon-button 
           matTooltip="Click to Edit" 
@@ -43,7 +45,7 @@
   </ng-template>
 
   <div class="recipe-forms">
-    <div class="mb-4">
+    <div class="yield-form mb-5">
       <!-- Yield form header -->
       <div class="flex justify-between mb-1">
         <h2 class="font-subheading font-bold text-xl">Yields</h2>
@@ -64,15 +66,15 @@
       </div>
 
       <!-- Edit mode - yield -->
-      <div *ngIf="isEditingYield; else viewModeYield">
-        <div class="yield-inputs flex flex-row gap-2 w-1/2">
+      <div *ngIf="isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full border border-light px-1 py-1 rounded-sm">
+        <div class="yield-inputs flex flex-row gap-2">
           <input
             type="number"
             id="yield-amount"
             placeholder="'6'"
             autofocus
             formControlName="yieldAmount"
-            class="form-field w-full h-4 mt-1 bg-light-blue"
+            class="form-field w-1/4 h-4 bg-light-blue"
           />
           <input
             type="text"
@@ -80,22 +82,22 @@
             placeholder="'loaves'"
             autofocus
             formControlName="yieldUnit"
-            class="form-field w-full h-4 mt-1 bg-light-blue"
+            class="form-field w-full h-4 bg-light-blue"
           />
         </div>
       </div>
 
       <!-- View mode - yield -->
       <ng-template #viewModeYield>
-        <div class="flex mb-4">
+        <div class="flex">
           <h2 class="font-body font-normal text-lg">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
         </div>
       </ng-template>
     </div>
 
-    <div class="ingredients-form mb-4">
+    <div class="ingredients-form mb-5">
       <!-- Ingredients form header -->
-      <div class="flex justify-between mb-2">
+      <div class="flex justify-between mb-1">
         <h2 class="font-subheading font-bold text-xl">Ingredients</h2>
 
         <div class="editing-options flex shrink-0">
@@ -121,9 +123,9 @@
       > </app-ingredients-form>
     </div>
 
-    <div class="instructions-form mb-4">
+    <div class="instructions-form mb-5">
       <!-- Instructions form header -->
-      <div class="flex justify-between mb-2">
+      <div class="flex justify-between mb-1">
         <h2 class="font-subheading font-bold text-xl">Instructions</h2>
 
         <div class="editing-options flex shrink-0">
@@ -150,7 +152,7 @@
 
 
     <div>
-      <h2 class="font-subheading font-bold text-xl">PLACEHOLDER for Tags component</h2>
+      <h2 class="font-subheading font-bold text-lg">( placeholder for Tags component )</h2>
     </div>
 
 
@@ -158,7 +160,7 @@
 
   <!-- Save options (fixed to bottom) -->
   <div class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
-    <div class="flex gap-2 py-1">
+    <div class="flex gap-2 py-0">
       <button
         type="button"
         class="font-body font-bold text-sm tracking-widest px-1 py-1 rounded-sm bg-white border-orange border-2"
@@ -172,4 +174,6 @@
       >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
     </div>
   </div>
+
+  <div class="h-8"></div> <!-- Spacer div -->
 </form>
