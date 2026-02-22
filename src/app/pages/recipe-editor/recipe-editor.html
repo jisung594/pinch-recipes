@@ -26,7 +26,7 @@
     <div class="flex mb-4">
       <div class="grow">
         <h1 class="font-heading font-semibold text-2xl md:text-4xl w-full">
-          {{ recipeForm.get('title')?.value ?? 'Untitled Recipe' }}
+          {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
       <div class="editing-options-viewmode flex shrink-0">
@@ -157,8 +157,8 @@
   </div>
 
   <!-- Save options (fixed to bottom) -->
-  <div class="fixed top-auto bottom-0 w-full h-6 bg-white">
-    <div class="flex gap-2">
+  <div class="fixed top-auto bottom-0 w-full my-2">
+    <div class="flex gap-2 py-1 bg-white/50">
       <button
         type="button"
         class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-orange border-2"
@@ -167,7 +167,7 @@
       <button
         *ngIf="recipeId"
         type="button"
-        class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm border-2 border-dark color-dark-gray"
+        class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white rounded-sm border-2 border-dark color-dark-gray"
         (click)="toggleArchive()"
       >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
     </div>
