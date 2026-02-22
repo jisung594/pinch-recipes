@@ -41,10 +41,7 @@ export const recipeConverter: FirestoreDataConverter<Recipe> = {
     return {
       id: snapshot.id,
       title: data['title'],
-      yield: {
-        amount: data['yield']['amount'],
-        unit: data['yield']['unit']
-      },
+      yield: data['yield'] || { amount: 1, unit: '' },
       ingredients: data['ingredients'],
       instructions: data['instructions'],
       tags: data['tags'],
