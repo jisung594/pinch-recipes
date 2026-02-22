@@ -66,6 +66,8 @@ export class RecipeEditor implements OnInit {
   ngOnInit() {
     // Display edit mode, if new recipe
     if (this.recipeId === null) {
+      this.isEditingTitle = true;
+      this.isEditingYield = true;
       this.isEditingIngredients = true;
       this.isEditingInstructions = true;
     }
