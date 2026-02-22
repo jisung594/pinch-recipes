@@ -42,16 +42,13 @@ import { Recipe } from '../../models/recipe.model';
 export class RecipeEditor implements OnInit {
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
-  @Input() yield: { amount: number; unit: string } = { amount: 1, unit: '' };
+  @Input() yield: { amount: number, unit: string } = { amount: 1, unit: 'unit' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
   @Input() archived: boolean = false;
   @Input() editable: boolean = false; // defaults to view mode
-  @Output() titleChange = new EventEmitter<string>();
-  @Output() yieldChange = new EventEmitter<{ amount: number; unit: string }>();
 
   recipeForm!: FormGroup;
-
   isEditingTitle = false;
   isEditingYield = false;
   isEditingIngredients = false;
@@ -100,23 +97,10 @@ export class RecipeEditor implements OnInit {
 
   saveTitle() {
     this.isEditingTitle = false;
-
-    const titleData = this.recipeForm.get('title')?.value;
-    
-    // Send new title data to parent
-    this.titleChange.emit(titleData);
   }
   
   saveYield() {
     this.isEditingYield = false;
-
-    const yieldData = {
-      amount: this.recipeForm.get('yieldAmount')?.value,
-      unit: this.recipeForm.get('yieldUnit')?.value
-    };
-    
-    // Send new yield data to parent
-    this.yieldChange.emit(yieldData);
   }
 
   saveIngredients() {
@@ -184,6 +168,7 @@ export class RecipeEditor implements OnInit {
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
     }
+
     const user = await this.authService.getCurrentUser();
     
     if (!user) {
@@ -218,7 +203,7 @@ export class RecipeEditor implements OnInit {
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
-          yield: recipeData.yield ?? {amount: 0, unit: 'N/A'},
+          yield: recipeData.yield ?? {amount: 1, unit: 'unit'},
           tags: recipeData.tags ?? [],
           archived: false,
           createdAt: new Date(),

@@ -69,12 +69,4 @@ export class RecipeDetail {
       }
     });
   }
-
-  onTitleChange(newTitle: string) {
-    this.editedTitle = newTitle;
-  }
-
-  onYieldChange(newYield: { amount: number; unit: string }) {
-    this.editedYield = newYield;
-  }
 }
