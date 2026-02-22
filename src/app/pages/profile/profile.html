@@ -6,20 +6,18 @@
       <div>
         <h1 class="font-subheading font-bold text-xl">Profile</h1>
       </div>
-      <div class="editing-options-editmode">
+      <div *ngIf="isEditingProfile" class="editing-options-editmode">
         <button
-          *ngIf="isEditingProfile"
           (click)="saveProfile()"
           type="button"  
-          class="flex font-semibold underline lg:no-underline underline-offset-10 hover:underline" 
+          class="flex flex-end font-semibold underline lg:no-underline underline-offset-10 hover:underline" 
         >save</button>
       </div>
-      <div class="editing-options-viewmode">
-        <button 
-          *ngIf="!isEditingProfile"
+      <div *ngIf="!isEditingProfile" class="editing-options-viewmode">
+        <button
           (click)="editProfile()"
           type="button" 
-          class="flex font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+          class="flex flex-end font-semibold underline lg:no-underline underline-offset-10 hover:underline"
         >edit</button>
       </div>
     </div>
@@ -28,7 +26,7 @@
       (profileChange)="onProfileChange($event)"
     ></app-profile-form>
   </div>
-
+  
   <div class="main-recipes">
     <h1 class="font-subheading font-bold text-xl mb-2">Recipes</h1>
     <div class="flex flex-col gap-2 mb-6">
@@ -44,12 +42,11 @@
 
   <div class="archived-recipes flex flex-col rounded-sm px-1 py-1 border border-light">
     <details closed class="group">
-      <summary class="flex justify-between list-none font-subheading font-bold text-base color-dark-gray">
-        archived 
+      <summary class="flex justify-between list-none font-heading font-normal text-sm color-dark-gray">
+        Archived 
         <span class="transition-transform group-open:rotate-180">&#9661;</span>
       </summary>
-
-      <div class="flex flex-col gap-2 mt-4">
+      <div class="flex flex-col gap-2 mt-2">
         <a 
           [routerLink]="['/recipes', r.id]" 
           *ngFor="let r of archivedRecipes" 
