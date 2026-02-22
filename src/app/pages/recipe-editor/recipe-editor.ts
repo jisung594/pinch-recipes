@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
+import { TagsForm } from './tags-form/tags-form';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
 import { ToastService } from '../../services/toast.service';
@@ -34,6 +35,7 @@ import { Recipe } from '../../models/recipe.model';
     ReactiveFormsModule,
     IngredientsForm, 
     InstructionsForm,
+    TagsForm,
     MatIconModule
   ],
   templateUrl: './recipe-editor.html',
