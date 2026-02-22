@@ -45,8 +45,8 @@
   <div class="recipe-forms">
     <div class="mb-4">
       <!-- Yield form header -->
-      <div class="flex justify-between mb-2">
-        <h2 class="font-subheading font-bold text-xl">Yields:</h2>
+      <div class="flex justify-between mb-1">
+        <h2 class="font-subheading font-bold text-xl">Yields</h2>
         <div class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
@@ -88,7 +88,7 @@
       <!-- View mode - yield -->
       <ng-template #viewModeYield>
         <div class="flex mb-4">
-          <h2 class="font-subheading font-bold text-xl">{{ recipeForm.get('yieldAmount')?.value ?? 'null' }} {{ recipeForm.get('yieldUnit')?.value ?? 'null' }}</h2>
+          <h2 class="font-body font-normal text-lg">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
         </div>
       </ng-template>
     </div>
