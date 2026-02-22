@@ -19,8 +19,8 @@ export interface Recipe {
   id?: string; // Firestore auto-generated ID
   title: string;
   yield: {
-    amount: number;
-    unit: string;
+    amount: number,
+    unit: string
   };
   ingredients: Ingredient[];
   instructions: Instruction[];
@@ -42,8 +42,8 @@ export const recipeConverter: FirestoreDataConverter<Recipe> = {
       id: snapshot.id,
       title: data['title'],
       yield: {
-        amount: data['yieldAmount'],
-        unit: data['yieldUnit']
+        amount: data['yield']['amount'],
+        unit: data['yield']['unit']
       },
       ingredients: data['ingredients'],
       instructions: data['instructions'],
