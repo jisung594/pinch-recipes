@@ -157,17 +157,17 @@
   </div>
 
   <!-- Save options (fixed to bottom) -->
-  <div class="fixed top-auto bottom-0 w-full my-2">
-    <div class="flex gap-2 py-1 bg-white/50">
+  <div class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
+    <div class="flex gap-2 py-1">
       <button
         type="button"
-        class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-orange border-2"
+        class="font-body font-bold text-sm tracking-widest px-1 py-1 rounded-sm bg-white border-orange border-2"
         (click)="saveRecipe()"
       >SAVE</button>
       <button
         *ngIf="recipeId"
         type="button"
-        class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white rounded-sm border-2 border-dark color-dark-gray"
+        class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white rounded-sm border-dark border-2 color-dark-gray"
         (click)="toggleArchive()"
       >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
     </div>
