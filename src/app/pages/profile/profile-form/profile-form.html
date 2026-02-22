@@ -1,4 +1,4 @@
-<form [formGroup]="profileForm" class="mb-4">
+<form [formGroup]="profileForm" class="mb-6">
   <!-- Edit mode -->
   <div *ngIf="isEditingProfile">
     <div class="flex border border-light px-1 py-1 rounded-sm">
@@ -41,13 +41,13 @@
       class="flex border border-light px-1 py-1 rounded-sm"
     >
       <div class="flex flex-col gap-2">
-        <div>
-          <label class="font-medium text-sm">Display Name</label>
-          <p class="font-body font-bold text-xl">{{ profile.displayName }}</p>
+        <div class="flex flex-col">
+          <label class="font-light text-sm mb-0.5">Display Name</label>
+          <p class="font-body font-semibold text-xl">{{ profile.displayName }}</p>
         </div>
-        <div>
-          <label class="font-medium text-sm">Full Name</label>
-          <p class="font-body font-normal text-base">{{ profile.firstName }} {{ profile.lastName }}</p>
+        <div class="flex flex-col">
+          <label class="font-light text-sm mb-0.5">Full Name</label>
+          <p class="font-body font-semibold text-xl">{{ profile.firstName }} {{ profile.lastName }}</p>
         </div>
       </div>
     </div>
