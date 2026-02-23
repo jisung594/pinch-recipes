@@ -25,7 +25,7 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class InstructionsForm {
   @Input() initialInstructions: InstructionRow[] = [];
-  @Input() editable = true;
+  @Input() isEditing = true;
   @Output() instructionsChange = new EventEmitter<InstructionRow[]>();
 
   instructionsForm: FormGroup;

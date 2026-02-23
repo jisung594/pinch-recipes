@@ -26,7 +26,7 @@ export class RecipeDetail {
   ingredientsRows: IngredientRow[] = [];
   instructionsRows: InstructionRow[] = [];
   archived = false;
-  editable = false; // view mode by default
+  isEditing = false; // view mode by default
 
   constructor(
     private route: ActivatedRoute,

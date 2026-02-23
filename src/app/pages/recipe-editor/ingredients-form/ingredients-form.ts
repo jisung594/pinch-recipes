@@ -25,7 +25,7 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class IngredientsForm {
   @Input() initialIngredients: IngredientRow[] = [];
-  @Input() editable = true;
+  @Input() isEditing = true;
   @Output() ingredientsChange = new EventEmitter<IngredientRow[]>();
   
   ingredientsForm: FormGroup;

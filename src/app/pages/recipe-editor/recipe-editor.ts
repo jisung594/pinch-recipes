@@ -47,14 +47,16 @@ export class RecipeEditor implements OnInit {
   @Input() yield: { amount: number, unit: string } = { amount: 1, unit: 'unit' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
+  @Input() tags: string[] = [];
   @Input() archived: boolean = false;
-  @Input() editable: boolean = false; // defaults to view mode
+  @Input() isEditing: boolean = false; // defaults to view mode
 
   recipeForm!: FormGroup;
   isEditingTitle = false;
   isEditingYield = false;
   isEditingIngredients = false;
   isEditingInstructions = false;
+  isEditingTags = false;
   currentRecipeId: string | null = null;
   
   constructor(
