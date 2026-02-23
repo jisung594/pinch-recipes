@@ -25,6 +25,7 @@ export interface Recipe {
   ingredients: Ingredient[];
   instructions: Instruction[];
   tags: string[];
+  isPublic: boolean;
   archived: boolean;
   createdAt?: any;
   updatedAt?: any;
@@ -45,6 +46,7 @@ export const recipeConverter: FirestoreDataConverter<Recipe> = {
       ingredients: data['ingredients'],
       instructions: data['instructions'],
       tags: data['tags'],
+      isPublic: data['isPublic'],
       archived: data['archived'],
       createdAt: data['createdAt'],
       updatedAt: data['updatedAt'],
