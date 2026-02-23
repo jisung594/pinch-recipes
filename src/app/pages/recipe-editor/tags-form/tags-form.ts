@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-tags-form',
@@ -7,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './tags-form.css',
 })
 export class TagsForm {
+  @Input() initialTags: string[] = [];
+
+  tagsList: string[] = [];
+
+  ngOnInit() {
+    this.tagsList = [...this.initialTags];
+  }
 
 }
