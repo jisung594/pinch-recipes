@@ -149,29 +149,42 @@
         (instructionsChange)="onInstructionsChange($event)"
       ></app-instructions-form>
     </div>
-
-
-    <div>
-      <h2 class="font-subheading font-bold text-lg">( placeholder for Tags component )</h2>
-    </div>
-
-
   </div>
 
   <!-- Save options (fixed to bottom) -->
-  <div class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
-    <div class="flex gap-2 py-0">
-      <button
-        type="button"
-        class="font-body font-bold text-sm tracking-widest px-1 py-1 rounded-sm bg-white border-orange border-2"
-        (click)="saveRecipe()"
-      >SAVE</button>
-      <button
-        *ngIf="recipeId"
-        type="button"
-        class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white rounded-sm border-dark border-2 color-dark-gray"
-        (click)="toggleArchive()"
-      >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
+  <div class="fixed top-auto bottom-0 my-2 bg-linear-to-r from-white to-transparent">
+    <div class="flex flex-col gap-1">
+
+
+      <!-- Public / private toggle -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-xs color-dark-gray">
+            {{ isPublic ? 'Anyone can view' : 'Only you can view' }}
+          </p>
+        </div>
+        <mat-slide-toggle
+          id="toggle-public"
+          class=""
+          [checked]="isPublic"
+          (change)="togglePublic($event)"
+        ></mat-slide-toggle>
+      </div>
+
+
+      <div class="flex gap-1 py-0">
+        <button
+          type="button"
+          class="font-body font-bold text-sm tracking-widest px-1 py-1 rounded-sm bg-white border-orange border-2"
+          (click)="saveRecipe()"
+        >SAVE</button>
+        <button
+          *ngIf="recipeId"
+          type="button"
+          class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white rounded-sm border-dark border-2 color-dark-gray"
+          (click)="toggleArchive()"
+        >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
+      </div>
     </div>
   </div>
 

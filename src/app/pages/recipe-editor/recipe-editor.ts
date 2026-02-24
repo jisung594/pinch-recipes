@@ -14,6 +14,7 @@ import {
   Validators 
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
@@ -34,7 +35,8 @@ import { Recipe } from '../../models/recipe.model';
     ReactiveFormsModule,
     IngredientsForm, 
     InstructionsForm,
-    MatIconModule
+    MatIconModule,
+    MatSlideToggleModule
   ],
   templateUrl: './recipe-editor.html',
   styleUrl: './recipe-editor.css'
@@ -45,6 +47,7 @@ export class RecipeEditor implements OnInit {
   @Input() yield: { amount: number, unit: string } = { amount: 1, unit: 'unit' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
+  @Input() isPublic: boolean = false;
   @Input() archived: boolean = false;
   @Input() editable: boolean = false; // defaults to view mode
 
@@ -77,7 +80,8 @@ export class RecipeEditor implements OnInit {
       yieldAmount: [this.yield.amount || 1, Validators.min(1)],
       yieldUnit: [this.yield.unit || 'unit'],
       ingredients: this.fb.array(this.ingredients),
-      instructions: this.fb.array(this.instructions)
+      instructions: this.fb.array(this.instructions),
+      isPublic: this.isPublic
     });
   }
 
@@ -121,6 +125,12 @@ export class RecipeEditor implements OnInit {
   // Runs when a InstructionsForm (child) emits an @Output
   onInstructionsChange(rows: InstructionRow[]) {
     this.instructions = rows;
+  }
+
+  togglePublic(event: any) {
+    this.isPublic = event.checked;  
+
+    console.log("this.isPublic", this.isPublic);
   }
 
   async toggleArchive() {
@@ -206,7 +216,7 @@ export class RecipeEditor implements OnInit {
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
           yield: recipeData.yield ?? {amount: 1, unit: 'unit'},
-          tags: recipeData.tags ?? [],
+          isPublic: recipeData.isPublic ?? false,
           archived: false,
           createdAt: new Date(),
         });
