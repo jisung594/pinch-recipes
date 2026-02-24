@@ -25,7 +25,7 @@
 
   <!-- View mode - title -->
   <ng-template #viewModeTitle>
-    <div class="flex mb-4">
+    <div class="flex mb-1 border-b border-light">
       <div class="flex grow my-1">
         <h1 class="font-heading font-semibold text-2xl md:text-4xl w-full">
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
@@ -48,25 +48,25 @@
     <div class="yield-form mb-5">
       <!-- Yield form header -->
       <div class="flex justify-between mb-1">
-        <h2 class="font-subheading font-bold text-xl">Yields</h2>
+        <h2 class="font-subheading font-bold text-base">Yields:</h2>
         <div class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
             (click)="editYield()" 
-            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
             type="button"
           >edit</button>
           <button
             *ngIf="isEditingYield" 
             (click)="saveYield()"
-            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
             type="button"
           >view</button>
         </div>
       </div>
 
       <!-- Edit mode - yield -->
-      <div *ngIf="isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full border border-light px-1 py-1 rounded-sm">
+      <div *ngIf="isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
         <div class="yield-inputs flex flex-row gap-2">
           <input
             type="number"
@@ -90,27 +90,27 @@
       <!-- View mode - yield -->
       <ng-template #viewModeYield>
         <div class="flex">
-          <h2 class="font-body font-normal text-lg">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
+          <h2 class="font-body font-normal text-base">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
         </div>
       </ng-template>
     </div>
 
     <div class="ingredients-form mb-5">
       <!-- Ingredients form header -->
-      <div class="flex justify-between mb-1">
-        <h2 class="font-subheading font-bold text-xl">Ingredients</h2>
+      <div class="flex justify-between mb-2">
+        <h2 class="font-heading font-semibold text-lg tracking-wide">Ingredients</h2>
 
         <div class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
-            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
             type="button"
           >edit</button>
           <button
             *ngIf="isEditingIngredients" 
             (click)="saveIngredients()"
-            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
             type="button"
           >view</button>
         </div>
@@ -125,18 +125,18 @@
 
     <div class="instructions-form mb-5">
       <!-- Instructions form header -->
-      <div class="flex justify-between mb-1">
-        <h2 class="font-subheading font-bold text-xl">Instructions</h2>
+      <div class="flex justify-between mb-2">
+        <h2 class="font-heading font-semibold text-lg tracking-wide">Instructions</h2>
 
         <div class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
-            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
           >edit</button>
           <button
             *ngIf="isEditingInstructions" 
-            class="font-semibold underline lg:no-underline underline-offset-10 hover:underline"
+            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
             type="button" 
             (click)="saveInstructions()"
           >view</button>
@@ -149,28 +149,26 @@
         (instructionsChange)="onInstructionsChange($event)"
       ></app-instructions-form>
     </div>
+
+    <!-- Public / private toggle -->
+    <div class="flex flex-col">
+      <div class="mb-1">
+        <p class="text-xs color-dark-gray">
+          {{ isPublic ? 'Anyone can view' : 'Only you can view' }}
+        </p>
+      </div>
+      <mat-slide-toggle
+        id="toggle-public"
+        class=""
+        [checked]="isPublic"
+        (change)="togglePublic($event)"
+      ></mat-slide-toggle>
+    </div>
   </div>
 
   <!-- Save options (fixed to bottom) -->
-  <div class="fixed top-auto bottom-0 my-2 bg-linear-to-r from-white to-transparent">
-    <div class="flex flex-col gap-1">
-
-
-      <!-- Public / private toggle -->
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-xs color-dark-gray">
-            {{ isPublic ? 'Anyone can view' : 'Only you can view' }}
-          </p>
-        </div>
-        <mat-slide-toggle
-          id="toggle-public"
-          class=""
-          [checked]="isPublic"
-          (change)="togglePublic($event)"
-        ></mat-slide-toggle>
-      </div>
-
+  <div class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
+    <div class="flex justify-between">
 
       <div class="flex gap-1 py-0">
         <button

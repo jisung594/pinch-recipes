@@ -1,8 +1,11 @@
 <form [formGroup]="ingredientsForm" class="">
-  <div formArrayName="ingredients" class="flex flex-col gap-1 mb-2">
+  <div formArrayName="ingredients" class="mb-2">
 
     <!-- Display when recipe already has ingredients -->
-    <div *ngIf="ingredients && ingredients.length > 0">
+    <div 
+      *ngIf="ingredients && ingredients.length > 0" 
+      class="flex flex-col gap-1"
+    >
       <div
         *ngFor="let ingredient of ingredients.controls; let i = index"
         [formGroupName]="i"
