@@ -81,7 +81,7 @@ export class RecipeEditor implements OnInit {
       yieldUnit: [this.yield.unit || 'unit'],
       ingredients: this.fb.array(this.ingredients),
       instructions: this.fb.array(this.instructions),
-      isPublic: this.isPublic
+      isPublic: [this.isPublic || false]
     });
   }
 
@@ -128,9 +128,7 @@ export class RecipeEditor implements OnInit {
   }
 
   togglePublic(event: any) {
-    this.isPublic = event.checked;  
-
-    console.log("this.isPublic", this.isPublic);
+    this.isPublic = event.checked;
   }
 
   async toggleArchive() {
@@ -179,6 +177,7 @@ export class RecipeEditor implements OnInit {
       },
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
+      isPublic: formValue.isPublic || false
     }
 
     const user = await this.authService.getCurrentUser();
