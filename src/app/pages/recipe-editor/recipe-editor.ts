@@ -47,7 +47,7 @@ export class RecipeEditor implements OnInit {
   @Input() yield: { amount: number, unit: string } = { amount: 1, unit: 'unit' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
-  @Input() public: boolean = false;
+  @Input() isPublic: boolean = false;
   @Input() archived: boolean = false;
   @Input() editable: boolean = false; // defaults to view mode
 
@@ -81,12 +81,8 @@ export class RecipeEditor implements OnInit {
       yieldUnit: [this.yield.unit || 'unit'],
       ingredients: this.fb.array(this.ingredients),
       instructions: this.fb.array(this.instructions),
-      public: this.public
+      isPublic: this.isPublic
     });
-
-
-    console.log("ngOnInit this.public", this.public)
-
   }
 
   editTitle() {
@@ -132,9 +128,9 @@ export class RecipeEditor implements OnInit {
   }
 
   togglePublic(event: any) {
-    this.public = event.checked;  
+    this.isPublic = event.checked;  
 
-    console.log("this.public", this.public);
+    console.log("this.isPublic", this.isPublic);
   }
 
   async toggleArchive() {
@@ -175,8 +171,6 @@ export class RecipeEditor implements OnInit {
   async saveRecipe() {
     const formValue = this.recipeForm.value;
 
-    console.log(formValue.public);
-
     const recipeData: Partial<Recipe> = {
       title: formValue.title,
       yield: {
@@ -185,7 +179,6 @@ export class RecipeEditor implements OnInit {
       },
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
-      public: formValue.public
     }
 
     const user = await this.authService.getCurrentUser();
@@ -223,7 +216,7 @@ export class RecipeEditor implements OnInit {
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
           yield: recipeData.yield ?? {amount: 1, unit: 'unit'},
-          public: recipeData.public ?? false,
+          isPublic: recipeData.isPublic ?? false,
           archived: false,
           createdAt: new Date(),
         });
