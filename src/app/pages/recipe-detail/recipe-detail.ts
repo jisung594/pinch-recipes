@@ -25,7 +25,7 @@ export class RecipeDetail {
   editedYield?: { amount: number; unit: string };
   ingredientsRows: IngredientRow[] = [];
   instructionsRows: InstructionRow[] = [];
-  isPublic = false;
+  public = false;
   archived = false;
   editable = false; // view mode by default
 
@@ -66,7 +66,7 @@ export class RecipeDetail {
           })
         );
         
-        this.isPublic = this.recipe.isPublic;
+        this.public = this.recipe.public;
         this.archived = this.recipe.archived;
       }
     });

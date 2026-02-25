@@ -1,6 +1,9 @@
 <form [formGroup]="recipeForm" class="recipe-editor py-2">
   <!-- Edit mode - title -->
-  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-1 mb-4">
+  <div 
+    *ngIf="isEditingTitle; else viewModeTitle" 
+    class="flex gap-1 mb-1"
+  >
     <div class="grow">
       <input
         type="text"
@@ -154,13 +157,13 @@
     <div class="flex flex-col">
       <div class="mb-1">
         <p class="text-xs color-dark-gray">
-          {{ isPublic ? 'Anyone can view' : 'Only you can view' }}
+          {{ public ? 'Anyone can view' : 'Only you can view' }}
         </p>
       </div>
       <mat-slide-toggle
         id="toggle-public"
         class=""
-        [checked]="isPublic"
+        [checked]="public"
         (change)="togglePublic($event)"
       ></mat-slide-toggle>
     </div>
