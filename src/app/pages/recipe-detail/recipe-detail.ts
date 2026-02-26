@@ -33,22 +33,34 @@ export class RecipeDetail {
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
-    private recipeRepo: RecipeFirestoreService
+    private firestoreService: RecipeFirestoreService
   ) {}
 
   async ngOnInit() {
     // Subscribes to auth state to get current user / data for given recipe id
     this.authSub = this.authService.authState$.subscribe(async user => {
-      if (!user) return;
+      let snapshot;
 
       this.recipeId = this.route.snapshot.paramMap.get('id')!;
-      const snapshot = await this.recipeRepo.getRecipeById(user.uid, this.recipeId);
 
-      if (snapshot.exists()) {
-        this.recipe = snapshot.data();
+      if (user) {
+        // Load as recipe author first
+        snapshot = await this.firestoreService.getRecipeById(user.uid, this.recipeId);
+        
+        // Load as anonymous when user is not recipe author
+        if (!snapshot.exists()) {
+          snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId);
+        }
+      } else {
+        // Load as anonymmous (not logged in)
+        snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId);
       }
 
-      if (this.recipe) {
+      if (snapshot && snapshot.exists()) {
+        this.recipe = snapshot.data();
+      // }
+
+      // if (this.recipe) {
         // RecipeEditor (child) expects FormGroup arrays for ingredients / instructions
         // TODO: refactor RecipeEditor to accept plain arrays instead, to avoid this conversion
         this.ingredientsRows = this.recipe.ingredients.map(i =>
