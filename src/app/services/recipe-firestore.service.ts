@@ -3,6 +3,7 @@ import {
     addDoc, 
     collection,
     collectionData,
+    collectionGroup,
     CollectionReference,
     deleteDoc,
     doc,
@@ -10,7 +11,7 @@ import {
     getDoc,
     getDocs,
     query,
-    QuerySnapshot,
+    // QuerySnapshot,
     serverTimestamp,
     updateDoc,
     where
@@ -63,15 +64,41 @@ export class RecipeFirestoreService {
     return deleteDoc(recipeDoc);
   }
   
+  // // Returns promise of a snapshot (matching recipe doc)
+  // async getRecipeByTitle(uid: string, title: string): Promise<QuerySnapshot<Recipe>> {
+  //   const recipesRef = this.getUserRecipesRef(uid);
+  //   const q = query(recipesRef, where('title', '==', title));
+  //   return await getDocs(q);
+  // }
+
   async getRecipeById(uid: string, id: string) {
     const docRef = doc(this.firestore, `users/${uid}/recipes/${id}`).withConverter(recipeConverter);
     return await getDoc(docRef); // returns a DocumentSnapshot<Recipe>
   }
+
+  async getPublicRecipeById(recipeId: string) {
+    try {
+      // Search across all 'recipe' collections where isPublic = true
+      const recipesRef = collectionGroup(this.firestore, 'recipes');
+
+      const q = query(
+        recipesRef,
+        where('isPublic', '==', true)
+      ).withConverter(recipeConverter);
+
+      console.log("query", q);
+
+      const snapshot = await getDocs(q);
+
+      console.log("snapshot", snapshot);
+
   
-  // Returns promise of a snapshot (matching recipe doc)
-  async getRecipeByTitle(uid: string, title: string): Promise<QuerySnapshot<Recipe>> {
-    const recipesRef = this.getUserRecipesRef(uid);
-    const q = query(recipesRef, where('title', '==', title));
-    return await getDocs(q);
+      // Find matching recipe
+      const matchingDoc = snapshot.docs.find(doc => doc.id === recipeId);
+      return matchingDoc || null;
+    } catch (err) {
+      console.error("ERROR:", err);
+      return null;
+    }
   }
 }
