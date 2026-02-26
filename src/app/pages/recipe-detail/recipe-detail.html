@@ -6,6 +6,7 @@
 
 <app-recipe-editor
   *ngIf="recipe"
+  [isAuthor]="isAuthor"
   [recipeId]="recipeId"
   [title]="recipe.title"
   [yield]="recipe.yield"

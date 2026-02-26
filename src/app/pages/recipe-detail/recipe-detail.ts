@@ -18,6 +18,7 @@ import { Recipe } from '../../models/recipe.model';
   styleUrl: './recipe-detail.css',
 })
 export class RecipeDetail {
+  isAuthor = false;
   private authSub?: Subscription; // only accessed/relevant within this scope
   recipe: Recipe | null = null;
   recipeId: string | null = null;
@@ -46,7 +47,8 @@ export class RecipeDetail {
       if (user) {
         // Load as recipe author first
         snapshot = await this.firestoreService.getRecipeById(user.uid, this.recipeId);
-        
+        this.isAuthor = true;
+
         // Load as anonymous when user is not recipe author
         if (!snapshot.exists()) {
           snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId);

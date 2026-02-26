@@ -42,6 +42,7 @@ import { Recipe } from '../../models/recipe.model';
   styleUrl: './recipe-editor.css'
 })
 export class RecipeEditor implements OnInit {
+  @Input() isAuthor = false;
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
   @Input() yield: { amount: number, unit: string } = { amount: 1, unit: 'unit' };
