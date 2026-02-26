@@ -31,7 +31,7 @@
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
-      <div class="editing-options-viewmode flex my-1 md:my-3">
+      <div *ngIf="this.isAuthor" class="editing-options-viewmode flex my-1 md:my-3">
         <button 
           mat-icon-button 
           matTooltip="Click to Edit" 
@@ -49,7 +49,7 @@
       <!-- Yield form header -->
       <div class="flex justify-between mb-1">
         <h2 class="font-subheading font-bold text-base">Yields:</h2>
-        <div class="editing-options flex shrink-0">
+        <div *ngIf="this.isAuthor" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
             (click)="editYield()" 
@@ -66,7 +66,7 @@
       </div>
 
       <!-- Edit mode - yield -->
-      <div *ngIf="isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
+      <div *ngIf="isAuthor && isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
         <div class="yield-inputs flex flex-row gap-2">
           <input
             type="number"
@@ -100,7 +100,7 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Ingredients</h2>
 
-        <div class="editing-options flex shrink-0">
+        <div *ngIf="this.isAuthor" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
@@ -128,7 +128,7 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Instructions</h2>
 
-        <div class="editing-options flex shrink-0">
+        <div *ngIf="this.isAuthor" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
@@ -151,7 +151,7 @@
     </div>
 
     <!-- Public / private toggle -->
-    <div class="flex flex-col">
+    <div *ngIf="this.isAuthor" class="flex flex-col">
       <div class="mb-1">
         <p class="text-xs color-dark-gray">
           {{ isPublic ? 'Anyone can view' : 'Only you can view' }}
@@ -167,7 +167,7 @@
   </div>
 
   <!-- Save options (fixed to bottom) -->
-  <div class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
+  <div *ngIf="this.isAuthor" class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
     <div class="flex justify-between">
 
       <div class="flex gap-1 py-0">
