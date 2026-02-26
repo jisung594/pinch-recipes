@@ -86,12 +86,7 @@ export class RecipeFirestoreService {
         where('isPublic', '==', true)
       ).withConverter(recipeConverter);
 
-      console.log("query", q);
-
       const snapshot = await getDocs(q);
-
-      console.log("snapshot", snapshot);
-
   
       // Find matching recipe
       const matchingDoc = snapshot.docs.find(doc => doc.id === recipeId);
