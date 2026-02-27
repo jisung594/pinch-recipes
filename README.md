@@ -25,7 +25,7 @@ A sample **[public recipe](https://bakers-logbook.web.app/recipes/PUBLIC_RECIPE_
 
 
 ## Project Goals
-- Learn Angular and its reactive patterns
+- Learn Angular, reactive forms, RxJS, and component architecture
 - Build and maintain a full application independently
 - Prioritize clean UI and long-term usability
 - Deploy and iterate on a tool I use regularly
