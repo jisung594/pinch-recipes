@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 
@@ -11,9 +10,7 @@ import { User } from 'firebase/auth';
   imports: [
     CommonModule,
     RouterModule, 
-    MatIconModule, 
-    MatMenu, 
-    MatMenuTrigger
+    MatIconModule
   ],
   templateUrl: './account-menu.html',
   styleUrl: './account-menu.css',
