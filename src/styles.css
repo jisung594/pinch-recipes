@@ -1,16 +1,6 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Gilda+Display:wght@400&display=swap');
 
-@font-face {
-  font-family: "Spectral";
-  src: url("/assets/fonts/Spectral-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Work Sans";
-  src: url("/assets/fonts/WorkSans-Regular.ttf") format("truetype");
-}
 
 @utility bg-cta-blue {
   background-color: var(--cta-blue);
@@ -37,8 +27,8 @@
 }
 
 @theme {
-  --font-heading: "Work Sans", sans-serif;
-  --font-subheading: "Spectral", serif;
+  --font-heading: "Gilda Display", sans-serif;
+  --font-subheading: "Gilda Display", serif;
   --font-body: "Work Sans", sans-serif;
 
   --cta-blue: #3069d4;
