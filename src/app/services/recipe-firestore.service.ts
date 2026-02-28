@@ -11,7 +11,6 @@ import {
     getDoc,
     getDocs,
     query,
-    // QuerySnapshot,
     serverTimestamp,
     updateDoc,
     where
@@ -63,13 +62,6 @@ export class RecipeFirestoreService {
     const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(recipeConverter);
     return deleteDoc(recipeDoc);
   }
-  
-  // // Returns promise of a snapshot (matching recipe doc)
-  // async getRecipeByTitle(uid: string, title: string): Promise<QuerySnapshot<Recipe>> {
-  //   const recipesRef = this.getUserRecipesRef(uid);
-  //   const q = query(recipesRef, where('title', '==', title));
-  //   return await getDocs(q);
-  // }
 
   async getRecipeById(uid: string, id: string) {
     const docRef = doc(this.firestore, `users/${uid}/recipes/${id}`).withConverter(recipeConverter);
