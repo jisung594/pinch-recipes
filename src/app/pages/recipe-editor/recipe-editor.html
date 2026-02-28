@@ -66,15 +66,15 @@
       </div>
 
       <!-- Edit mode - yield -->
-      <div *ngIf="this.isAuthor && isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
-        <div class="yield-inputs flex flex-row gap-2">
+      <div *ngIf="(this.isAuthor || !recipeId) && isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
+        <div class="yield-inputs flex flex-row gap-1">
           <input
             type="number"
             id="yield-amount"
             placeholder="'6'"
             autofocus
             formControlName="yieldAmount"
-            class="form-field w-1/4 h-4 bg-light-blue"
+            class="form-field w-4 h-3 bg-light-blue"
           />
           <input
             type="text"
@@ -82,14 +82,14 @@
             placeholder="'loaves'"
             autofocus
             formControlName="yieldUnit"
-            class="form-field w-full h-4 bg-light-blue"
+            class="form-field w-8 h-3 bg-light-blue"
           />
         </div>
       </div>
 
       <!-- View mode - yield -->
       <ng-template #viewModeYield>
-        <div class="flex">
+        <div class="flex h-3">
           <h2 class="font-body font-normal text-base">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
         </div>
       </ng-template>
