@@ -66,7 +66,7 @@
       </div>
 
       <!-- Edit mode - yield -->
-      <div *ngIf="isAuthor && isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
+      <div *ngIf="this.isAuthor && isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
         <div class="yield-inputs flex flex-row gap-2">
           <input
             type="number"
