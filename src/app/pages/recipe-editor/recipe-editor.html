@@ -31,7 +31,7 @@
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
-      <div *ngIf="this.isAuthor" class="editing-options-viewmode flex my-1 md:my-3">
+      <div *ngIf="this.isAuthor || !recipeId" class="editing-options-viewmode flex my-1 md:my-3">
         <button 
           mat-icon-button 
           matTooltip="Click to Edit" 
@@ -49,7 +49,7 @@
       <!-- Yield form header -->
       <div class="flex justify-between mb-1">
         <h2 class="font-subheading font-bold text-base">Yields:</h2>
-        <div *ngIf="this.isAuthor" class="editing-options flex shrink-0">
+        <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
             (click)="editYield()" 
@@ -167,7 +167,7 @@
   </div>
 
   <!-- Save options (fixed to bottom) -->
-  <div *ngIf="this.isAuthor" class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
+  <div *ngIf="this.isAuthor || !recipeId" class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
     <div class="flex justify-between">
 
       <div class="flex gap-1 py-0">
