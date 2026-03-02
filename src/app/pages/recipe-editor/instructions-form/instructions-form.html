@@ -16,14 +16,13 @@
           *ngIf="editable" 
           class="flex flex-row"
         >
-          <div class="flex justify-between gap-1 w-full border border-light px-1 py-1 rounded-sm">
-            <div class="flex gap-1 w-full">
-              <label class="font-medium">{{ i + 1 }}.</label>
+          <div class="flex justify-between gap-2 w-full px-1 py-1 rounded-sm bg-light-blue">
+            <div class="flex w-full">
               <textarea 
                 matInput 
                 placeholder="Step {{ i + 1 }}..."
                 formControlName="step"
-                class="form-field w-full h-8 bg-light-blue rounded-sm">
+                class="form-field font-normal text-base w-full bg-white rounded-sm">
               </textarea>
             </div>
 
@@ -41,17 +40,20 @@
           *ngIf="!editable" 
           class="flex border-b border-light"
         >
-          <div class="flex mb-1">
-            <div class="mr-2">
+          <div class="flex gap-1 w-full mb-1">
+            <div class="step-label w-2 shrink-0">
               <p class="font-body font-black text-base">{{ i + 1 }}</p>
             </div>
-            <div *ngIf="instruction.value.step; else emptyInstruction" class="">
+            <div 
+              class="step-text flex-1"
+              *ngIf="instruction.value.step; else emptyInstruction" 
+            >
               <p class="font-body text-base">{{ instruction.value.step }}</p>
             </div>
             <ng-template #emptyInstruction>
               <div class="">
                 <p class="font-body text-base color-dark-gray">
-                  ( empty instruction )
+                  ( empty )
                 </p>
               </div>
             </ng-template>

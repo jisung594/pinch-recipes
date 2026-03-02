@@ -1,15 +1,14 @@
-<form [formGroup]="recipeForm" class="recipe-editor py-2">
+<form [formGroup]="recipeForm" class="recipe-editor">
   <!-- Edit mode - title -->
-  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-1 mb-4">
-    <div class="grow">
+  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-1 mb-1">
+    <div class="flex grow my-1 w-full">
       <input
         type="text"
         id="recipe-title"
         formControlName="title"
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
-        autofocus
-        class="font-heading font-medum text-2xl leading-loose md:text-4xl w-full border-b-2 border-gray-400 placeholder-gray-400"
+        class="font-heading font-medium text-2xl leading-loose md:text-4xl border-b border-light color-dark-gray"
       />
     </div>
     <div class="editing-options-editmode flex my-1 md:my-3">
@@ -25,9 +24,9 @@
 
   <!-- View mode - title -->
   <ng-template #viewModeTitle>
-    <div class="flex mb-1 border-b border-light">
-      <div class="flex grow my-1">
-        <h1 class="font-heading font-semibold text-2xl md:text-4xl w-full">
+    <div class="flex gap-1 mb-1">
+      <div class="flex grow my-1 w-full">
+        <h1 class="font-heading font-bold text-2xl leading-loose md:text-4xl border-b border-light">
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
@@ -45,10 +44,38 @@
   </ng-template>
 
   <div class="recipe-forms">
-    <div class="yield-form mb-5">
+    <div class="yield-form mb-6">
       <!-- Yield form header -->
-      <div class="flex justify-between mb-1">
-        <h2 class="font-subheading font-bold text-base">Yields:</h2>
+      <div class="flex flex-row justify-between items-center mb-1">
+        <div>
+          <h2 class="font-subheading font-bold text-base mr-1">Yields:</h2>
+
+          <!-- Edit mode - yield -->
+          <div 
+            *ngIf="(this.isAuthor || !recipeId) && isEditingYield; else viewModeYield" 
+            class="flex w-full"
+          >
+            <div class="yield-inputs flex flex-row gap-1">
+              <input
+                type="number"
+                id="yield-amount"
+                placeholder="'6'"
+                autofocus
+                formControlName="yieldAmount"
+                class="font-body font-normal text-base w-3 h-3 border-b border-light"
+              />
+              <input
+                type="text"
+                id="yield-unit"
+                placeholder="'loaves'"
+                autofocus
+                formControlName="yieldUnit"
+                class="font-body font-normal text-base w-8 h-3 border-b border-light"
+              />
+            </div>
+          </div>
+        </div>
+
         <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
@@ -65,42 +92,20 @@
         </div>
       </div>
 
-      <!-- Edit mode - yield -->
-      <div *ngIf="(this.isAuthor || !recipeId) && isEditingYield; else viewModeYield" class="flex justify-between gap-1 w-full">
-        <div class="yield-inputs flex flex-row gap-1">
-          <input
-            type="number"
-            id="yield-amount"
-            placeholder="'6'"
-            autofocus
-            formControlName="yieldAmount"
-            class="form-field w-4 h-3 bg-light-blue"
-          />
-          <input
-            type="text"
-            id="yield-unit"
-            placeholder="'loaves'"
-            autofocus
-            formControlName="yieldUnit"
-            class="form-field w-8 h-3 bg-light-blue"
-          />
-        </div>
-      </div>
-
       <!-- View mode - yield -->
       <ng-template #viewModeYield>
-        <div class="flex h-3">
-          <h2 class="font-body font-normal text-base">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
+        <div class="flex items-center h-3">
+          <h2 class="font-body font-medium text-base">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
         </div>
       </ng-template>
     </div>
 
-    <div class="ingredients-form mb-5">
+    <div class="ingredients-form mb-6">
       <!-- Ingredients form header -->
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Ingredients</h2>
 
-        <div *ngIf="this.isAuthor" class="editing-options flex shrink-0">
+        <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
@@ -123,12 +128,12 @@
       > </app-ingredients-form>
     </div>
 
-    <div class="instructions-form mb-5">
+    <div class="instructions-form mb-6">
       <!-- Instructions form header -->
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Instructions</h2>
 
-        <div *ngIf="this.isAuthor" class="editing-options flex shrink-0">
+        <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
