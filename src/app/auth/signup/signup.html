@@ -1,6 +1,6 @@
 <div class="signup-page flex flex-col gap-4 px-1 py-2">
   <div>
-    <h1 class="flex justify-center font-subheading font-extrabold text-2xl mb-2">Create Account</h1>
+    <h1 class="flex justify-center font-subheading font-extrabold text-2xl tracking-wide mb-2">Create Account</h1>
     <form
       [formGroup]="signupForm"
       (submit)="handleSignUp()"
@@ -65,7 +65,7 @@
           *ngIf="errorCode === 'auth/email-already-in-use'" 
           class="error font-body font-normal text-sm color-red"
         >
-          Another account already uses this email -- please try another.
+          Another account already uses this email. Please try another.
         </div>
       </div>
       <div class="flex flex-col w-full lg:w-1/2">
