@@ -95,7 +95,7 @@
 
       <button 
         [disabled]="!signupForm.valid"
-        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 border border-light"
+        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 rounded-sm border-2 border-light"
         type="submit"
       >Register</button>
     </form>
@@ -108,7 +108,7 @@
   <div class="flex justify-center h-4 w-auto">
     <button
       type="button"
-      class="flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border border-light"
+      class="flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border-2 border-light"
       (click)="handleGoogleSignIn()"
     >
       <img

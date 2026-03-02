@@ -42,20 +42,20 @@
         <!-- Inline validation errors -->
         <div 
           *ngIf="password!.invalid && password!.touched" 
-          class="error font-body font-medium text-sm color-red"
+          class="error font-body font-medium text-sm color-red mt-0.5"
         >
           Please enter your password.
         </div>
         <div 
           *ngIf="errorCode === 'auth/invalid-credential'" 
-          class="error font-body font-medium text-sm color-red"
+          class="error font-body font-medium text-sm color-red mt-0.5"
         >
-          Incorrect email or password -- please try again.
+          Incorrect email or password. Please try again.
         </div>
       </div>
       <button 
         [disabled]="!loginForm.valid"
-        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 border border-light"
+        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 rounded-sm border-2 border-light"
         type="submit"
       >Login</button>
     </form>
@@ -68,7 +68,7 @@
   <div class="flex justify-center h-4 w-auto">
     <button
       type="button"
-      class="flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border border-light"
+      class="flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border-2 border-light"
       (click)="handleGoogleSignIn()"
     >
       <img
