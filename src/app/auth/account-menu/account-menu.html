@@ -9,9 +9,9 @@
     </a>
   </div>
   <div *ngIf="user" class="logged-in">
-    <div class="mb-2 lg:hidden">
+    <div *ngIf="userProfile$ | async as profile" class="mb-2 lg:hidden">
       <span class="font-heading font-normal text-lg text-black">
-        Hi there, {{ user.displayName || 'baker' }}!
+        Hi, {{ profile.displayName || profile.firstName || 'baker' }}!
       </span>
     </div>
     <div class="">

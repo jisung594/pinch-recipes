@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
+import { Observable } from 'rxjs';
+import { UserProfile } from '../../models/user-profile.model';
 
 @Component({
   selector: 'app-account-menu',
@@ -19,8 +21,11 @@ export class AccountMenu implements OnInit {
   @Output() requestClose = new EventEmitter<void>();
 
   user: User | null = null;
+  userProfile$!: Observable<UserProfile | null>;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.userProfile$ = this.authService.userProfile$;
+  }
 
   // Called after input properties are set, but before DOM is ready
   ngOnInit() {
