@@ -10,15 +10,15 @@
   </div>
   <div *ngIf="user" class="logged-in">
     <div class="mb-2 lg:hidden">
-      <span class="font-body font-medium text-base text-white lg:text-black">
-        Hi, {{ user.displayName || 'baker' }}
+      <span class="font-heading font-normal text-lg text-black">
+        Hi there, {{ user.displayName || 'baker' }}!
       </span>
     </div>
     <div class="">
       <button
         (click)="handleSignOut()"
-        class="font-body font-semibold text-sm text-white lg:text-black px-2 py-1 rounded-sm border border-light"
-      >sign out</button>
+        class="font-body font-semibold text-sm text-black tracking-wide px-2 py-1 rounded-sm border-2 border-light"
+      >Sign Out</button>
     </div>
   </div>
 </div>
