@@ -1,7 +1,7 @@
 <form [formGroup]="profileForm" class="mb-6">
   <!-- Edit mode -->
   <div *ngIf="isEditingProfile">
-    <div class="flex border border-light px-1 py-2 rounded-sm">
+    <div class="flex border border-light px-2 py-2 rounded-sm">
       <div class="flex flex-col gap-1">
         <div class="">
           <label class="font-body font-normal text-sm">Display name</label>
@@ -38,7 +38,7 @@
   <div *ngIf="!isEditingProfile">
     <div 
       *ngIf="userProfile$ | async as profile" 
-      class="flex border border-light px-1 py-2 rounded-sm"
+      class="flex border border-light px-2 py-2 rounded-sm"
     >
       <div *ngIf="!profile.displayName && !profile.firstName && !profile.lastName; else profileData">
         <p class="font-body font-normal text-sm color-dark-gray">No profile yet.</p>
