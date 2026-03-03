@@ -1,29 +1,30 @@
-<div class="homepage flex flex-col items-center">
-  <div class="homepage-links flex justify-between gap-4 lg:gap-12 m-6 lg:w-fit font-heading font-semibold text-2xl lg:text-6xl lg:tracking-widest">
-    <a class="tracking-wide underline-offset-10 hover:underline" routerLink="/profile">BAKE</a>
-    <a class="tracking-wide underline lg:no-underline underline-offset-10 hover:underline" routerLink="recipes/new">LOG</a>
+<div 
+  *ngIf="userProfile$ | async as userProfile" 
+  class="homepage flex flex-col px-1 py-4"
+>
+  <!-- Display for logged-in users -->
+  <div>
+    <h1 class="font-subheading font-bold text-4xl lg:text-6xl mb-6">
+      Hi, <br>
+      {{ userProfile.displayName || userProfile.firstName || 'baker' }}
+    </h1>
+    <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
+    <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-semibold text-lg lg:text-xl tracking-wide">
+      <a class="px-2 py-0.5 rounded-sm border-2 border-light" routerLink="/profile">BAKE</a>
+      <a class="px-2 py-0.5 rounded-sm border-2 border-orange" routerLink="recipes/new">LOG</a>
+    </div>
   </div>
 
-  <div class="bg-light-gray px-2 py-2">
+  <!-- Display for guest users -->
+  <div *ngIf="!user" class="bg-light-gray px-2 py-2">
     <div class="flex flex-col gap-2">
-      <div class="font-body font-normal text-base mb-2">
-        <h1 class="mb-1">Note:</h1>
-        <p class="">
-          This site is currently work-in-progress. Features may be incomplete or subject to change.
-          Your feedback is very much appreciated; please feel free to report any bugs or leave suggestions 
-          <a href="https://github.com/jisung594/bakers-logbook/issues/1" class="underline">here</a>.
-        </p>
-      </div>
-
-      <div>
-        <p class="font-subheading font-bold text-base">Welcome to the Baker's Logbook! Over the past seven months, 
-          I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
-          I've repeatedly practiced, as well as notes on what worked and what didn't. My goal is to digitize 
-          this notebook and create a more refined "logbook" that I can easily reference and share with others.
-          This project is built using Angular and styled with Tailwind CSS, with Firebase handling authentication 
-          and data storage.
-        </p>
-      </div>
+      <p class="font-body font-normal text-base">Welcome to the Baker's Logbook! Over the past seven months, 
+        I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
+        I've repeatedly practiced, as well as notes on what worked and what didn't. My goal is to digitize 
+        this notebook and create a more refined "logbook" that I can easily reference and share with others.
+        This project is built using Angular and styled with Tailwind CSS, with Firebase handling authentication 
+        and data storage.
+      </p>
     </div>
   </div>
   <div class="h-8"></div> <!-- Spacer div -->
