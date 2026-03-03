@@ -20,7 +20,6 @@ import { User } from 'firebase/auth';
   styleUrl: './header.css',
 })
 export class Header {
-  // user$ = this.authService.authState$;
   user$!: Observable<User | null>;
   isMenuOpen = false;
 
