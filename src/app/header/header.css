@@ -1,0 +1,29 @@
+@keyframes slideIn {
+  from {
+    opacity: 0.5; 
+    transform: translateX(80%); 
+  }
+  to {
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes slideOut {
+  from { 
+    opacity: 1;
+    transform: translateX(0); 
+  }
+  to { 
+    opacity: 0.5;
+    transform: translateX(80%); 
+  }
+}
+
+.menu-enter {
+  animation: slideIn 0.7s ease-out;
+}
+
+.menu-leave {
+  animation: slideOut 0.5s ease-in;
+}

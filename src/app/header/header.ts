@@ -31,9 +31,4 @@ export class Header {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-
-  closeMenu() {
-    this.isMenuOpen = false;
-  }
-
 }

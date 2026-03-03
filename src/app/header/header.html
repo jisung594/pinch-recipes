@@ -1,17 +1,17 @@
 <div class="flex items-center justify-between px-2 py-2 md:h-8 md:px-6 bg-white">
   <div class="flex">
-     <img 
+    <img 
       class="w-8 md:w-10"
       src="assets/logo_full_black.svg" 
       alt="Baker's Logbook logo"
       routerLink="/"
-     />
+    />
   </div>
 
   <div class="flex items-center gap-2 px-1 py-0.5 rounded-sm border-2 lg:border-0 border-light">
     <button 
       mat-icon-button 
-      matTooltip="Click to Toggle Menu" 
+      matTooltip="Click to Open Menu" 
       (click)="toggleMenu()" 
       class="menu-btn lg:hidden flex"
     >
@@ -28,44 +28,46 @@
       </div>
       <app-account-menu></app-account-menu>
     </nav>
+  </div>
+</div>
 
-    <!-- Open nav menu on small screens -->
-    <div
-      *ngIf="isMenuOpen"
-      class="fixed inset-0 z-50 bg-white"
-    >
-      <div class="flex flex-col justify-between h-full">
-        <div class="flex items-center justify-between px-2 py-2">
-          <img 
-            class="w-8 md:w-10"
-            src="assets/logo_full_black.svg"  
-            alt="Baker's Logbook logo"
-            routerLink="/"
-            (click)="closeMenu()"
-          />
-          <div class="flex items-center px-1 py-0.5 rounded-sm border-2 border-light">
-            <button 
-              mat-icon-button 
-              matTooltip="Click to Close Menu" 
-              (click)="closeMenu()"
-              class="close-btn lg:hidden flex"
-            >
-              <mat-icon aria-label="close" class="">close</mat-icon>
-            </button>
-          </div>
-        </div>
-        <nav class="flex flex-col justify-between h-full px-4 py-6 text-black">
-          <div 
-            *ngIf="user$ | async" 
-            class="menu-options flex flex-col gap-2 font-subheading text-2xl"
-          >
-            <a routerLink="/" (click)="closeMenu()">home</a>
-            <a routerLink="recipes/new" (click)="closeMenu()">new recipe</a>
-            <a routerLink="/profile" (click)="closeMenu()">profile</a>
-          </div>
-          <app-account-menu (requestClose)="closeMenu()"></app-account-menu>
-        </nav>
+<!-- Open nav menu on small screens -->
+<div
+  *ngIf="isMenuOpen"
+  class="fixed inset-0 z-50 bg-white"
+  animate.enter="menu-enter"
+  animate.leave="menu-leave"
+>
+  <div class="flex flex-col justify-between h-full">
+    <div class="flex items-center justify-between px-2 py-2">
+      <img 
+        class="w-8 md:w-10"
+        src="assets/logo_full_black.svg"  
+        alt="Baker's Logbook logo"
+        routerLink="/"
+        (click)="toggleMenu()"
+      />
+      <div class="flex items-center px-1 py-0.5 rounded-sm border-2 border-light">
+        <button 
+          mat-icon-button 
+          matTooltip="Click to Close Menu" 
+          (click)="toggleMenu()"
+          class="close-btn lg:hidden flex"
+        >
+          <mat-icon aria-label="close" class="">close</mat-icon>
+        </button>
       </div>
     </div>
+    <nav class="flex flex-col justify-between h-full px-4 py-6 text-black">
+      <div 
+        *ngIf="user$ | async" 
+        class="menu-options flex flex-col gap-2 font-subheading text-2xl"
+      >
+        <a routerLink="/" (click)="toggleMenu()">home</a>
+        <a routerLink="recipes/new" (click)="toggleMenu()">new recipe</a>
+        <a routerLink="/profile" (click)="toggleMenu()">profile</a>
+      </div>
+      <app-account-menu (requestClose)="toggleMenu()"></app-account-menu>
+    </nav>
   </div>
 </div>
