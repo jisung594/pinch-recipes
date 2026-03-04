@@ -16,5 +16,6 @@ export function mapInstructionRows(rows: InstructionRow[]): Instruction[] {
   return rows.map((row) => ({
     step: row.controls.step.value,
     order: row.controls.order.value,
+    notes: row.controls.notes.value,
   }));
 }

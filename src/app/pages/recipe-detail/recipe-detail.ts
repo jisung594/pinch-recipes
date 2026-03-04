@@ -77,6 +77,7 @@ export class RecipeDetail {
           this.fb.group({
             step: this.fb.control(i.step, { nonNullable: true }),
             order: this.fb.control(i.order, { nonNullable: true }),
+            notes: this.fb.control(i.notes, { nonNullable: true }),
           })
         );
         

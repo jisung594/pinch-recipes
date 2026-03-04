@@ -12,6 +12,7 @@ export interface Ingredient {
 export interface Instruction {
   step: string;
   order: number;
+  notes: string[];
 }
 
 // recipe document structure (saved to Firestore)

@@ -35,7 +35,6 @@ export class InstructionsForm {
     private toastService: ToastService
   ) {
     this.instructionsForm = this.fb.group({
-      // instructions: this.fb.array([this.createInstruction(1)]) // starts first step in order at 1
       instructions: this.fb.array([this.createInstruction()])
     })
   }
@@ -59,6 +58,7 @@ export class InstructionsForm {
       return this.fb.group({
         step: this.fb.control(removedItemValue.step ?? '', { nonNullable: true }),
         order: this.fb.control(removedItemValue.order ?? 0, { nonNullable: true }),
+        notes: this.fb.control<string[]>(removedItemValue.notes ?? [], { nonNullable: true }),
       });
     }
 
@@ -66,6 +66,7 @@ export class InstructionsForm {
     return this.fb.group({
       step: this.fb.control('', { nonNullable: true }),
       order: this.fb.control(0, { nonNullable: true }),
+      notes: this.fb.control<string[]>([], { nonNullable: true }),
     });
   }
 
