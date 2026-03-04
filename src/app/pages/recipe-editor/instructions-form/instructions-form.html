@@ -14,9 +14,10 @@
         <!-- Edit mode -->
         <div 
           *ngIf="editable" 
-          class="flex flex-row"
+          class="flex flex-col"
         >
-          <div class="flex justify-between gap-2 w-full px-1 py-1 rounded-sm bg-light-blue">
+          <!-- Instruction step field-->
+          <div class="flex justify-between gap-2 w-full px-1 py-1 rounded-sm bg-light-blue mb-1">
             <div class="flex w-full">
               <textarea 
                 matInput 
@@ -33,13 +34,25 @@
                 (click)="removeInstruction(i)">&times;</button>
             </div>
           </div>
+
+          <!-- Instruction notes field -->
+          <div>
+            <textarea
+              matInput
+              placeholder="Notes for step {{ i + 1 }}"
+              formControlName="notes"
+              class="form-field font-normal text-base w-full bg-white border-2 border-light rounded-sm"
+            ></textarea>
+          </div>
+
         </div>
 
         <!-- View mode -->
         <div 
           *ngIf="!editable" 
-          class="flex border-b border-light"
+          class="flex flex-col border-b border-light"
         >
+          <!-- Instruction step field -->
           <div class="flex gap-1 w-full mb-1">
             <div class="step-label w-2 shrink-0">
               <p class="font-body font-black text-base">{{ i + 1 }}</p>
@@ -58,6 +71,11 @@
               </div>
             </ng-template>
           </div>
+
+          <!-- Instruction notes field -->
+           <div *ngIf="instruction.value.notes && instruction.value.notes.length > 0">
+            <p>{{ instruction.value.notes }}</p>
+           </div>
         </div>
       </div>
     </div>
