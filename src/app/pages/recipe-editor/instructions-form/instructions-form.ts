@@ -58,7 +58,7 @@ export class InstructionsForm {
       return this.fb.group({
         step: this.fb.control(removedItemValue.step ?? '', { nonNullable: true }),
         order: this.fb.control(removedItemValue.order ?? 0, { nonNullable: true }),
-        notes: this.fb.control<string[]>(removedItemValue.notes ?? [], { nonNullable: true }),
+        notes: this.fb.control(removedItemValue.notes ?? '', { nonNullable: true }),
       });
     }
 
@@ -66,7 +66,7 @@ export class InstructionsForm {
     return this.fb.group({
       step: this.fb.control('', { nonNullable: true }),
       order: this.fb.control(0, { nonNullable: true }),
-      notes: this.fb.control<string[]>([], { nonNullable: true }),
+      notes: this.fb.control('', { nonNullable: true }),
     });
   }
 

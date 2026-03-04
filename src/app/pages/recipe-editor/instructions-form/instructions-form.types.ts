@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export interface InstructionFormGroup {
   step: FormControl<string>;
   order: FormControl<number>;
-  notes: FormControl<string[]>;
+  notes: FormControl<string>;
 }
 
 export type InstructionRow = FormGroup<InstructionFormGroup>;
@@ -12,5 +12,5 @@ export type InstructionRow = FormGroup<InstructionFormGroup>;
 export interface InstructionValue {
   step: string;
   order: number;
-  notes: string[];
+  notes: string;
 }
