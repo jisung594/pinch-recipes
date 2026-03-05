@@ -1,17 +1,19 @@
-<div 
-  *ngIf="userProfile$ | async as userProfile" 
-  class="homepage flex flex-col px-1 py-4"
->
+<div>
   <!-- Display for logged-in users -->
-  <div>
-    <h1 class="font-subheading font-bold text-4xl lg:text-6xl mb-6">
-      Hi, <br>
-      {{ userProfile.displayName || userProfile.firstName || 'baker' }}
-    </h1>
-    <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
-    <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-semibold text-lg lg:text-xl tracking-wide">
-      <a class="px-2 py-0.5 rounded-sm border-2 border-light" routerLink="/profile">BAKE</a>
-      <a class="px-2 py-0.5 rounded-sm border-2 border-orange" routerLink="recipes/new">LOG</a>
+  <div 
+    *ngIf="userProfile$ | async as userProfile" 
+    class="homepage flex flex-col px-1 py-4"
+  >
+    <div>
+      <h1 class="font-subheading font-bold text-4xl lg:text-6xl mb-6">
+        Hi, <br>
+        {{ userProfile.displayName || userProfile.firstName || 'baker' }}
+      </h1>
+      <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
+      <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-semibold text-lg lg:text-xl tracking-wide">
+        <a class="px-2 py-0.5 rounded-sm border-2 border-light" routerLink="/profile">BAKE</a>
+        <a class="px-2 py-0.5 rounded-sm border-2 border-orange" routerLink="recipes/new">LOG</a>
+      </div>
     </div>
   </div>
 
