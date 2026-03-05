@@ -1,4 +1,4 @@
-# Baker's Logbook
+# Pinch
 
 A recipe management tool for home bakers to create, organize, and refine recipes. Designed to feel like a manual logbook — simple, structured, and built to evolve over time. This project was built to both create a practical tool I use in my day-to-day life as a home baker and spend time working in Angular after using React professionally.
 
