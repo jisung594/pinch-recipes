@@ -110,3 +110,9 @@ body {
 #toggle-public-button.mdc-switch--selected:hover .mdc-switch__track::after {
   background: var(--orange) !important;
 }
+
+/* Hide default marker for <details> */
+summary::-webkit-details-marker, 
+summary::marker {
+  display: none;
+}
