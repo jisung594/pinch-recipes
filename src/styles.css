@@ -95,7 +95,8 @@ body {
   color: var(--dark-gray);
 }
 
-.snackbar-dismiss .mdc-snackbar__surface {
+.snackbar-dismiss .mdc-snackbar__surface,
+.snackbar-undo .mdc-snackbar__surface {
   background-color: var(--light-blue) !important;
   color: black !important;
   z-index: 1000 !important;
