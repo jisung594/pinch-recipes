@@ -16,7 +16,7 @@
           *ngIf="editable"
           class="flex flex-row"
         >
-          <div class="flex flex-col w-full px-1 py-1 rounded-sm bg-light-blue">
+          <div class="flex flex-col w-full px-1 py-1 rounded-sm bg-light-blue border border-dark">
             <div class="editing-options-editmode flex flex-row justify-between mb-2">
               <label *ngIf="ingredient.value.name" class="font-body font-medium text-base uppercase tracking-wide">{{ ingredient.value.name }}</label>
               <label *ngIf="!ingredient.value.name" class="font-body font-medium text-base italic color-dark-gray">Name</label>
