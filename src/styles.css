@@ -93,17 +93,12 @@ body {
 
 .form-field::placeholder {
   color: var(--dark-gray);
-  /* padding-inline: calc(var(--spacing) * 1); */
 }
 
-/* size of "Edit" icon */
-/* .material-icons {
-  font-size: 22px;
-} */
-
-.snackbar-dismiss {
-  --mdc-snackbar-container-color:black;
-  --mat-snack-bar-button-color: var(--orange);
+.snackbar-dismiss .mdc-snackbar__surface {
+  background-color: var(--light-blue) !important;
+  color: black !important;
+  z-index: 1000 !important;
 }
 
 .user-menu {
