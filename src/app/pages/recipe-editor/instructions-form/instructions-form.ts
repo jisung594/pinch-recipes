@@ -5,7 +5,7 @@ import {
   FormGroup, 
   ReactiveFormsModule
 } from '@angular/forms';
-import { CdkDrag } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,7 @@ import { ToastService } from '../../../services/toast.service';
   standalone: true,
   imports: [
     CdkDrag,
+    CdkDropList,
     CommonModule, 
     ReactiveFormsModule,
     MatButtonModule,

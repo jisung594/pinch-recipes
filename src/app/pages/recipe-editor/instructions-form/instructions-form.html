@@ -7,6 +7,7 @@
       class="flex flex-col gap-3"
     >
       <div
+        cdkDropList 
         *ngFor="let instruction of instructions.controls; let i = index"
         [formGroupName]="i"
         class="instruction-row"
@@ -15,7 +16,7 @@
         <div
           cdkDrag 
           *ngIf="editable" 
-          class="flex flex-col"
+          class="flex flex-row gap-1"
         >
           <div class="flex justify-between gap-2 w-full rounded-sm bg-light-blue border border-dark px-1 py-1">
             <div class="w-full">
@@ -58,6 +59,11 @@
                 </div>
               </div>
             </div>
+          </div>
+          
+          <!-- Drag handle -->
+          <div cdkDragHandle class="flex items-center cursor-move">
+            <mat-icon>drag_indicator</mat-icon>
           </div>
         </div>
 
