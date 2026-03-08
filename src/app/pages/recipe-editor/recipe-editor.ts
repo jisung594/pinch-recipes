@@ -1,8 +1,6 @@
 import { 
-  Component, 
-  EventEmitter, 
+  Component,
   Input, 
-  Output, 
   OnInit 
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -232,6 +230,31 @@ export class RecipeEditor implements OnInit {
       }
     } catch (err) {
       console.error('Error saving recipe:', err);
+    }
+  }
+
+  async confirmDelete() {
+    const recipeName = this.recipeForm.get('title')?.value;
+
+    if (confirm(`Delete ${recipeName || 'this recipe'}? This cannot be undone.`)) {
+      await this.deleteRecipe();
+    }
+  }
+
+  async deleteRecipe() {
+    if (!this.isAuthor || !this.recipeId) return;
+    
+    try {
+      const user = await this.authService.getCurrentUser();
+      
+      if (user) {
+        await this.firestoreService.deleteRecipe(user.uid, this.recipeId);
+        console.log('Recipe deleted successfully.');
+        this.router.navigate(['/profile']);
+      }
+    } catch (err) {
+      console.error('Delete failed:', err);
+      this.toastService.notify('Failed to delete recipe.');
     }
   }
 }
