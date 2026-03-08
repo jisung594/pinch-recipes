@@ -30,7 +30,7 @@
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
-      <div *ngIf="this.isAuthor || !recipeId" class="editing-options-viewmode flex my-1 md:my-3">
+      <div *ngIf="isAuthor || !recipeId" class="editing-options-viewmode flex my-1 md:my-3">
         <button 
           mat-icon-button 
           matTooltip="Click to Edit" 
@@ -52,7 +52,7 @@
 
           <!-- Edit mode - yield -->
           <div 
-            *ngIf="(this.isAuthor || !recipeId) && isEditingYield; else viewModeYield" 
+            *ngIf="(isAuthor || !recipeId) && isEditingYield; else viewModeYield" 
             class="flex w-full"
           >
             <div class="yield-inputs flex flex-row gap-1">
@@ -74,7 +74,7 @@
           </div>
         </div>
 
-        <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
+        <div *ngIf="isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
             (click)="editYield()" 
@@ -103,7 +103,7 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Ingredients</h2>
 
-        <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
+        <div *ngIf="isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
@@ -131,7 +131,7 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Instructions</h2>
 
-        <div *ngIf="this.isAuthor || !recipeId" class="editing-options flex shrink-0">
+        <div *ngIf="isAuthor || !recipeId" class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
@@ -154,7 +154,7 @@
     </div>
 
     <!-- Public / private toggle -->
-    <div *ngIf="this.isAuthor" class="flex flex-col">
+    <div *ngIf="isAuthor" class="flex flex-col">
       <div class="mb-1">
         <p class="text-xs color-dark-gray">
           {{ isPublic ? 'Anyone can view' : 'Only you can view' }}
@@ -170,23 +170,33 @@
     </div>
   </div>
 
-  <!-- Save options (fixed to bottom) -->
-  <div *ngIf="this.isAuthor || !recipeId" class="fixed top-auto bottom-0 w-full my-2 bg-linear-to-r from-white to-transparent">
-    <div class="flex justify-between">
+  <!-- Options fixed footer (only for recipe authors) -->
+  <div *ngIf="isAuthor" class="flex justify-between fixed bottom-0 left-0 right-0 px-2 py-1 bg-white">
+    <!-- Save / Archive options -->
+    <div class="flex gap-1 py-0">
+      <button
+        type="button"
+        class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white border-2 border-orange shadow-md rounded-sm"
+        (click)="saveRecipe()"
+      >SAVE</button>
+      <button
+        *ngIf="recipeId"
+        type="button"
+        class="font-body font-normal text-sm tracking-widest color-dark-gray px-1 py-1 bg-white border border-dark shadow-md rounded-sm"
+        (click)="toggleArchive()"
+      >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
+    </div>
 
-      <div class="flex gap-1 py-0">
-        <button
-          type="button"
-          class="font-body font-semibold text-sm tracking-widest px-1 py-1 rounded-sm bg-white border-orange border-2"
-          (click)="saveRecipe()"
-        >SAVE</button>
-        <button
-          *ngIf="recipeId"
-          type="button"
-          class="font-body font-semibold text-sm tracking-widest px-1 py-1 bg-white rounded-sm border-dark border-2 color-dark-gray"
-          (click)="toggleArchive()"
-        >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
-      </div>
+    <!-- Delete option-->
+    <div *ngIf="recipeId" class="flex items-center">
+      <button
+        type="button"
+        (click)="confirmDelete()"
+        class="font-body font-semibold text-xs tracking-widest color-red px-1 py-0.5 bg-white border border-red shadow-md rounded-sm hover:underline flex items-center gap-0.5"
+      >
+        <mat-icon class="text-sm">delete_outline</mat-icon>
+        DELETE
+      </button>
     </div>
   </div>
 
