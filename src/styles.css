@@ -85,6 +85,10 @@ body {
   border-color: var(--orange);
 }
 
+.border-red {
+  border-color: var(--red);
+}
+
 .form-field {
   border-radius: var(--radius-sm);
   padding-block: calc(var(--spacing) * 1);
