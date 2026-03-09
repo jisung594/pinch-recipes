@@ -5,7 +5,13 @@ import {
   FormGroup, 
   ReactiveFormsModule
 } from '@angular/forms';
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { 
+  CdkDrag, 
+  CdkDragDrop, 
+  CdkDropList, 
+  DragDropModule, 
+  moveItemInArray 
+} from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -49,6 +55,22 @@ export class InstructionsForm {
       instructionsFormArray.clear(); // Removes form controls unrelated to initialInstructions
       this.initialInstructions.forEach(row => instructionsFormArray.push(row));
     }
+  }
+
+  /**
+   * Handles the drag-and-drop event for reordering instructions. Triggered when a user 
+   * drops a dragged item (instruction form group) within the drop zone (cdkDropList), 
+   * this function updates the form to reflect the new sequential order.
+   */
+  handleReorder(event: CdkDragDrop<FormGroup[]>) {
+    // Built-in utility func to update form array order 
+    moveItemInArray(
+      this.instructions.controls,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    this.emitChange();
   }
 
   get instructions(): FormArray<InstructionRow> {
