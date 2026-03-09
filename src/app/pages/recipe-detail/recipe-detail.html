@@ -1,18 +1,20 @@
-<div *ngIf="!recipe" class="flex flex-col items-center">
-  <!-- Placeholder for loading screen -->
-  <h1 class="font-subheading font-bold text-2xl px-0 py-4">Loading</h1>
-  <h1 class="font-subheading font-bold text-2xl px-0 py-4">. . .</h1>
-</div>
+<div class="flex flex-col">
+  <div *ngIf="!recipe" class="flex flex-col items-center">
+    <!-- Placeholder for loading screen -->
+    <h1 class="font-subheading font-bold text-2xl px-0 py-4">Loading</h1>
+    <h1 class="font-subheading font-bold text-2xl px-0 py-4">. . .</h1>
+  </div>
 
-<app-recipe-editor
-  *ngIf="recipe"
-  [isAuthor]="isAuthor"
-  [recipeId]="recipeId"
-  [title]="recipe.title"
-  [yield]="recipe.yield"
-  [ingredients]="ingredientsRows"
-  [instructions]="instructionsRows"
-  [isPublic]="recipe.isPublic"
-  [archived]="archived"
-  [editable]="!editable"
-></app-recipe-editor>
+  <app-recipe-editor
+    *ngIf="recipe"
+    [isAuthor]="isAuthor"
+    [recipeId]="recipeId"
+    [title]="recipe.title"
+    [yield]="recipe.yield"
+    [ingredients]="ingredientsRows"
+    [instructions]="instructionsRows"
+    [isPublic]="recipe.isPublic"
+    [archived]="archived"
+    [editable]="!editable"
+  ></app-recipe-editor>
+</div>

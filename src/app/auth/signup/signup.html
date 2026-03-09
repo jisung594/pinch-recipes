@@ -1,12 +1,12 @@
 <div class="signup-page flex flex-col gap-4 px-1 py-2">
   <div>
-    <h1 class="flex justify-center font-subheading font-extrabold text-2xl tracking-wide mb-2">Create Account</h1>
+    <h1 class="flex justify-center font-body font-bold text-2xl tracking-normal mb-4">Create Account</h1>
     <form
       [formGroup]="signupForm"
       (submit)="handleSignUp()"
       class="flex flex-col items-center gap-2"
     >
-      <div class="flex flex-col w-full lg:w-1/2">
+      <div class="flex flex-col w-full md:w-1/2 lg:w-1/3">
         <label for="input-first-name" class="font-normal text-sm">First Name</label>
         <input
           id="input-first-name"
@@ -18,7 +18,7 @@
           required
         />
       </div>
-      <div class="flex flex-col w-full lg:w-1/2">
+      <div class="flex flex-col w-full md:w-1/2 lg:w-1/3">
         <label for="input-last-name" class="font-normal text-sm">Last Name</label>
         <input
           id="input-last-name"
@@ -30,7 +30,7 @@
           required
         />
       </div>
-      <div class="flex flex-col w-full lg:w-1/2">
+      <div class="flex flex-col w-full md:w-1/2 lg:w-1/3">
         <label for="input-display-name" class="font-normal text-sm">Display Name</label>
         <input
           id="input-display-name"
@@ -42,7 +42,7 @@
           required
         />
       </div>
-      <div class="flex flex-col w-full lg:w-1/2">
+      <div class="flex flex-col w-full md:w-1/2 lg:w-1/3">
         <label for="input-email" class="font-normal text-sm">Email</label>
         <input
           id="input-email"
@@ -68,7 +68,7 @@
           Another account already uses this email. Please try another.
         </div>
       </div>
-      <div class="flex flex-col w-full lg:w-1/2">
+      <div class="flex flex-col w-full md:w-1/2 lg:w-1/3">
         <label for="input-password" class="font-normal text-sm">Password</label>
         <input
           id="input-password"
@@ -95,7 +95,7 @@
 
       <button 
         [disabled]="!signupForm.valid"
-        class="font-body font-semibold text-sm w-full lg:w-1/2 px-2 py-1 rounded-sm border-2 border-light"
+        class="font-body font-semibold text-sm w-full md:w-1/2 lg:w-1/3 px-2 py-1 mt-1 rounded-sm border-2 border-light"
         type="submit"
       >Register</button>
     </form>

@@ -1,4 +1,4 @@
-<form [formGroup]="ingredientsForm" class="">
+<form [formGroup]="ingredientsForm" class="md:w-3/4">
   <div formArrayName="ingredients" class="mb-2">
 
     <!-- Display when recipe already has ingredients -->
@@ -49,8 +49,8 @@
                     <option value="" disabled selected>Select unit</option>
                     <optgroup label="Volume">
                       <option value="cup">cup</option>
-                      <option value="fl-oz">fl oz</option>
-                      <option value="tbsp">tbsp</option>
+                      <option value="fl oz">fl oz</option>
+                      <option value="Tbsp">tbsp</option>
                       <option value="tsp">tsp</option>
                     </optgroup>
                     <optgroup label="Weight">
@@ -59,8 +59,8 @@
                       <option value="lb">lb</option>
                     </optgroup>
                     <optgroup label="Other">
-                      <option value="each">each</option>
                       <option value="pinch">pinch</option>
+                      <option value="">N/a</option>
                   </select>
                 </div>
               </div>
