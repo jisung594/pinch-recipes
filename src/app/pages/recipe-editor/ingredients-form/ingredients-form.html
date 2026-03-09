@@ -3,11 +3,12 @@
 
     <!-- Display when recipe already has ingredients -->
     <div 
+      cdkDropList
+      (cdkDropListDropped)="handleReorder($event)"
       *ngIf="ingredients && ingredients.length > 0" 
       class="flex flex-col gap-1"
     >
       <div
-        cdkDropList 
         *ngFor="let ingredient of ingredients.controls; let i = index"
         [formGroupName]="i"
         class="ingredient-row"

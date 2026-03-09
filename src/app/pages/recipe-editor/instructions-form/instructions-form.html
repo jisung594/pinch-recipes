@@ -3,11 +3,12 @@
     
     <!-- Display when recipe already has instructions -->
     <div 
+      cdkDropList 
+      (cdkDropListDropped)="handleReorder($event)"
       *ngIf="instructions && instructions.length > 0; else emptyInstructions"
       class="flex flex-col gap-3"
     >
       <div
-        cdkDropList 
         *ngFor="let instruction of instructions.controls; let i = index"
         [formGroupName]="i"
         class="instruction-row"
