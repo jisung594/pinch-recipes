@@ -77,7 +77,15 @@
           </div>
         </div>
 
-        <div *ngIf="isAuthor || !recipeId" class="editing-options flex shrink-0">
+        <div 
+          *ngIf="isAuthor || !recipeId" 
+          matRipple 
+          matRippleColor="rgba(162, 211, 255, 0.2)"
+          [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+          [matRippleUnbounded]="true"
+          [matRippleRadius]="30" 
+          class="editing-options flex shrink-0"
+        >
           <button 
             *ngIf="!isEditingYield"
             (click)="editYield()" 
@@ -106,7 +114,15 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Ingredients</h2>
 
-        <div *ngIf="isAuthor || !recipeId" class="editing-options flex shrink-0">
+        <div 
+          *ngIf="isAuthor || !recipeId" 
+          matRipple 
+          matRippleColor="rgba(162, 211, 255, 0.2)"
+          [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+          [matRippleUnbounded]="true"
+          [matRippleRadius]="30" 
+          class="editing-options flex shrink-0"
+        >
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
@@ -134,7 +150,15 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-lg tracking-wide">Instructions</h2>
 
-        <div *ngIf="isAuthor || !recipeId" class="editing-options flex shrink-0">
+        <div 
+          *ngIf="isAuthor || !recipeId"
+          matRipple 
+          matRippleColor="rgba(162, 211, 255, 0.2)"
+          [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+          [matRippleUnbounded]="true"
+          [matRippleRadius]="30" 
+          class="editing-options flex shrink-0"
+        >
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
@@ -179,7 +203,14 @@
     class="flex justify-between fixed bottom-0 left-0 right-0 px-2 py-2 md:px-6 md:py-4 bg-white"
   >
     <!-- Save / Archive options -->
-    <div class="flex gap-1 py-0">
+    <div 
+      matRipple 
+      matRippleColor="rgba(255, 165, 0, 0.2)"
+      [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="30"
+      class="flex gap-1 py-0"
+    >
       <button
         type="button"
         class="font-body font-semibold text-sm md:text-base tracking-widest px-1 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm"
@@ -194,7 +225,15 @@
     </div>
 
     <!-- Delete option-->
-    <div *ngIf="recipeId" class="flex items-center">
+    <div 
+      *ngIf="recipeId" 
+      matRipple 
+      matRippleColor="rgba(178, 34, 34, 0.2)"
+      [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="30"
+      class="flex items-center"
+    >
       <button
         type="button"
         (click)="confirmDelete()"

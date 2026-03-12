@@ -12,6 +12,7 @@ import {
   Validators 
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
@@ -34,6 +35,7 @@ import { Recipe } from '../../models/recipe.model';
     IngredientsForm, 
     InstructionsForm,
     MatIconModule,
+    MatRippleModule,
     MatSlideToggleModule
   ],
   templateUrl: './recipe-editor.html',
