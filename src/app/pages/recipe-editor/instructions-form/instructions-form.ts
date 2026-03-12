@@ -15,6 +15,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 import { InstructionRow, InstructionValue } from './instructions-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -28,6 +29,7 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatRippleModule,
   ],
   templateUrl: './instructions-form.html',
   styleUrl: './instructions-form.css'

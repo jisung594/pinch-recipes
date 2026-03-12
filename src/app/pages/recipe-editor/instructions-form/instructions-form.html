@@ -6,7 +6,7 @@
       cdkDropList 
       (cdkDropListDropped)="handleReorder($event)"
       *ngIf="instructions && instructions.length > 0; else emptyInstructions"
-      class="flex flex-col gap-3"
+      class="flex flex-col gap-1"
     >
       <div
         *ngFor="let instruction of instructions.controls; let i = index"
@@ -19,7 +19,7 @@
           *ngIf="editable" 
           class="flex flex-row gap-1"
         >
-          <div class="flex justify-between gap-2 w-full rounded-sm bg-light-blue border border-dark px-1 py-1">
+          <div class="flex justify-between gap-2 w-full rounded-sm bg-light-blue border border-black px-1 py-1">
             <div class="w-full">
               <div class="editing-options-editmode flex flex-row justify-between mb-1">
                 <label class="font-body font-medium text-base">{{ i + 1 }}.</label>
@@ -41,11 +41,19 @@
 
               <!-- Instruction notes field -->
               <div class="flex flex-col w-full">
-                <div class="flex flex-col px-1 py-0.5 border border-light rounded-sm">
-                  <details closed class="group">
-                    <summary class="flex justify-between font-body font-medium text-sm px-0 py-0.5 list-none">
+                <div class="flex flex-col px-1 py-0.5 border border-dark rounded-sm">
+                  <details 
+                    closed
+                    matRipple 
+                    matRippleColor="rgba(162, 211, 255, 0.5)"
+                    [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+                    [matRippleUnbounded]="true"
+                    [matRippleRadius]="30"
+                    class="group"
+                  >
+                    <summary class="flex justify-between font-body font-medium text-sm color-dark-gray px-0 py-0.5 list-none">
                       Notes 
-                      <span class="transition-transform group-open:rotate-180">&#9661;</span>
+                      <span class="color-dark-gray transition-transform group-open:rotate-180">&#9661;</span>
                     </summary>
                     <div class="flex rounded-b-sm">
                       <textarea
@@ -55,7 +63,6 @@
                         class="form-field font-normal px-1 py-1 text-base w-full bg-white placeholder:italic"
                       ></textarea>
                     </div>
-
                   </details>
                 </div>
               </div>
