@@ -80,17 +80,32 @@
           *ngIf="!editable" 
           class="flex flex-col border-b border-light"
         >
-          <!-- Instruction step field -->
           <div class="flex gap-1 w-full mb-1">
             <div class="step-label w-2 shrink-0">
               <p class="font-body font-black text-base">{{ i + 1 }}</p>
             </div>
-            <div 
-              class="step-text flex-1"
-              *ngIf="instruction.value.step; else emptyInstruction" 
-            >
-              <p class="font-body text-base">{{ instruction.value.step }}</p>
+
+            <div class="flex flex-col">
+              <!-- Instruction step field -->
+              <div 
+                class="step-text flex-1"
+                *ngIf="instruction.value.step; else emptyInstruction" 
+              >
+                <p class="font-body text-base mb-1">{{ instruction.value.step }}</p>
+              </div>
+
+              <!-- Instruction notes field -->
+              <div 
+                class=""
+                *ngIf="instruction.value.notes && instruction.value.notes.length > 0"
+              >
+                <p class="font-body text-sm color-dark-gray whitespace-pre-line">
+                  {{ instruction.value.notes }}
+                </p>
+              </div>
             </div>
+
+
             <ng-template #emptyInstruction>
               <div class="">
                 <p class="font-body text-base italic color-dark-gray">
@@ -99,16 +114,6 @@
               </div>
             </ng-template>
           </div>
-
-          <!-- Instruction notes field -->
-          <div 
-            *ngIf="instruction.value.notes && instruction.value.notes.length > 0"
-            class="mb-0.5"
-          >
-            <p class="font-body text-sm color-dark-gray whitespace-pre-line">
-              {{ instruction.value.notes }}
-            </p>
-           </div>
         </div>
       </div>
     </div>
