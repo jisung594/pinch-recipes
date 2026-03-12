@@ -15,6 +15,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 import { IngredientRow, IngredientValue } from './ingredients-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -31,6 +32,7 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatRippleModule,
   ]
 })
 export class IngredientsForm {
@@ -39,6 +41,7 @@ export class IngredientsForm {
   @Output() ingredientsChange = new EventEmitter<IngredientRow[]>();
   
   ingredientsForm: FormGroup;
+  newIngredientIndex: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -107,6 +110,9 @@ export class IngredientsForm {
     }
 
     this.ingredients.push(this.createIngredient());
+
+    // Set to auto-open details of new ingredient row
+    this.newIngredientIndex = this.ingredients.length - 1;
 
     // Notifies parent when an ingredient has been created
     this.emitChange();
