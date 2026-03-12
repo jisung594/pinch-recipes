@@ -84,18 +84,18 @@
           [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
           [matRippleUnbounded]="true"
           [matRippleRadius]="30" 
-          class="editing-options flex shrink-0"
+          class="editing-options flex shrink-0 border-b border-dark"
         >
           <button 
             *ngIf="!isEditingYield"
             (click)="editYield()" 
-            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
+            class="font-normal text-sm"
             type="button"
           >edit</button>
           <button
             *ngIf="isEditingYield" 
             (click)="saveYield()"
-            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
+            class="font-normal text-sm"
             type="button"
           >view</button>
         </div>
@@ -121,18 +121,18 @@
           [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
           [matRippleUnbounded]="true"
           [matRippleRadius]="30" 
-          class="editing-options flex shrink-0"
+          class="editing-options flex shrink-0 border-b border-dark"
         >
           <button 
             *ngIf="!isEditingIngredients"
             (click)="editIngredients()" 
-            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
+            class="font-normal text-sm"
             type="button"
           >edit</button>
           <button
             *ngIf="isEditingIngredients" 
             (click)="saveIngredients()"
-            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
+            class="font-normal text-sm"
             type="button"
           >view</button>
         </div>
@@ -157,16 +157,16 @@
           [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
           [matRippleUnbounded]="true"
           [matRippleRadius]="30" 
-          class="editing-options flex shrink-0"
+          class="editing-options flex shrink-0 border-b border-dark"
         >
           <button 
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()" 
-            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
+            class="font-normal text-sm"
           >edit</button>
           <button
             *ngIf="isEditingInstructions" 
-            class="font-normal text-sm underline lg:no-underline underline-offset-8 hover:underline"
+            class="font-normal text-sm"
             type="button" 
             (click)="saveInstructions()"
           >view</button>
@@ -245,5 +245,5 @@
     </div>
   </div>
 
-  <div class="h-8"></div> <!-- Spacer div -->
+  <div class="h-8 lg:h-16"></div> <!-- Spacer div -->
 </form>
