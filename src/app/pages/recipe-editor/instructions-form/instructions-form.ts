@@ -25,6 +25,7 @@ import { ToastService } from '../../../services/toast.service';
   imports: [
     CdkDrag,
     CdkDropList,
+    DragDropModule,
     CommonModule, 
     ReactiveFormsModule,
     MatButtonModule,
