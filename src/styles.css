@@ -122,6 +122,22 @@ summary::marker {
   display: none;
 }
 
+.drag-handle {
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+
+.cdk-drag-handle {
+  transition: background-color 0.4s ease-out, transform 0.2s ease-out;
+}
+
+/* Visual feedback upon grabbing item by the handle */
+.cdk-drag-handle:active {
+  background-color: var(--med-blue);
+  transform: scale(1.1);
+  border-radius: var(--border-radius);
+}
+
 /* The item being dragged */
 .cdk-drag-preview {
   box-shadow: 0 4px 4px rgba(118, 118, 118, 0.5);
