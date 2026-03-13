@@ -22,7 +22,7 @@
           <div class="flex flex-col w-full gap-1 px-1 py-1 rounded-sm bg-light-blue border border-black">
             <div class="editing-options-editmode flex flex-row justify-between">
               <label *ngIf="ingredient.value.name" class="font-body font-medium text-base uppercase tracking-wide">{{ ingredient.value.name }}</label>
-              <label *ngIf="!ingredient.value.name" class="font-body font-medium text-base italic color-dark-gray">Ingredient Name</label>
+              <label *ngIf="!ingredient.value.name" class="font-body font-normal text-base italic color-dark-gray">Ingredient Name</label>
               <button 
                 class="font-body font-medium text-xl"
                 type="button" 
@@ -39,7 +39,7 @@
                 [attr.open]="i === newIngredientIndex ? true : null" 
                 class="group"
               >
-                <summary class="flex justify-between font-body font-medium text-sm color-dark-gray px-0 py-0.5 list-none">
+                <summary class="flex justify-between font-heading font-medium text-sm tracking-wide color-dark-gray px-0 list-none">
                   Details 
                   <span class="color-dark-gray transition-transform group-open:rotate-180">&#9661;</span>
                 </summary>

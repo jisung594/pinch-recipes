@@ -47,11 +47,11 @@
         <div *ngIf="profile" class="flex flex-col gap-2">
           <div *ngIf="profile.displayName" class="flex flex-col">
             <label class="font-body font-normal text-sm mb-0.5">Display name</label>
-            <p class="font-heading font-normal text-lg">{{ profile.displayName }}</p>
+            <p class="font-body font-medium text-lg">{{ profile.displayName }}</p>
           </div>
           <div *ngIf="profile.firstName || profile.lastName" class="flex flex-col">
             <label class="font-body font-normal text-sm mb-0.5">Full name</label>
-            <p class="font-heading font-normal text-lg">{{ profile.firstName }} {{ profile.lastName }}</p>
+            <p class="font-body font-medium text-lg">{{ profile.firstName }} {{ profile.lastName }}</p>
           </div>
         </div>
       </ng-template>

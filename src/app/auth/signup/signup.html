@@ -1,6 +1,6 @@
 <div class="signup-page flex flex-col gap-4 px-1 py-2">
   <div>
-    <h1 class="flex justify-center font-body font-bold text-2xl tracking-normal mb-4">Create Account</h1>
+    <h1 class="flex justify-center font-heading font-medium text-3xl tracking-wide mb-4">Create Account</h1>
     <form
       [formGroup]="signupForm"
       (submit)="handleSignUp()"
@@ -102,7 +102,7 @@
   </div>
 
   <div class="flex justify-center">
-    <h2 class="font-subheading font-base text-sm">or sign-up with</h2>
+    <h2 class="font-body font-normal text-sm">or sign-up with</h2>
   </div>
 
   <div class="flex justify-center h-4 w-auto">
@@ -121,7 +121,7 @@
   </div>
 
   <div class="flex justify-center">
-    <p class="font-body font-normal text-sm">Already have an account? 
+    <p class="font-heading font-normal text-base tracking-wide">Already have an account? 
       <a class="font-bold" routerLink="/login">Login</a>
     </p>
   </div>
