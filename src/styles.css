@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Gilda+Display:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Gilda+Display:wght@400&family=Barlow+Condensed:wght@400;600&display=swap');
 @import "tailwindcss";
 
 @utility bg-cta-blue {
@@ -26,7 +26,7 @@
 }
 
 @theme {
-  --font-heading: "Gilda Display", sans-serif;
+  --font-heading: "Barlow Condensed", sans-serif;
   --font-subheading: "Gilda Display", serif;
   --font-body: "Work Sans", sans-serif;
 
