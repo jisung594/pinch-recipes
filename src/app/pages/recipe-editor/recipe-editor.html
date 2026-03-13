@@ -202,29 +202,7 @@
     *ngIf="isAuthor || !recipeId" 
     class="flex justify-between fixed bottom-0 left-0 right-0 px-2 py-2 md:px-6 md:py-4 bg-white"
   >
-    <!-- Save / Archive options -->
-    <div 
-      matRipple 
-      matRippleColor="rgba(255, 165, 0, 0.2)"
-      [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
-      [matRippleUnbounded]="true"
-      [matRippleRadius]="30"
-      class="flex gap-1 py-0"
-    >
-      <button
-        type="button"
-        class="font-body font-semibold text-sm md:text-base tracking-widest px-1 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm"
-        (click)="saveRecipe()"
-      >SAVE</button>
-      <button
-        *ngIf="recipeId"
-        type="button"
-        class="font-body font-normal text-sm md:text-base tracking-widest color-dark-gray px-1 py-0.5 bg-white border border-dark shadow-md rounded-sm"
-        (click)="toggleArchive()"
-      >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
-    </div>
-
-    <!-- Delete option-->
+    <!-- Delete / Archive options -->
     <div 
       *ngIf="recipeId" 
       matRipple 
@@ -232,16 +210,38 @@
       [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
       [matRippleUnbounded]="true"
       [matRippleRadius]="30"
-      class="flex items-center"
+      class="flex gap-1"
     >
       <button
         type="button"
         (click)="confirmDelete()"
-        class="font-body font-semibold text-xs md:text-sm tracking-widest color-red px-1 py-0.5 bg-white border border-red shadow-md rounded-sm hover:underline flex items-center gap-0.5"
+        class="font-body font-medium text-xs md:text-sm tracking-widest color-red px-1 py-0.5 bg-white shadow-md rounded-sm flex items-center gap-0.5"
       >
         <mat-icon class="text-sm">delete_outline</mat-icon>
         DELETE
       </button>
+      <button
+        *ngIf="recipeId"
+        type="button"
+        class="font-body font-medium text-xs md:text-sm tracking-widest px-1 py-0.5 bg-white shadow-md rounded-sm"
+        (click)="toggleArchive()"
+      >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
+    </div>
+    
+    <!-- Save option -->
+    <div 
+      matRipple 
+      matRippleColor="rgba(255, 165, 0, 0.2)"
+      [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="30"
+      class="flex"
+    >
+      <button
+        type="button"
+        class="font-body font-semibold text-sm md:text-base tracking-widest px-2 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm"
+        (click)="saveRecipe()"
+      >SAVE</button>
     </div>
   </div>
 
