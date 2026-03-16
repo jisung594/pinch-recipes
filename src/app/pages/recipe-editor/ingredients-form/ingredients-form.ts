@@ -89,6 +89,7 @@ export class IngredientsForm {
         name: this.fb.control(removedItemValue.name ?? '', { nonNullable: true }),
         quantity: this.fb.control(removedItemValue.quantity ?? '', { nonNullable: true }),
         unit: this.fb.control(removedItemValue.unit ?? '', { nonNullable: true }),
+        customUnit: this.fb.control(removedItemValue.customUnit ?? '', { nonNullable: true }),
       });
     }
 
@@ -97,6 +98,7 @@ export class IngredientsForm {
       name: this.fb.control('', { nonNullable: true }),
       quantity: this.fb.control('', { nonNullable: true }),
       unit: this.fb.control('', { nonNullable: true }),
+      customUnit: this.fb.control('', { nonNullable: true }),
     });
   }
 

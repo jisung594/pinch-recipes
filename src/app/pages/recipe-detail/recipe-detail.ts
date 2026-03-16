@@ -70,6 +70,7 @@ export class RecipeDetail {
             name: this.fb.control(i.name, { nonNullable: true }),
             quantity: this.fb.control(i.quantity, { nonNullable: true }),
             unit: this.fb.control(i.unit, { nonNullable: true }),
+            customUnit: this.fb.control(i.customUnit, { nonNullable: true }),
           })
         );
 

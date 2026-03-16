@@ -7,6 +7,7 @@ export interface Ingredient {
   name: string;
   quantity: string;
   unit: string;
+  customUnit: string;
 }
 
 export interface Instruction {

@@ -8,6 +8,7 @@ export function mapIngredientRows(rows: IngredientRow[]): Ingredient[] {
     name: row.controls.name.value,
     quantity: row.controls.quantity.value,
     unit: row.controls.unit.value,
+    customUnit: row.controls.customUnit.value,
   }));
 }
 
