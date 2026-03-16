@@ -22,7 +22,7 @@ export class ToastService {
 	notifyUndoable(
 		message: string, 
 		onUndo: () => void, // the callback passed in when user clicks "Undo"
-		duration: number = 10000
+		duration: number = 5000
 	) {
 		// Setting a variable here allows for interacting with the opened snackbar
     const snackBarRef: MatSnackBarRef<any> = this.snackBar.open(
