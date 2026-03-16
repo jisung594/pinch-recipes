@@ -57,12 +57,13 @@
                       </div>
                       <div class="flex flex-col w-1/2">
                         <label class="font-body font-normal text-sm">Unit</label>
-                        <select 
+                        <select
                           required
                           formControlName="unit"
                           class="form-field font-normal text-base w-full mt-1 bg-white appearance-none"
+                          [ngClass]="{'color-dark-gray italic': ingredient.get('unit')?.value === 'custom' || !ingredient.get('unit')?.value}"
                         >
-                          <option disabled selected>Select unit</option>
+                          <option value="" selected>Select unit</option>
 
                           <option disabled>Volume</option>
                           <option value="cup">cup</option>
@@ -77,8 +78,16 @@
                           
                           <option disabled>Other</option>
                           <option value="pinch">pinch</option>
-                          <option value="">N/a</option>
+                          <option value="custom">(custom)</option>
                         </select>
+
+                        <input 
+                          *ngIf="ingredient.get('unit')?.value === 'custom'"
+                          type="text" 
+                          placeholder="'cloves'"
+                          formControlName="customUnit" 
+                          class="form-field font-normal text-base w-full mt-1 bg-white placeholder:italic"
+                        >
                       </div>
                     </div>
                     <div class="flex flex-col w-full">
@@ -114,7 +123,7 @@
             <div *ngIf="ingredient.value.quantity || ingredient.value.unit || ingredient.value.name; else emptyIngredient" class="">
               <p class="font-body text-base">
                 {{ ingredient.value.quantity }}
-                {{ ingredient.value.unit }}
+                {{ ingredient.value.customUnit || ingredient.value.unit }}
                 {{ ingredient.value.name }}
               </p>
             </div>
