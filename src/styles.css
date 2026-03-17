@@ -141,15 +141,15 @@ summary::marker {
 /* The item being dragged */
 .cdk-drag-preview {
   box-shadow: 0 4px 4px rgba(118, 118, 118, 0.5);
-  opacity: 0.8;
   border-radius: var(--border-radius);
 }
 
 /* The gap where item will land */
 .cdk-drag-placeholder {
-  opacity: 0.4;
+  opacity: 0.6;
   background-color: var(--light-gray);
-  border: 4px dashed var(--light-blue);
+  border: 2px dotted var(--med-blue);
+  border-radius: var(--border-radius);
 }
 
 /* Smooth animation when dropping */
