@@ -15,17 +15,20 @@
         <a class="px-2 py-0.5 rounded-sm border-2 border-light" routerLink="/profile">SAVED</a>
       </div>
     </div>
+    <div class="h-8"></div> <!-- Spacer div -->
   </div>
 
   <!-- Display for guest users -->
-  <div *ngIf="!user" class="lg:w-1/2 bg-light-gray p-2 lg:p-4">
-    <p class="font-body font-normal text-base">Welcome to Pinch! Over the past seven months, 
-      I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
-      I've repeatedly practiced, as well as notes on what worked and what didn't. My goal is to digitize 
-      this notebook and create a more refined "logbook" that I can easily reference and share with others.
-      This project is built using Angular and styled with Tailwind CSS, with Firebase handling authentication 
-      and data storage.
-    </p>
+  <div *ngIf="!user" class="flex flex-col">
+    <div class="lg:w-1/2 bg-light-gray px-2 py-3 lg:p-4">
+      <p class="font-body font-normal text-base">Welcome to Pinch! Over the past seven months, 
+        I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
+        I've repeatedly practiced, as well as notes on what worked and what didn't. My goal is to digitize 
+        this notebook and create a more refined "logbook" that I can easily reference and share with others.
+        This project is built using Angular and styled with Tailwind CSS, with Firebase handling authentication 
+        and data storage.
+      </p>
+    </div>
+    <div class="h-8"></div> <!-- Spacer div -->
   </div>
-  <div class="h-8"></div> <!-- Spacer div -->
 </div>
