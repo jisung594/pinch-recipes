@@ -4,12 +4,15 @@ import { InstructionRow } from './instructions-form/instructions-form.types';
 
 // Transforms array of IngredientRow FormGroup's into Firestore-compatible Ingredient objects
 export function mapIngredientRows(rows: IngredientRow[]): Ingredient[] {
-  return rows.map((row) => ({
-    name: row.controls.name.value,
-    quantity: row.controls.quantity.value,
-    unit: row.controls.unit.value,
-    customUnit: row.controls.customUnit.value,
-  }));
+  return rows.map((row) => {
+    const unit = row.controls.unit.value;
+    return {
+      name: row.controls.name.value,
+      quantity: row.controls.quantity.value,
+      unit: unit,
+      customUnit: unit === 'custom' ? row.controls.customUnit.value : '',
+    };
+  });
 }
 
 // Transforms array of InstructionRow FormGroup's into Firestore-compatible Instruction objects
