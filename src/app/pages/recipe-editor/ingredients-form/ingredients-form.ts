@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { 
   FormArray, 
   FormBuilder,
@@ -16,6 +16,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { IngredientRow, IngredientValue } from './ingredients-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -35,13 +37,14 @@ import { ToastService } from '../../../services/toast.service';
     MatRippleModule,
   ]
 })
-export class IngredientsForm {
+export class IngredientsForm implements OnDestroy {
   @Input() initialIngredients: IngredientRow[] = [];
   @Input() editable = true;
   @Output() ingredientsChange = new EventEmitter<IngredientRow[]>();
   
   ingredientsForm: FormGroup;
   newIngredientIndex: number | null = null;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -83,23 +86,30 @@ export class IngredientsForm {
   }
 
   createIngredient(removedItemValue?: Partial<IngredientValue>): IngredientRow {
-    // Checks for removeItemValue to prefill fields upon undo
-    if (removedItemValue !== undefined) {
-      return this.fb.group({
-        name: this.fb.control(removedItemValue.name ?? '', { nonNullable: true }),
-        quantity: this.fb.control(removedItemValue.quantity ?? '', { nonNullable: true }),
-        unit: this.fb.control(removedItemValue.unit ?? '', { nonNullable: true }),
-        customUnit: this.fb.control(removedItemValue.customUnit ?? '', { nonNullable: true }),
+    const group = this.fb.group({
+      name: this.fb.control(removedItemValue?.name ?? '', { nonNullable: true }),
+      quantity: this.fb.control(removedItemValue?.quantity ?? '', { nonNullable: true }),
+      unit: this.fb.control(removedItemValue?.unit ?? '', { nonNullable: true }),
+      customUnit: this.fb.control(removedItemValue?.customUnit ?? '', { nonNullable: true }),
+    });
+
+    // Clear customUnit when unit changes to anything other than 'custom'
+    group.get('unit')?.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(unitValue => {
+        if (unitValue !== 'custom') {
+          group.get('customUnit')?.setValue('', { emitEvent: false });
+        }
       });
+
+    // Also clear customUnit for initial state if unit is not 'custom'
+    const currentUnit = group.get('unit')?.value;
+    
+    if (currentUnit && currentUnit !== 'custom') {
+      group.get('customUnit')?.setValue('');
     }
 
-    // Creates blank ingredient row (default)
-    return this.fb.group({
-      name: this.fb.control('', { nonNullable: true }),
-      quantity: this.fb.control('', { nonNullable: true }),
-      unit: this.fb.control('', { nonNullable: true }),
-      customUnit: this.fb.control('', { nonNullable: true }),
-    });
+    return group;
   }
 
   addIngredient(removedItemIndex?: number, removedItemValue?: Partial<IngredientValue>) {
@@ -141,5 +151,11 @@ export class IngredientsForm {
 
   emitChange() {
     this.ingredientsChange.emit(this.ingredients.controls as IngredientRow[]);
+  }
+
+  // Clean up subscriptions to prevent memory leaks
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
