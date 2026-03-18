@@ -28,7 +28,9 @@ export class RecipeDetail {
   instructionsRows: InstructionRow[] = [];
   isPublic = false;
   archived = false;
-  editable = false; // view mode by default
+  editable = false;
+  isDemo = false;
+  demoRecipeId = 'dTGRZu6HOXFLz3ksCy8P';
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,24 @@ export class RecipeDetail {
   ) {}
 
   async ngOnInit() {
+    this.isDemo = this.route.snapshot.data['isDemo'] ?? false;
+
+    // Use hardcoded demo ID if on /demo route, otherwise read from URL
+    this.recipeId = this.isDemo ? this.demoRecipeId : this.route.snapshot.paramMap.get('id');
+
+    if (this.isDemo) {
+      // Skip auth and load public recipe directly
+      const snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
+
+      if (snapshot && snapshot.exists()) {
+        this.isAuthor = true;
+        this.recipe = snapshot.data();
+        this.initRows();
+      }
+
+      return;
+    }
+
     // Subscribes to auth state to get current user / data for given recipe id
     this.authSub = this.authService.authState$.subscribe(async user => {
       let snapshot;
@@ -60,31 +80,31 @@ export class RecipeDetail {
 
       if (snapshot && snapshot.exists()) {
         this.recipe = snapshot.data();
-      // }
 
-      // if (this.recipe) {
-        // RecipeEditor (child) expects FormGroup arrays for ingredients / instructions
-        // TODO: refactor RecipeEditor to accept plain arrays instead, to avoid this conversion
-        this.ingredientsRows = this.recipe.ingredients.map(i =>
-          this.fb.group({
-            name: this.fb.control(i.name, { nonNullable: true }),
-            quantity: this.fb.control(i.quantity, { nonNullable: true }),
-            unit: this.fb.control(i.unit, { nonNullable: true }),
-            customUnit: this.fb.control(i.customUnit, { nonNullable: true }),
-          })
-        );
-
-        this.instructionsRows = this.recipe.instructions.map(i =>
-          this.fb.group({
-            step: this.fb.control(i.step, { nonNullable: true }),
-            order: this.fb.control(i.order, { nonNullable: true }),
-            notes: this.fb.control(i.notes, { nonNullable: true }),
-          })
-        );
-        
-        this.isPublic = this.recipe.isPublic;
-        this.archived = this.recipe.archived;
+        this.initRows(this.recipe);
       }
     });
+  }
+
+  private initRows(recipe: Recipe = this.recipe!) {
+    this.ingredientsRows = recipe.ingredients.map(i =>
+      this.fb.group({
+        name: this.fb.control(i.name, { nonNullable: true }),
+        quantity: this.fb.control(i.quantity, { nonNullable: true }),
+        unit: this.fb.control(i.unit, { nonNullable: true }),
+        customUnit: this.fb.control(i.customUnit, { nonNullable: true }),
+      })
+    );
+
+    this.instructionsRows = recipe.instructions.map(i =>
+      this.fb.group({
+        step: this.fb.control(i.step, { nonNullable: true }),
+        order: this.fb.control(i.order, { nonNullable: true }),
+        notes: this.fb.control(i.notes, { nonNullable: true }),
+      })
+    );
+    
+    this.isPublic = recipe.isPublic;
+    this.archived = recipe.archived;
   }
 }

@@ -50,7 +50,8 @@ export class RecipeEditor implements OnInit {
   @Input() instructions: InstructionRow[] = [];
   @Input() isPublic: boolean = false;
   @Input() archived: boolean = false;
-  @Input() editable: boolean = false; // defaults to view mode
+  @Input() editable: boolean = false;
+  @Input() isDemo: boolean = false;
 
   recipeForm!: FormGroup;
   isEditingTitle = false;
@@ -162,9 +163,6 @@ export class RecipeEditor implements OnInit {
     } catch(err) {
       console.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
     }
-
-    // TODO: confirmation dialog when "RESTORE" button is clicked
-
   };
 
   async saveRecipe() {
