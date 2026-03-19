@@ -47,7 +47,7 @@ export class InstructionsForm {
     private toastService: ToastService
   ) {
     this.instructionsForm = this.fb.group({
-      instructions: this.fb.array([this.createInstruction()])
+      instructions: this.fb.array([this.createInstruction(undefined, 0)])
     })
   }
 
@@ -56,7 +56,15 @@ export class InstructionsForm {
     if (this.initialInstructions.length) {
       const instructionsFormArray = this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
       instructionsFormArray.clear(); // Removes form controls unrelated to initialInstructions
-      this.initialInstructions.forEach(row => instructionsFormArray.push(row));
+      
+      // Fix order values for old recipes that have order: 0 for all instructions
+      this.initialInstructions.forEach((row, index) => {
+        // Update the order value if it's 0 (indicating an old recipe)
+        if (row.controls.order.value === 0) {
+          row.controls.order.setValue(index);
+        }
+        instructionsFormArray.push(row);
+      });
     }
   }
 
@@ -80,34 +88,26 @@ export class InstructionsForm {
     return this.instructionsForm.get('instructions') as FormArray<InstructionRow>;
   }
 
-  createInstruction(removedItemValue?: Partial<InstructionValue>): InstructionRow {
-    // Checks for removeItemValue to prefill fields upon undo
-    if (removedItemValue !== undefined) {
-      return this.fb.group({
-        step: this.fb.control(removedItemValue.step ?? '', { nonNullable: true }),
-        order: this.fb.control(removedItemValue.order ?? 0, { nonNullable: true }),
-        notes: this.fb.control(removedItemValue.notes ?? '', { nonNullable: true }),
-      });
-    }
-
-    // Creates blank instruction row (default)
-    return this.fb.group({
-      step: this.fb.control('', { nonNullable: true }),
-      order: this.fb.control(0, { nonNullable: true }),
-      notes: this.fb.control('', { nonNullable: true }),
+  createInstruction(removedItemValue?: Partial<InstructionValue>, currentIndex?: number): InstructionRow {
+    const group = this.fb.group({
+      step: this.fb.control(removedItemValue?.step ?? '', { nonNullable: true }),
+      order: this.fb.control(removedItemValue?.order ?? currentIndex ?? this.instructions.length, { nonNullable: true }),
+      notes: this.fb.control(removedItemValue?.notes ?? '', { nonNullable: true }),
     });
+
+    return group;
   }
 
   addInstruction(removedItemIndex?: number, removedItemValue?: Partial<InstructionValue>) {
     if (removedItemIndex !== undefined) {
-      this.instructions.insert(removedItemIndex, this.createInstruction(removedItemValue));
+      this.instructions.insert(removedItemIndex, this.createInstruction(removedItemValue, removedItemIndex));
 
       // Notifies parent when an instruction has been added back
       this.emitChange();
       return;
     }
 
-    this.instructions.push(this.createInstruction());
+    this.instructions.push(this.createInstruction(undefined, this.instructions.length));
 
     // Notifies parent when an instruction has been created
     this.emitChange();
