@@ -156,3 +156,7 @@ summary::marker {
 .cdk-drag-animating {
   transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.icon-sm {
+  font-size: 20px !important;
+}

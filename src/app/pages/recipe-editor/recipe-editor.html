@@ -2,8 +2,7 @@
   <!-- Edit mode - title -->
   <div 
     *ngIf="isEditingTitle; else viewModeTitle" 
-    class="flex gap-2 mb-1"
-  >
+    class="flex gap-2 mb-1">
     <div class="flex grow my-1">
       <input
         type="text"
@@ -11,16 +10,15 @@
         formControlName="title"
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
-        class="font-heading font-medium text-3xl md:text-4xl tracking-wide border-b border-light color-dark-gray"
-      />
+        class="font-heading font-medium text-3xl md:text-4xl tracking-wide border-b border-light color-dark-gray"/>
     </div>
     <div class="editing-options-editmode flex my-1 md:my-3">
       <button
-        class=""
-        type="button" 
         (click)="saveTitle()"
-      >
-        <mat-icon class="color-dark-gray">check</mat-icon>
+        type="button"
+        mat-icon-button 
+        matTooltip="Done Editing">
+          <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
       </button>
     </div>
   </div>
@@ -37,10 +35,8 @@
         <button 
           mat-icon-button 
           matTooltip="Click to Edit" 
-          (click)="editTitle()" 
-          class="iconbutton"
-        >
-          <mat-icon aria-label="Edit" class="color-dark-gray">edit</mat-icon>
+          (click)="editTitle()">
+            <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
         </button>
       </div>
     </div>
@@ -56,23 +52,20 @@
           <!-- Edit mode - yield -->
           <div 
             *ngIf="(isAuthor || !recipeId) && isEditingYield; else viewModeYield" 
-            class="flex w-full"
-          >
+            class="flex w-full">
             <div class="yield-inputs flex flex-row gap-1">
               <input
                 type="number"
                 id="yield-amount"
                 placeholder="'6'"
                 formControlName="yieldAmount"
-                class="font-body font-normal text-base w-4 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"
-              />
+                class="font-body font-normal text-base w-4 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"/>
               <input
                 type="text"
                 id="yield-unit"
                 placeholder="'loaves'"
                 formControlName="yieldUnit"
-                class="font-body font-normal text-base w-6 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"
-              />
+                class="font-body font-normal text-base w-6 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"/>
             </div>
           </div>
         </div>
@@ -84,20 +77,23 @@
           [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
           [matRippleUnbounded]="true"
           [matRippleRadius]="30" 
-          class="editing-options flex shrink-0 border-b border-dark"
-        >
+          class="editing-options flex shrink-0">
           <button 
             *ngIf="!isEditingYield"
-            (click)="editYield()" 
-            class="font-normal text-sm"
+            (click)="editYield()"
             type="button"
-          >edit</button>
+            mat-icon-button 
+            matTooltip="Click to Edit">
+              <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+          </button>
           <button
             *ngIf="isEditingYield" 
             (click)="saveYield()"
-            class="font-normal text-sm"
             type="button"
-          >view</button>
+            mat-icon-button 
+            matTooltip="Done Editing">
+              <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+          </button>
         </div>
       </div>
 
@@ -121,20 +117,23 @@
           [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
           [matRippleUnbounded]="true"
           [matRippleRadius]="30" 
-          class="editing-options flex shrink-0 border-b border-dark"
-        >
-          <button 
-            *ngIf="!isEditingIngredients"
-            (click)="editIngredients()" 
-            class="font-normal text-sm"
-            type="button"
-          >edit</button>
-          <button
-            *ngIf="isEditingIngredients" 
-            (click)="saveIngredients()"
-            class="font-normal text-sm"
-            type="button"
-          >view</button>
+          class="editing-options flex shrink-0">
+            <button 
+              *ngIf="!isEditingIngredients"
+              (click)="editIngredients()"
+              type="button"
+              mat-icon-button 
+              matTooltip="Click to Edit">
+                <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+            </button>
+            <button
+              *ngIf="isEditingIngredients" 
+              (click)="saveIngredients()"
+              type="button"
+              mat-icon-button 
+              matTooltip="Done Editing">
+                <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+            </button>
         </div>
       </div>
 
@@ -157,19 +156,24 @@
           [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
           [matRippleUnbounded]="true"
           [matRippleRadius]="30" 
-          class="editing-options flex shrink-0 border-b border-dark"
+          class="editing-options flex shrink-0"
         >
           <button 
             *ngIf="!isEditingInstructions"
-            (click)="editInstructions()" 
-            class="font-normal text-sm"
-          >edit</button>
+            (click)="editInstructions()"
+            type="button"
+            mat-icon-button 
+            matTooltip="Click to Edit">
+              <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+          </button>
           <button
             *ngIf="isEditingInstructions" 
-            class="font-normal text-sm"
-            type="button" 
             (click)="saveInstructions()"
-          >view</button>
+            type="button"
+            mat-icon-button 
+            matTooltip="Done Editing">
+              <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+          </button>
         </div>
       </div>
 
