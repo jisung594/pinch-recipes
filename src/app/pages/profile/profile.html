@@ -3,7 +3,7 @@
     <!-- Profile form header -->
     <div class="flex flex-row justify-between mb-1">
       <div>
-        <h1 class="font-heading font-semibold text-lg tracking-wide">Profile</h1>
+        <h1 class="font-heading font-semibold text-lg md:text-2xl tracking-wide">Profile</h1>
       </div>
       <div *ngIf="isEditingProfile" class="editing-options-editmode">
         <button
@@ -31,7 +31,7 @@
   </div>
   
   <div class="main-recipes">
-    <h1 class="font-heading font-semibold text-lg tracking-wide mb-1">Recipes</h1>
+    <h1 class="font-heading font-semibold text-lg md:text-2xl tracking-wide mb-1">Recipes</h1>
     <div class="flex flex-col gap-2 border border-light px-2 py-2 rounded-sm mb-6">
       <p 
         *ngIf="!mainRecipes.length"
@@ -40,7 +40,7 @@
       <a 
         [routerLink]="['/recipes', r.id]" 
         *ngFor="let r of mainRecipes" 
-        class="block font-body font-normal text-base underline-offset-10 hover:underline border-b border-light"
+        class="block font-body font-normal text-base border-b border-light"
       >
         {{ r.title || 'Untitled' }}
       </a>
