@@ -1,39 +1,33 @@
-<div class="flex">
-  <!-- Display for logged-in users -->
-  <div 
-    *ngIf="userProfile$ | async as userProfile" 
-    class="homepage flex flex-col px-1 py-4">
-    <div>
-      <h1 class="font-subheading font-bold text-6xl lg:text-8xl mb-6 lg:mb-10 whitespace-pre-line">
-        {{ displayName }}<span *ngIf="showCursor" class="animate-pulse">|</span>
-      </h1>
-      <div *ngIf="showButtons" class="animate-fade-in-up">
-        <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
-        <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-medium text-base lg:text-xl tracking-wide">
-          <button
-            class="edit-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
-            type="button"
-            routerLink="recipes/new"
-            matTooltip="Create new recipe">
-              <mat-icon aria-label="Edit" class="icon-sm">edit</mat-icon>
-              NEW
-          </button>
-          <button
-            class="view-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
-            type="button"
-            routerLink="/profile"
-            matTooltip="View saved recipes">
-              <mat-icon aria-label="View" class="icon-sm">visibility</mat-icon>
-              SAVED
-          </button>
-        </div>
+<div class="flex flex-col">
+  <!-- Main content - always displayed -->
+  <div class="homepage px-1 py-4 lg:px-4 lg:py-8">
+    <h1 class="font-subheading font-bold text-6xl lg:text-8xl mb-6 lg:mb-10 whitespace-pre-line">
+      {{ displayName }}<span *ngIf="showCursor" class="animate-pulse">|</span>
+    </h1>
+    <div *ngIf="showButtons" class="animate-fade-in-up">
+      <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
+      <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-medium text-base lg:text-xl tracking-wide">
+        <button
+          class="edit-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
+          type="button"
+          routerLink="recipes/new"
+          matTooltip="Create new recipe">
+            <mat-icon aria-label="Edit" class="icon-sm">edit</mat-icon>
+            NEW
+        </button>
+        <button
+          class="view-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
+          type="button"
+          routerLink="/profile"
+          matTooltip="View saved recipes">
+            <mat-icon aria-label="View" class="icon-sm">visibility</mat-icon>
+            SAVED
+        </button>
       </div>
     </div>
-    <div class="h-8"></div> <!-- Spacer div -->
   </div>
 
-  <!-- Display for guest users -->
-  <div *ngIf="!user" class="flex flex-col">
+  <!-- <div class="flex flex-col">
     <div class="lg:w-1/2 bg-light-gray px-2 py-3 lg:p-4">
       <p class="font-body font-normal text-base">Welcome to Pinch! Over the past seven months, 
         I have been consistently documenting my baking journey in a small notebook. It contains recipes that 
@@ -43,6 +37,6 @@
         and data storage.
       </p>
     </div>
-    <div class="h-8"></div> <!-- Spacer div -->
-  </div>
+    <div class="h-8"></div>
+  </div> -->
 </div>
