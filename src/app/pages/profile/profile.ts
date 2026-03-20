@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'firebase/auth';
 import { Observable, Subscription, of, switchMap } from 'rxjs';
@@ -13,7 +14,12 @@ import { UserProfile } from '../../models/user-profile.model';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports:[CommonModule, RouterModule, ProfileForm],
+  imports:[
+    CommonModule, 
+    RouterModule, 
+    MatIconModule, 
+    ProfileForm
+  ],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })

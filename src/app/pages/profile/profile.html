@@ -8,16 +8,20 @@
       <div *ngIf="isEditingProfile" class="editing-options-editmode">
         <button
           (click)="saveProfile()"
-          type="button"  
-          class="flex flex-end font-normal underline lg:no-underline underline-offset-10 hover:underline" 
-        >save</button>
+          type="button"
+          mat-icon-button 
+          matTooltip="Done Editing">
+            <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+        </button>
       </div>
       <div *ngIf="!isEditingProfile" class="editing-options-viewmode">
         <button
           (click)="editProfile()"
-          type="button" 
-          class="flex flex-end font-normal underline lg:no-underline underline-offset-10 hover:underline"
-        >edit</button>
+          type="button"
+          mat-icon-button 
+          matTooltip="Click to Edit">
+            <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+        </button>
       </div>
     </div>
     <app-profile-form 
