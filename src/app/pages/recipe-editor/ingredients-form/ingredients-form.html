@@ -24,7 +24,7 @@
               <label *ngIf="ingredient.value.name" class="font-body font-medium text-base uppercase tracking-wide">{{ ingredient.value.name }}</label>
               <label *ngIf="!ingredient.value.name" class="font-body font-normal text-base italic color-dark-gray">Ingredient Name</label>
               <button 
-                class="font-body font-medium text-xl"
+                class="remove-button font-body font-medium text-xl"
                 type="button" 
                 (click)="removeIngredient(i)">&times;</button>
             </div>
@@ -147,7 +147,7 @@
   
   <button
     *ngIf="editable"
-    class="font-body font-medium text-sm px-2 py-0.5 rounded-sm border-2 border-light"
+    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border-2 border-light"
     type="button" 
     (click)="addIngredient()"
   >Item +</button>
