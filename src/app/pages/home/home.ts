@@ -35,10 +35,8 @@ export class Home implements OnInit {
   ngOnInit() {
     // To unsubscribe from later
     this.profileSubscription = this.userProfile$.subscribe(profile => {
-      if (profile) {
-        const fullText = 'Hi,' + '\n' + (profile.displayName || profile.firstName || 'maker') + '.';
-        this.typeText(fullText);
-      }
+      const fullText = 'Hi,' + '\n' + (profile?.displayName || profile?.firstName || 'maker') + '.';
+      this.typeText(fullText);
     });
   }
 
@@ -51,7 +49,7 @@ export class Home implements OnInit {
     // Reset display
     this.displayName = '';
     this.showCursor = true;
-     this.showButtons = false;
+    this.showButtons = false;
     
     let index = 0;
     this.typingInterval = setInterval(() => {
