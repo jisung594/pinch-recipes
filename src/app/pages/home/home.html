@@ -1,18 +1,32 @@
-<div class="flex justify-center">
+<div class="flex">
   <!-- Display for logged-in users -->
   <div 
     *ngIf="userProfile$ | async as userProfile" 
-    class="homepage flex flex-col px-1 py-4"
-  >
+    class="homepage flex flex-col px-1 py-4">
     <div>
-      <h1 class="font-subheading font-bold text-4xl lg:text-6xl mb-6">
-        Hi, <br>
-        {{ userProfile.displayName || userProfile.firstName || 'recipe creator' }}
+      <h1 class="font-subheading font-bold text-6xl lg:text-8xl mb-6 lg:mb-10 whitespace-pre-line">
+        {{ displayName }}<span *ngIf="showCursor" class="animate-pulse">|</span>
       </h1>
-      <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
-      <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-medium text-base lg:text-xl tracking-wide">
-        <a class="px-2 py-0.5 rounded-sm border-2 border-orange" routerLink="recipes/new">NEW</a>
-        <a class="px-2 py-0.5 rounded-sm border-2 border-light" routerLink="/profile">SAVED</a>
+      <div *ngIf="showButtons" class="animate-fade-in-up">
+        <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
+        <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-medium text-base lg:text-xl tracking-wide">
+          <button
+            class="edit-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
+            type="button"
+            routerLink="recipes/new"
+            matTooltip="Create new recipe">
+              <mat-icon aria-label="Edit" class="icon-sm">edit</mat-icon>
+              NEW
+          </button>
+          <button
+            class="view-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
+            type="button"
+            routerLink="/profile"
+            matTooltip="View saved recipes">
+              <mat-icon aria-label="View" class="icon-sm">visibility</mat-icon>
+              SAVED
+          </button>
+        </div>
       </div>
     </div>
     <div class="h-8"></div> <!-- Spacer div -->
