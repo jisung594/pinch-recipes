@@ -10,7 +10,7 @@
         formControlName="title"
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
-        class="font-heading font-medium text-4xl md:text-6xl tracking-wide border-b border-light color-dark-gray"/>
+        class="w-full font-heading font-medium text-4xl md:text-6xl tracking-wide border-b border-light color-dark-gray"/>
     </div>
     <div class="editing-options-editmode flex my-1 md:my-3">
       <button
@@ -108,7 +108,7 @@
     <div class="ingredients-form mb-6">
       <!-- Ingredients form header -->
       <div class="flex justify-between mb-2">
-        <h2 class="font-heading font-semibold text-lg md:text-2xl tracking-wide">Ingredients</h2>
+        <h2 class="font-heading font-semibold text-xl md:text-2xl tracking-wide">Ingredients</h2>
 
         <div 
           *ngIf="isAuthor || !recipeId" 
@@ -147,7 +147,7 @@
     <div class="instructions-form mb-6">
       <!-- Instructions form header -->
       <div class="flex justify-between mb-2">
-        <h2 class="font-heading font-semibold text-lg md:text-2xl tracking-wide">Instructions</h2>
+        <h2 class="font-heading font-semibold text-xl md:text-2xl tracking-wide">Instructions</h2>
 
         <div 
           *ngIf="isAuthor || !recipeId"
