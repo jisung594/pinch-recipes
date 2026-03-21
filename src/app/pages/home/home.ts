@@ -19,7 +19,7 @@ export class Home implements OnInit {
   private profileSubscription?: Subscription;
   user: User | null = null;
   userProfile$!: Observable<UserProfile | null>;
-  displayName = '';
+  welcomeText = '';
   typingSpeed = 120;
   showCursor = true;
   showButtons = false;
@@ -35,7 +35,13 @@ export class Home implements OnInit {
   ngOnInit() {
     // To unsubscribe from later
     this.profileSubscription = this.userProfile$.subscribe(profile => {
-      const fullText = 'Hi,' + '\n' + (profile?.displayName || profile?.firstName || 'maker') + '.';
+      let fullText = '';
+
+      if (profile) {
+        fullText = 'Hi,' + '\n' + (profile?.displayName || profile?.firstName || 'maker') + '.';
+      } else {
+        fullText = 'Recipes by you,' + '\n' + 'for you.';
+      }
       this.typeText(fullText);
     });
   }
@@ -47,14 +53,14 @@ export class Home implements OnInit {
     }
 
     // Reset display
-    this.displayName = '';
+    this.welcomeText = '';
     this.showCursor = true;
     this.showButtons = false;
     
     let index = 0;
     this.typingInterval = setInterval(() => {
       if (index < fullText.length) {
-        this.displayName += fullText[index];
+        this.welcomeText += fullText[index];
         index++;
       } else {
         clearInterval(this.typingInterval!);
