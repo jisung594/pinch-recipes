@@ -40,7 +40,7 @@ export class Home implements OnInit {
       if (profile) {
         fullText = 'Hi,' + '\n' + (profile?.displayName || profile?.firstName || 'maker') + '.';
       } else {
-        fullText = 'Recipes, by you.';
+        fullText = 'Recipes,' + '\n' + 'by you.';
       }
       this.typeText(fullText);
     });
