@@ -1,10 +1,11 @@
 <div class="flex flex-col">
   <!-- Main content - always displayed -->
   <div class="homepage px-1 py-4 lg:px-4 lg:py-8">
-    <h1 class="font-subheading font-bold text-6xl lg:text-8xl mb-6 lg:mb-10 whitespace-pre-line">
-      {{ displayName }}<span *ngIf="showCursor" class="animate-pulse">|</span>
+    <h1 class="font-heading font-bold text-7xl lg:text-9xl mb-6 lg:mb-10 whitespace-pre-line">
+      {{ welcomeText }}<span *ngIf="showCursor" class="animate-pulse">|</span>
     </h1>
-    <div *ngIf="showButtons" class="animate-fade-in-up">
+    <!-- Display for logged-in users -->
+    <div *ngIf="user && showButtons" class="animate-fade-in-up">
       <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
       <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-medium text-base lg:text-xl tracking-wide">
         <button
@@ -24,6 +25,17 @@
             SAVED
         </button>
       </div>
+    </div>
+    <!-- Display for guest users -->
+    <div *ngIf="!user" class="animate-fade-in-up">
+      <button
+        class="login-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
+        type="button"
+        routerLink="/login"
+        matTooltip="Login">
+          <mat-icon aria-label="Login" class="icon-sm">login</mat-icon>
+          GET STARTED
+      </button>
     </div>
   </div>
 
