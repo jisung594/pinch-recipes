@@ -58,7 +58,7 @@
     <nav class="flex flex-col justify-between h-full px-4 py-6 md:px-6 md:py-8 text-black">
       <div 
         *ngIf="user$ | async" 
-        class="menu-options flex flex-col gap-2 md:gap-4 font-heading text-2xl md:text-4xl">
+        class="menu-options flex flex-col gap-2 md:gap-4 font-heading font-bold text-2xl md:text-4xl">
           <a routerLink="/" (click)="toggleMenu()">home</a>
           <a routerLink="recipes/new" (click)="toggleMenu()">new recipe</a>
           <a routerLink="/profile" (click)="toggleMenu()">profile</a>

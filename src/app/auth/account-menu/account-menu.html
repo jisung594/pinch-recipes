@@ -1,9 +1,8 @@
 <div class="account-menu">
   <div 
     *ngIf="!user"
-    class="font-heading font-bold text-xl"
-  >
-    <a routerLink="/login" (click)="triggerCloseMenu()" class="flex flex-col lg:flex-row">
+    class="font-heading font-bold text-xl">
+    <a routerLink="/login" (click)="triggerCloseMenu()" class="flex flex-col lg:flex-row text-2xl lg:text-xl">
       <span class="whitespace-pre">login / </span>
       <span>signup</span>
     </a>
@@ -11,14 +10,15 @@
   <div *ngIf="user" class="logged-in">
     <div *ngIf="userProfile$ | async as profile" class="mb-2 lg:hidden">
       <span class="font-body font-normal text-base md:text-2xl text-black">
-        Hello, {{ profile.displayName || profile.firstName || 'baker' }}
+        Hello, {{ profile.displayName || profile.firstName || 'maker' }}.
       </span>
     </div>
     <div class="">
       <button
         (click)="handleSignOut()"
-        class="signout-button font-body font-semibold text-sm text-black tracking-wide px-2 py-0.5 border-2 border-light rounded-sm"
-      >SIGN OUT</button>
+        class="signout-button font-body font-semibold text-sm text-black tracking-wide px-2 py-0.5 border-2 border-light rounded-sm">
+          SIGN OUT
+      </button>
     </div>
   </div>
 </div>
