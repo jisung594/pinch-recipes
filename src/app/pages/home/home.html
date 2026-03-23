@@ -6,23 +6,17 @@
     </h1>
     <!-- Display for logged-in users -->
     <div *ngIf="user && showButtons" class="animate-fade-in-up">
-      <p class="font-body font-normal text-base mb-2">What would you like to do today?</p>
-      <div class="homepage-links flex items-center gap-2 lg:gap-4 lg:w-fit font-body font-medium text-base lg:text-xl tracking-wide">
+      <!-- Search bar -->
+      <app-search-bar [(searchTerm)]="searchTerm"></app-search-bar>
+
+      <div class="homepage-links flex items-center lg:w-fit font-body font-medium text-base">
         <button
-          class="edit-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
+          class="new-recipe-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
           type="button"
           routerLink="recipes/new"
           matTooltip="Create new recipe">
             <mat-icon aria-label="Edit" class="icon-sm">edit</mat-icon>
-            NEW
-        </button>
-        <button
-          class="view-button flex items-center gap-1 px-2 py-0.5 rounded-sm border-2 border-light"
-          type="button"
-          routerLink="/profile"
-          matTooltip="View saved recipes">
-            <mat-icon aria-label="View" class="icon-sm">visibility</mat-icon>
-            SAVED
+            New Recipe
         </button>
       </div>
     </div>
