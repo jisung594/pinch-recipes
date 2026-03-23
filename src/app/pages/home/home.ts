@@ -6,13 +6,15 @@ import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 import { Observable, Subscription } from 'rxjs';
 import { UserProfile } from '../../models/user-profile.model';
+import { SearchBar } from '../../search-bar/search-bar';
+import { RecipesList } from '../../recipes-list/recipes-list';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.html',
   styleUrl: './home.css',
-  imports: [CommonModule, RouterModule, MatIconModule]
+  imports: [CommonModule, RouterModule, MatIconModule, SearchBar, RecipesList]
 })
 export class Home implements OnInit {
   private typingInterval?: ReturnType<typeof setInterval>;
@@ -23,6 +25,7 @@ export class Home implements OnInit {
   typingSpeed = 120;
   showCursor = true;
   showButtons = false;
+  searchTerm = '';
 
   constructor(private authService: AuthService) {
     this.userProfile$ = this.authService.userProfile$;
