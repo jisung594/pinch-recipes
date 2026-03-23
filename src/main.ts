@@ -12,6 +12,6 @@ bootstrapApplication(App, {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-    provideRouter(routes)
+    provideRouter(routes),
   ],
 });

@@ -14,7 +14,7 @@ import { RecipesList } from '../../recipes-list/recipes-list';
   standalone: true,
   templateUrl: './home.html',
   styleUrl: './home.css',
-  imports: [CommonModule, RouterModule, MatIconModule, SearchBar, RecipesList]
+  imports: [CommonModule, RouterModule, MatIconModule, SearchBar, RecipesList],
 })
 export class Home implements OnInit {
   private typingInterval?: ReturnType<typeof setInterval>;
@@ -30,14 +30,14 @@ export class Home implements OnInit {
   constructor(private authService: AuthService) {
     this.userProfile$ = this.authService.userProfile$;
 
-    this.authService.authState$.subscribe(user => {
+    this.authService.authState$.subscribe((user) => {
       this.user = user;
     });
   }
 
   ngOnInit() {
     // To unsubscribe from later
-    this.profileSubscription = this.userProfile$.subscribe(profile => {
+    this.profileSubscription = this.userProfile$.subscribe((profile) => {
       let fullText = '';
 
       if (profile) {
@@ -59,7 +59,7 @@ export class Home implements OnInit {
     this.welcomeText = '';
     this.showCursor = true;
     this.showButtons = false;
-    
+
     let index = 0;
     this.typingInterval = setInterval(() => {
       if (index < fullText.length) {

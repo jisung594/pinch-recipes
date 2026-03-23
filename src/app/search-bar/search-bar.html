@@ -1,8 +1,8 @@
 <div class="border-b-2 border-dotted border-light pb-4 mb-2">
   <p class="font-heading font-normal text-lg lg:text-xl mb-1">Search your recipes:</p>
 
-  <input 
-    [(ngModel)]="searchTerm" 
+  <input
+    [(ngModel)]="searchTerm"
     (ngModelChange)="searchTermChange.emit($event)"
     type="text"
     placeholder="Maple Dijon Roasted Chicken"

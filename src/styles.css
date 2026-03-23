@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Gilda+Display:wght@400;500;600&family=Barlow+Condensed:wght@400;600&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @utility bg-cta-blue {
   background-color: var(--cta-blue);
@@ -26,14 +26,14 @@
 }
 
 @theme {
-  --font-heading: "Barlow Condensed", sans-serif;
-  --font-body: "Work Sans", sans-serif;
+  --font-heading: 'Barlow Condensed', sans-serif;
+  --font-body: 'Work Sans', sans-serif;
 
   --cta-blue: #3069d4;
-  --orange: #FFA500;
-  --red: #B22222;
+  --orange: #ffa500;
+  --red: #b22222;
   --white: #ffffff;
-  --light-blue: #F4FAFF;
+  --light-blue: #f4faff;
   --med-blue: #a2d3ff;
   --light-gray: #f2f2f2;
   --lightest-gray: #f9f9f9;
@@ -41,11 +41,12 @@
   --border-radius: 4px;
   --spacing: 0.75rem;
 }
-html, body { 
-  height: 100%; 
+html,
+body {
+  height: 100%;
 }
-body { 
-  margin: 0; 
+body {
+  margin: 0;
   background-color: white;
 }
 
@@ -153,7 +154,7 @@ body {
 }
 
 /* Hide default marker for <details> */
-summary::-webkit-details-marker, 
+summary::-webkit-details-marker,
 summary::marker {
   display: none;
 }
@@ -164,7 +165,9 @@ summary::marker {
 }
 
 .cdk-drag-handle {
-  transition: background-color 0.4s ease-out, transform 0.2s ease-out;
+  transition:
+    background-color 0.4s ease-out,
+    transform 0.2s ease-out;
 }
 
 /* Visual feedback upon grabbing item by the handle */
@@ -197,7 +200,6 @@ summary::marker {
   font-size: 22px !important;
 }
 
-
 /* --- HOVER / ACTIVE states --- */
 a:hover,
 .icon-sm:hover,
@@ -223,8 +225,7 @@ textarea:focus {
 .new-recipe-button:hover,
 .new-recipe-button:active,
 .add-item-button:hover,
-.add-item-button:active
-.register-button:hover,
+.add-item-button:active .register-button:hover,
 .register-button:active,
 .google-signin-button:hover,
 .google-signin-button:active,
@@ -270,7 +271,9 @@ textarea:focus {
 }
 
 .recipes-list {
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
   min-height: 100%;
 }
 

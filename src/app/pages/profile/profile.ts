@@ -14,14 +14,9 @@ import { UserProfile } from '../../models/user-profile.model';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports:[
-    CommonModule, 
-    RouterModule, 
-    MatIconModule, 
-    ProfileForm
-  ],
+  imports: [CommonModule, RouterModule, MatIconModule, ProfileForm],
   templateUrl: './profile.html',
-  styleUrl: './profile.css'
+  styleUrl: './profile.css',
 })
 export class Profile implements OnInit, OnDestroy {
   // $ (syntax for observable)
@@ -43,20 +38,24 @@ export class Profile implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    const sub = this.authService.authState$.pipe(
-      switchMap(user => {
-        this.currentUser = user;
+    const sub = this.authService.authState$
+      .pipe(
+        switchMap((user) => {
+          this.currentUser = user;
 
-        if (!user) {
-          return of([]);
-        }
+          if (!user) {
+            return of([]);
+          }
 
-        return this.firestoreService.getUserRecipes(user.uid);
-      })
-    ).subscribe(recipes => {
-      this.mainRecipes = recipes.filter(recipe => recipe.archived === false);
-      this.archivedRecipes = recipes.filter(recipe => recipe.archived === true || recipe.archived === undefined);
-    });
+          return this.firestoreService.getUserRecipes(user.uid);
+        }),
+      )
+      .subscribe((recipes) => {
+        this.mainRecipes = recipes.filter((recipe) => recipe.archived === false);
+        this.archivedRecipes = recipes.filter(
+          (recipe) => recipe.archived === true || recipe.archived === undefined,
+        );
+      });
 
     this.subscriptions.add(sub);
   }
@@ -84,7 +83,7 @@ export class Profile implements OnInit, OnDestroy {
 
       // Toast notification upon update
       this.toastService.notify('Profile updated successfully.');
-    } catch(err) {
+    } catch (err) {
       console.error('Error updating profile:', err);
     }
   }

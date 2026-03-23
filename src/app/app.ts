@@ -8,11 +8,7 @@ import { Header } from './header/header';
   templateUrl: './app.html',
   standalone: true,
   styleUrl: './app.css',
-  imports: [
-    CommonModule,
-    RouterModule,
-    Header,
-  ],
+  imports: [CommonModule, RouterModule, Header],
 })
 export class App {
   protected readonly title = signal('bakers-logbook');

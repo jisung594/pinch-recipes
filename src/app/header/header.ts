@@ -10,12 +10,7 @@ import { User } from 'firebase/auth';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    AccountMenu, 
-    CommonModule, 
-    RouterModule,
-    MatIconModule
-  ],
+  imports: [AccountMenu, CommonModule, RouterModule, MatIconModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

@@ -1,8 +1,6 @@
 <form [formGroup]="recipeForm" class="recipe-editor">
   <!-- Edit mode - title -->
-  <div 
-    *ngIf="isEditingTitle; else viewModeTitle" 
-    class="flex gap-2 mb-1">
+  <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-2 mb-1">
     <div class="flex grow my-1">
       <input
         type="text"
@@ -10,15 +8,12 @@
         formControlName="title"
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
-        class="w-full font-heading font-medium text-4xl md:text-6xl tracking-wide border-b border-light color-dark-gray"/>
+        class="w-full font-heading font-medium text-4xl md:text-6xl tracking-wide border-b border-light color-dark-gray"
+      />
     </div>
     <div class="editing-options-editmode flex my-1 md:my-3">
-      <button
-        (click)="saveTitle()"
-        type="button"
-        mat-icon-button 
-        matTooltip="Done Editing">
-          <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+      <button (click)="saveTitle()" type="button" mat-icon-button matTooltip="Done Editing">
+        <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
       </button>
     </div>
   </div>
@@ -32,11 +27,8 @@
         </h1>
       </div>
       <div *ngIf="isAuthor || !recipeId" class="editing-options-viewmode flex my-1 md:my-3">
-        <button 
-          mat-icon-button 
-          matTooltip="Click to Edit" 
-          (click)="editTitle()">
-            <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+        <button mat-icon-button matTooltip="Click to Edit" (click)="editTitle()">
+          <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
         </button>
       </div>
     </div>
@@ -50,57 +42,65 @@
           <h2 class="font-body font-normal text-base md:text-lg">Yields:</h2>
 
           <!-- Edit mode - yield -->
-          <div 
-            *ngIf="(isAuthor || !recipeId) && isEditingYield; else viewModeYield" 
-            class="flex w-full">
+          <div
+            *ngIf="(isAuthor || !recipeId) && isEditingYield; else viewModeYield"
+            class="flex w-full"
+          >
             <div class="yield-inputs flex flex-row gap-1">
               <input
                 type="number"
                 id="yield-amount"
                 placeholder="'6'"
                 formControlName="yieldAmount"
-                class="font-body font-normal text-base w-4 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"/>
+                class="font-body font-normal text-base w-4 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"
+              />
               <input
                 type="text"
                 id="yield-unit"
                 placeholder="'loaves'"
                 formControlName="yieldUnit"
-                class="font-body font-normal text-base w-6 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"/>
+                class="font-body font-normal text-base w-6 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"
+              />
             </div>
           </div>
         </div>
 
-        <div 
-          *ngIf="isAuthor || !recipeId" 
-          matRipple 
+        <div
+          *ngIf="isAuthor || !recipeId"
+          matRipple
           matRippleColor="rgba(162, 211, 255, 0.2)"
-          [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+          [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
           [matRippleUnbounded]="true"
-          [matRippleRadius]="30" 
-          class="editing-options flex shrink-0">
-            <button 
-              *ngIf="!isEditingYield"
-              (click)="editYield()"
-              type="button"
-              mat-icon-button 
-              matTooltip="Click to Edit">
-                <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
-            </button>
-            <button
-              *ngIf="isEditingYield" 
-              (click)="saveYield()"
-              type="button"
-              mat-icon-button 
-              matTooltip="Done Editing">
-                <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
-            </button>
+          [matRippleRadius]="30"
+          class="editing-options flex shrink-0"
+        >
+          <button
+            *ngIf="!isEditingYield"
+            (click)="editYield()"
+            type="button"
+            mat-icon-button
+            matTooltip="Click to Edit"
+          >
+            <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+          </button>
+          <button
+            *ngIf="isEditingYield"
+            (click)="saveYield()"
+            type="button"
+            mat-icon-button
+            matTooltip="Done Editing"
+          >
+            <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+          </button>
         </div>
       </div>
 
       <!-- View mode - yield -->
       <ng-template #viewModeYield>
         <div class="flex items-center h-3">
-          <h2 class="font-body font-semibold text-base md:text-lg">{{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}</h2>
+          <h2 class="font-body font-semibold text-base md:text-lg">
+            {{ recipeForm.get('yieldAmount')?.value }} {{ recipeForm.get('yieldUnit')?.value }}
+          </h2>
         </div>
       </ng-template>
     </div>
@@ -110,30 +110,33 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-xl md:text-2xl tracking-wide">Ingredients</h2>
 
-        <div 
-          *ngIf="isAuthor || !recipeId" 
-          matRipple 
+        <div
+          *ngIf="isAuthor || !recipeId"
+          matRipple
           matRippleColor="rgba(162, 211, 255, 0.2)"
-          [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+          [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
           [matRippleUnbounded]="true"
-          [matRippleRadius]="30" 
-          class="editing-options flex shrink-0">
-            <button 
-              *ngIf="!isEditingIngredients"
-              (click)="editIngredients()"
-              type="button"
-              mat-icon-button 
-              matTooltip="Click to Edit">
-                <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
-            </button>
-            <button
-              *ngIf="isEditingIngredients" 
-              (click)="saveIngredients()"
-              type="button"
-              mat-icon-button 
-              matTooltip="Done Editing">
-                <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
-            </button>
+          [matRippleRadius]="30"
+          class="editing-options flex shrink-0"
+        >
+          <button
+            *ngIf="!isEditingIngredients"
+            (click)="editIngredients()"
+            type="button"
+            mat-icon-button
+            matTooltip="Click to Edit"
+          >
+            <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+          </button>
+          <button
+            *ngIf="isEditingIngredients"
+            (click)="saveIngredients()"
+            type="button"
+            mat-icon-button
+            matTooltip="Done Editing"
+          >
+            <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+          </button>
         </div>
       </div>
 
@@ -141,7 +144,8 @@
         [initialIngredients]="ingredients"
         [editable]="isEditingIngredients"
         (ingredientsChange)="onIngredientsChange($event)"
-      > </app-ingredients-form>
+      >
+      </app-ingredients-form>
     </div>
 
     <div class="instructions-form mb-6">
@@ -149,30 +153,32 @@
       <div class="flex justify-between mb-2">
         <h2 class="font-heading font-semibold text-xl md:text-2xl tracking-wide">Instructions</h2>
 
-        <div 
+        <div
           *ngIf="isAuthor || !recipeId"
-          matRipple 
+          matRipple
           matRippleColor="rgba(162, 211, 255, 0.2)"
-          [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+          [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
           [matRippleUnbounded]="true"
-          [matRippleRadius]="30" 
+          [matRippleRadius]="30"
           class="editing-options flex shrink-0"
         >
-          <button 
+          <button
             *ngIf="!isEditingInstructions"
             (click)="editInstructions()"
             type="button"
-            mat-icon-button 
-            matTooltip="Click to Edit">
-              <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
+            mat-icon-button
+            matTooltip="Click to Edit"
+          >
+            <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
           </button>
           <button
-            *ngIf="isEditingInstructions" 
+            *ngIf="isEditingInstructions"
             (click)="saveInstructions()"
             type="button"
-            mat-icon-button 
-            matTooltip="Done Editing">
-              <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
+            mat-icon-button
+            matTooltip="Done Editing"
+          >
+            <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
           </button>
         </div>
       </div>
@@ -202,16 +208,16 @@
   </div>
 
   <!-- Options fixed footer (only for recipe authors) -->
-  <div 
-    *ngIf="isAuthor || !recipeId" 
+  <div
+    *ngIf="isAuthor || !recipeId"
     class="flex justify-between fixed bottom-0 left-0 right-0 px-2 py-2 md:px-6 md:py-4 bg-white"
   >
     <!-- Delete / Archive options -->
-    <div 
-      *ngIf="recipeId" 
-      matRipple 
+    <div
+      *ngIf="recipeId"
+      matRipple
       matRippleColor="rgba(178, 34, 34, 0.2)"
-      [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+      [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
       [matRippleUnbounded]="true"
       [matRippleRadius]="30"
       class="flex gap-1"
@@ -235,14 +241,16 @@
         [disabled]="isDemo"
         [class.opacity-40]="isDemo"
         [class.cursor-not-allowed]="isDemo"
-      >{{ archived ? 'RESTORE' : 'ARCHIVE' }}</button>
+      >
+        {{ archived ? 'RESTORE' : 'ARCHIVE' }}
+      </button>
     </div>
-    
+
     <!-- Save option -->
-    <div 
-      matRipple 
+    <div
+      matRipple
       matRippleColor="rgba(255, 165, 0, 0.2)"
-      [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+      [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
       [matRippleUnbounded]="true"
       [matRippleRadius]="30"
       class="flex"
@@ -254,9 +262,12 @@
         [disabled]="isDemo"
         [class.opacity-40]="isDemo"
         [class.cursor-not-allowed]="isDemo"
-      >SAVE</button>
+      >
+        SAVE
+      </button>
     </div>
   </div>
 
-  <div class="h-8 lg:h-16"></div> <!-- Spacer div -->
+  <div class="h-8 lg:h-16"></div>
+  <!-- Spacer div -->
 </form>

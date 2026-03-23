@@ -1,17 +1,23 @@
 <div class="signup-page flex flex-col gap-4 px-1 py-2">
   <div>
-    <h1 class="flex justify-center font-heading font-bold text-3xl md:text-4xl tracking-wide mb-4">SIGNUP</h1>
+    <h1 class="flex justify-center font-heading font-bold text-3xl md:text-4xl tracking-wide mb-4">
+      SIGNUP
+    </h1>
     <form
       [formGroup]="signupForm"
       (submit)="handleSignUp()"
       class="flex flex-col items-center gap-2"
     >
       <div class="flex flex-col w-full md:w-1/2 lg:w-2/3">
-        <label for="input-first-name" class="font-body font-medium tracking-normal text-sm lg:text-base">First Name</label>
+        <label
+          for="input-first-name"
+          class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >First Name</label
+        >
         <input
           id="input-first-name"
           type="text"
-          formControlName="firstName" 
+          formControlName="firstName"
           class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="John"
           minlength="2"
@@ -19,11 +25,15 @@
         />
       </div>
       <div class="flex flex-col w-full md:w-1/2 lg:w-2/3">
-        <label for="input-last-name" class="font-body font-medium tracking-normal text-sm lg:text-base">Last Name</label>
+        <label
+          for="input-last-name"
+          class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >Last Name</label
+        >
         <input
           id="input-last-name"
           type="text"
-          formControlName="lastName" 
+          formControlName="lastName"
           class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="Doe"
           minlength="2"
@@ -31,11 +41,15 @@
         />
       </div>
       <div class="flex flex-col w-full md:w-1/2 lg:w-2/3 border-b border-light pb-2">
-        <label for="input-display-name" class="font-body font-medium tracking-normal text-sm lg:text-base">Display Name</label>
+        <label
+          for="input-display-name"
+          class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >Display Name</label
+        >
         <input
           id="input-display-name"
           type="text"
-          formControlName="displayName" 
+          formControlName="displayName"
           class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="Johnny"
           minlength="2"
@@ -43,35 +57,43 @@
         />
       </div>
       <div class="flex flex-col w-full md:w-1/2 lg:w-2/3">
-        <label for="input-email" class="font-body font-medium tracking-normal text-sm lg:text-base">Email</label>
+        <label for="input-email" class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >Email</label
+        >
         <input
           id="input-email"
           type="email"
-          formControlName="email" 
-          class="form-field h-4 mt-1 bg-light-blue text-base" 
+          formControlName="email"
+          class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="doeboy@example.com"
           required
         />
 
         <!-- Inline validation errors -->
-        <div 
-          *ngIf="email!.invalid && email!.touched" 
-          class="error font-body font-medium text-sm color-red">
-            Please enter a valid email address.
+        <div
+          *ngIf="email!.invalid && email!.touched"
+          class="error font-body font-medium text-sm color-red"
+        >
+          Please enter a valid email address.
         </div>
 
-        <div 
-          *ngIf="errorCode === 'auth/email-already-in-use'" 
-          class="error font-body font-medium text-sm color-red">
-            Another account already uses this email. Please try another.
+        <div
+          *ngIf="errorCode === 'auth/email-already-in-use'"
+          class="error font-body font-medium text-sm color-red"
+        >
+          Another account already uses this email. Please try another.
         </div>
       </div>
       <div class="flex flex-col w-full md:w-1/2 lg:w-2/3">
-        <label for="input-password" class="font-body font-medium tracking-normal text-sm lg:text-base">Password</label>
+        <label
+          for="input-password"
+          class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >Password</label
+        >
         <input
           id="input-password"
           type="password"
-          formControlName="password" 
+          formControlName="password"
           class="form-field w-full h-4 mt-1 bg-light-blue text-base"
           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
           minlength="8"
@@ -79,9 +101,12 @@
         />
 
         <!-- Inline validation error -->
-        <div *ngIf="password!.invalid && password!.touched" class="error font-body font-medium text-sm color-red">
+        <div
+          *ngIf="password!.invalid && password!.touched"
+          class="error font-body font-medium text-sm color-red"
+        >
           <p class="mb-1">Please enter a valid password with:</p>
-          <ul class="font-normal list-inside list-disc"> 
+          <ul class="font-normal list-inside list-disc">
             <li>a minimum of 8 characters</li>
             <li>a minimum of one uppercase letter</li>
             <li>a minimum of one lowercase letter</li>
@@ -91,16 +116,20 @@
         </div>
       </div>
 
-      <button 
+      <button
         [disabled]="!signupForm.valid"
         class="register-button font-body font-semibold text-sm w-full md:w-1/2 lg:w-1/3 px-2 py-1 mt-1 rounded-sm border-2 border-light"
         type="submit"
-      >REGISTER</button>
+      >
+        REGISTER
+      </button>
     </form>
   </div>
 
   <div class="flex justify-center">
-    <h2 class="font-body font-normal text-sm tracking-normal border-t border-b border-light py-1">or sign-up with</h2>
+    <h2 class="font-body font-normal text-sm tracking-normal border-t border-b border-light py-1">
+      or sign-up with
+    </h2>
   </div>
 
   <div class="flex justify-center h-4 w-auto">
@@ -109,17 +138,14 @@
       class="google-signin-button flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border-2 border-light"
       (click)="handleGoogleSignIn()"
     >
-      <img
-        src="../../../assets/google.png"
-        alt="Google logo"
-        class="h-2 w-2"
-      />
+      <img src="../../../assets/google.png" alt="Google logo" class="h-2 w-2" />
       <span>Google</span>
     </button>
   </div>
 
   <div class="flex justify-center">
-    <p class="font-heading font-normal text-base lg:text-lg tracking-wide">Already have an account? 
+    <p class="font-heading font-normal text-base lg:text-lg tracking-wide">
+      Already have an account?
       <a class="font-bold" routerLink="/login">Login</a>
     </p>
   </div>

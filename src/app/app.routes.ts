@@ -3,22 +3,19 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => 
-      import('./pages/home/home').then((module) => module.Home),
+    loadComponent: () => import('./pages/home/home').then((module) => module.Home),
   },
   {
     path: 'login',
-    loadComponent: () => 
-      import('./auth/login/login').then((module) => module.Login),
+    loadComponent: () => import('./auth/login/login').then((module) => module.Login),
   },
   {
     path: 'signup',
-    loadComponent: () => 
-      import('./auth/signup/signup').then((module) => module.Signup),
+    loadComponent: () => import('./auth/signup/signup').then((module) => module.Signup),
   },
   {
     path: 'reset',
-    loadComponent: () => 
+    loadComponent: () =>
       import('./auth/forgot-password/forgot-password').then((module) => module.ForgotPassword),
   },
   {
@@ -33,13 +30,12 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    loadComponent: () => 
-      import('./pages/profile/profile').then((module) => module.Profile),
+    loadComponent: () => import('./pages/profile/profile').then((module) => module.Profile),
   },
   {
     path: 'demo',
-    loadComponent: () => 
+    loadComponent: () =>
       import('./pages/recipe-detail/recipe-detail').then((module) => module.RecipeDetail),
-    data: { isDemo: true }
-  }
+    data: { isDemo: true },
+  },
 ];

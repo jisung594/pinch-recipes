@@ -13,22 +13,22 @@ import { takeUntil } from 'rxjs/operators';
   standalone: true,
   templateUrl: './recipes-list.html',
   styleUrl: './recipes-list.css',
-  imports: [CommonModule, RouterModule, MatIconModule]
+  imports: [CommonModule, RouterModule, MatIconModule],
 })
 export class RecipesList implements OnInit, OnDestroy {
   @Input() searchTerm = '';
-  
+
   private destroy$ = new Subject<void>();
   currentUserId: string | null = null;
   private allRecipes: Recipe[] = [];
 
   constructor(
     private recipeService: RecipeFirestoreService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
-    this.authService.authState$.subscribe(user => {
+    this.authService.authState$.subscribe((user) => {
       this.currentUserId = user?.uid || null;
       this.loadRecipes();
     });
@@ -37,9 +37,10 @@ export class RecipesList implements OnInit, OnDestroy {
   private loadRecipes(): void {
     if (!this.currentUserId) return;
 
-    this.recipeService.getUserRecipes(this.currentUserId)
+    this.recipeService
+      .getUserRecipes(this.currentUserId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(recipes => {
+      .subscribe((recipes) => {
         this.allRecipes = recipes;
       });
   }
@@ -50,10 +51,11 @@ export class RecipesList implements OnInit, OnDestroy {
     }
 
     const search = this.searchTerm.toLowerCase();
-    return this.allRecipes.filter(recipe => 
-      recipe.title.toLowerCase().includes(search) ||
-      recipe.ingredients.some(ing => ing.name.toLowerCase().includes(search)) ||
-      recipe.instructions.some(inst => inst.step.toLowerCase().includes(search))
+    return this.allRecipes.filter(
+      (recipe) =>
+        recipe.title.toLowerCase().includes(search) ||
+        recipe.ingredients.some((ing) => ing.name.toLowerCase().includes(search)) ||
+        recipe.instructions.some((inst) => inst.step.toLowerCase().includes(search)),
     );
   }
 

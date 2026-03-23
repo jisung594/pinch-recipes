@@ -9,11 +9,7 @@ import { UserProfile } from '../../models/user-profile.model';
 
 @Component({
   selector: 'app-account-menu',
-  imports: [
-    CommonModule,
-    RouterModule, 
-    MatIconModule
-  ],
+  imports: [CommonModule, RouterModule, MatIconModule],
   templateUrl: './account-menu.html',
   styleUrl: './account-menu.css',
 })
@@ -29,7 +25,7 @@ export class AccountMenu implements OnInit {
 
   // Called after input properties are set, but before DOM is ready
   ngOnInit() {
-    this.authService.authState$.subscribe(user => {
+    this.authService.authState$.subscribe((user) => {
       this.user = user;
     });
   }
@@ -46,10 +42,9 @@ export class AccountMenu implements OnInit {
     try {
       await this.authService.signOut();
       this.user = null;
-      console.log("Signed out");
+      console.log('Signed out');
     } catch (err) {
-      console.log("Sign-out error:", err);
+      console.log('Sign-out error:', err);
     }
   }
 }
-

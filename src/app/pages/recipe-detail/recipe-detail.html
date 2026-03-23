@@ -2,7 +2,9 @@
   <!-- Loading spinner -->
   <div *ngIf="!recipe" class="fixed inset-0 flex flex-col items-center justify-center">
     <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-widest mb-4">LOADING</h1>
-    <div class="w-10 h-10 md:w-14 md:h-14 border-2 border-gray-100 border-t-orange-400 rounded-full animate-spin"></div>
+    <div
+      class="w-10 h-10 md:w-14 md:h-14 border-2 border-gray-100 border-t-orange-400 rounded-full animate-spin"
+    ></div>
   </div>
 
   <app-recipe-editor

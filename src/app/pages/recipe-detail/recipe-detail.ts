@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -36,7 +36,7 @@ export class RecipeDetail {
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
-    private firestoreService: RecipeFirestoreService
+    private firestoreService: RecipeFirestoreService,
   ) {}
 
   async ngOnInit() {
@@ -59,7 +59,7 @@ export class RecipeDetail {
     }
 
     // Subscribes to auth state to get current user / data for given recipe id
-    this.authSub = this.authService.authState$.subscribe(async user => {
+    this.authSub = this.authService.authState$.subscribe(async (user) => {
       let snapshot;
 
       this.recipeId = this.route.snapshot.paramMap.get('id')!;
@@ -87,23 +87,23 @@ export class RecipeDetail {
   }
 
   private initRows(recipe: Recipe = this.recipe!) {
-    this.ingredientsRows = recipe.ingredients.map(i =>
+    this.ingredientsRows = recipe.ingredients.map((i) =>
       this.fb.group({
         name: this.fb.control(i.name, { nonNullable: true }),
         quantity: this.fb.control(i.quantity, { nonNullable: true }),
         unit: this.fb.control(i.unit, { nonNullable: true }),
         customUnit: this.fb.control(i.customUnit, { nonNullable: true }),
-      })
+      }),
     );
 
-    this.instructionsRows = recipe.instructions.map(i =>
+    this.instructionsRows = recipe.instructions.map((i) =>
       this.fb.group({
         step: this.fb.control(i.step, { nonNullable: true }),
         order: this.fb.control(i.order, { nonNullable: true }),
         notes: this.fb.control(i.notes, { nonNullable: true }),
-      })
+      }),
     );
-    
+
     this.isPublic = recipe.isPublic;
     this.archived = recipe.archived;
   }

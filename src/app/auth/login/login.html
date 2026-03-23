@@ -1,35 +1,44 @@
 <div class="login-page flex flex-col gap-4 px-1 py-2">
   <div>
-    <h1 class="flex justify-center font-heading font-bold text-3xl md:text-4xl tracking-wide mb-4">WELCOME</h1>
+    <h1 class="flex justify-center font-heading font-bold text-3xl md:text-4xl tracking-wide mb-4">
+      WELCOME
+    </h1>
     <form
       [formGroup]="loginForm"
       (submit)="handleSignIn()"
       class="flex flex-col items-center gap-2"
     >
       <div class="flex flex-col w-full md:w-2/3">
-        <label for="input-email" class="font-body font-medium tracking-normal text-sm lg:text-base">Email</label>
+        <label for="input-email" class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >Email</label
+        >
         <input
           id="input-email"
           type="email"
-          formControlName="email" 
-          class="form-field h-4 mt-1 bg-light-blue text-base" 
+          formControlName="email"
+          class="form-field h-4 mt-1 bg-light-blue text-base"
           placeholder="baker214@gmail.com"
           required
         />
 
         <!-- Inline validation error -->
-        <div 
-          *ngIf="email!.invalid && email!.touched" 
-          class="error font-body font-medium text-sm color-red">
-            Please enter a valid email address.
+        <div
+          *ngIf="email!.invalid && email!.touched"
+          class="error font-body font-medium text-sm color-red"
+        >
+          Please enter a valid email address.
         </div>
       </div>
       <div class="flex flex-col w-full md:w-2/3">
-        <label for="input-password" class="font-body font-medium tracking-normal text-sm lg:text-base">Password</label>
+        <label
+          for="input-password"
+          class="font-body font-medium tracking-normal text-sm lg:text-base"
+          >Password</label
+        >
         <input
           id="input-password"
           type="password"
-          formControlName="password" 
+          formControlName="password"
           class="form-field h-4 mt-1 mb-1 bg-light-blue text-base"
           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
           required
@@ -39,27 +48,33 @@
         </div>
 
         <!-- Inline validation errors -->
-        <div 
-          *ngIf="password!.invalid && password!.touched" 
-          class="error font-body font-medium text-sm color-red mt-0.5">
+        <div
+          *ngIf="password!.invalid && password!.touched"
+          class="error font-body font-medium text-sm color-red mt-0.5"
+        >
           Please enter your password.
         </div>
-        <div 
-          *ngIf="errorCode === 'auth/invalid-credential'" 
-          class="error font-body font-medium text-sm color-red mt-0.5">
-            Incorrect email or password. Please try again.
+        <div
+          *ngIf="errorCode === 'auth/invalid-credential'"
+          class="error font-body font-medium text-sm color-red mt-0.5"
+        >
+          Incorrect email or password. Please try again.
         </div>
       </div>
-      <button 
+      <button
         [disabled]="!loginForm.valid"
         class="login-button font-body font-semibold text-sm w-full md:w-1/2 lg:w-1/3 px-2 py-1 mt-1 rounded-sm border-2 border-light"
         type="submit"
-      >LOGIN</button>
+      >
+        LOGIN
+      </button>
     </form>
   </div>
 
   <div class="flex justify-center">
-    <h2 class="font-body font-normal text-sm tracking-normal border-t border-b border-light py-1">or continue with</h2>
+    <h2 class="font-body font-normal text-sm tracking-normal border-t border-b border-light py-1">
+      or continue with
+    </h2>
   </div>
 
   <div class="flex justify-center h-4 w-auto">
@@ -68,17 +83,14 @@
       class="google-signin-button flex items-center justify-center gap-2 px-2 py-1 font-body text-sm rounded-sm border-2 border-light"
       (click)="handleGoogleSignIn()"
     >
-      <img
-        src="../../../assets/google.png"
-        alt="Google logo"
-        class="h-2 w-2"
-      />
+      <img src="../../../assets/google.png" alt="Google logo" class="h-2 w-2" />
       <span>Google</span>
     </button>
   </div>
 
   <div class="flex justify-center">
-    <p class="font-heading font-normal text-base lg:text-lg tracking-wide">Don't have an account? 
+    <p class="font-heading font-normal text-base lg:text-lg tracking-wide">
+      Don't have an account?
       <a class="font-bold" routerLink="/signup">Sign up</a>
     </p>
   </div>

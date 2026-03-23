@@ -1,15 +1,11 @@
-import { 
-  Component,
-  Input, 
-  OnInit 
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
-  FormBuilder, 
-  FormGroup, 
-  FormsModule, 
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
   ReactiveFormsModule,
-  Validators 
+  Validators,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
@@ -29,23 +25,23 @@ import { Recipe } from '../../models/recipe.model';
   selector: 'app-recipe-editor',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    IngredientsForm, 
+    IngredientsForm,
     InstructionsForm,
     MatIconModule,
     MatRippleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   templateUrl: './recipe-editor.html',
-  styleUrl: './recipe-editor.css'
+  styleUrl: './recipe-editor.css',
 })
 export class RecipeEditor implements OnInit {
   @Input() isAuthor = false;
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
-  @Input() yield: { amount: number, unit: string } = { amount: 1, unit: 'unit' };
+  @Input() yield: { amount: number; unit: string } = { amount: 1, unit: 'unit' };
   @Input() ingredients: IngredientRow[] = [];
   @Input() instructions: InstructionRow[] = [];
   @Input() isPublic: boolean = false;
@@ -59,13 +55,13 @@ export class RecipeEditor implements OnInit {
   isEditingIngredients = false;
   isEditingInstructions = false;
   currentRecipeId: string | null = null;
-  
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private firestoreService: RecipeFirestoreService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -83,7 +79,7 @@ export class RecipeEditor implements OnInit {
       yieldUnit: [this.yield.unit || 'unit'],
       ingredients: this.fb.array(this.ingredients),
       instructions: this.fb.array(this.instructions),
-      isPublic: [this.isPublic || false]
+      isPublic: [this.isPublic || false],
     });
   }
 
@@ -106,7 +102,7 @@ export class RecipeEditor implements OnInit {
   saveTitle() {
     this.isEditingTitle = false;
   }
-  
+
   saveYield() {
     this.isEditingYield = false;
   }
@@ -139,17 +135,13 @@ export class RecipeEditor implements OnInit {
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
       archived: !this.archived,
-    }
+    };
 
     const user = await this.authService.getCurrentUser();
 
     try {
       if (user && this.recipeId) {
-        await this.firestoreService.updateRecipe(
-          user.uid, 
-          this.recipeId,
-          recipeData
-        );
+        await this.firestoreService.updateRecipe(user.uid, this.recipeId, recipeData);
 
         this.archived = !this.archived;
 
@@ -157,13 +149,13 @@ export class RecipeEditor implements OnInit {
 
         // Toast notification upon change
         this.toastService.notify(
-          `${recipeData.title || 'Recipe'} has been ${recipeData.archived ? 'archived' : 'restored'}.`
+          `${recipeData.title || 'Recipe'} has been ${recipeData.archived ? 'archived' : 'restored'}.`,
         );
       }
-    } catch(err) {
+    } catch (err) {
       console.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
     }
-  };
+  }
 
   async saveRecipe() {
     const formValue = this.recipeForm.value;
@@ -172,38 +164,30 @@ export class RecipeEditor implements OnInit {
       title: formValue.title,
       yield: {
         amount: formValue.yieldAmount || 1,
-        unit: formValue.yieldUnit || 'unit'
+        unit: formValue.yieldUnit || 'unit',
       },
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
-      isPublic: formValue.isPublic || false
-    }
+      isPublic: formValue.isPublic || false,
+    };
 
     const user = await this.authService.getCurrentUser();
-    
-    if (!user) {
-      this.toastService.notify(
-        'Please create an account or login to save recipes.'
-      );
 
-      console.warn("You must be signed in to save recipes.");
+    if (!user) {
+      this.toastService.notify('Please create an account or login to save recipes.');
+
+      console.warn('You must be signed in to save recipes.');
       return;
     }
 
     try {
       // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
-        await this.firestoreService.updateRecipe(
-          user.uid, 
-          this.recipeId,
-          recipeData
-        );
-        console.log('Recipe updated successfully.')
+        await this.firestoreService.updateRecipe(user.uid, this.recipeId, recipeData);
+        console.log('Recipe updated successfully.');
 
         // Toast notification upon update
-        this.toastService.notify(
-          `${recipeData.title || 'Recipe'} saved successfully.`
-        );
+        this.toastService.notify(`${recipeData.title || 'Recipe'} saved successfully.`);
 
         return;
       } else {
@@ -213,7 +197,7 @@ export class RecipeEditor implements OnInit {
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
           instructions: recipeData.instructions ?? [],
-          yield: recipeData.yield ?? {amount: 1, unit: 'unit'},
+          yield: recipeData.yield ?? { amount: 1, unit: 'unit' },
           isPublic: recipeData.isPublic ?? false,
           archived: false,
           createdAt: new Date(),
@@ -224,9 +208,7 @@ export class RecipeEditor implements OnInit {
         console.log('Recipe created successfully.');
 
         // Toast notification upon creation
-        this.toastService.notify(
-          `${recipeData.title || 'Recipe'} created successfully.`
-        );
+        this.toastService.notify(`${recipeData.title || 'Recipe'} created successfully.`);
       }
     } catch (err) {
       console.error('Error saving recipe:', err);
@@ -243,10 +225,10 @@ export class RecipeEditor implements OnInit {
 
   async deleteRecipe() {
     if (!this.isAuthor || !this.recipeId) return;
-    
+
     try {
       const user = await this.authService.getCurrentUser();
-      
+
       if (user) {
         await this.firestoreService.deleteRecipe(user.uid, this.recipeId);
         console.log('Recipe deleted successfully.');

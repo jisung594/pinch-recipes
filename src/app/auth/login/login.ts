@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup, 
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
@@ -15,15 +10,10 @@ import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    CommonModule, 
-    MatIconModule,
-    ReactiveFormsModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, MatIconModule, ReactiveFormsModule, RouterModule],
   standalone: true,
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
 })
 export class Login {
   errorCode: string = '';
@@ -34,19 +24,18 @@ export class Login {
     private authService: AuthService,
     private toastService: ToastService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
-      email: this.fb.control(
-        '', { nonNullable: true, validators: [
-          Validators.required, 
+      email: this.fb.control('', {
+        nonNullable: true,
+        validators: [
+          Validators.required,
           Validators.email,
-          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
-        ] }
-      ),
-      password: this.fb.control(
-        '', { nonNullable: true, validators: [Validators.required] }
-      ),
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
+        ],
+      }),
+      password: this.fb.control('', { nonNullable: true, validators: [Validators.required] }),
     });
   }
 
@@ -68,17 +57,17 @@ export class Login {
       if (err instanceof FirebaseError) {
         this.errorCode = err.code;
       }
-      console.log("Login error:", err);
+      console.log('Login error:', err);
     }
   }
- 
+
   async handleGoogleSignIn() {
     try {
       const userCreds = await this.authService.signInWithGoogle();
       this.router.navigate(['/']);
       this.toastService.notify(`Welcome back, ${userCreds.user.displayName?.split(' ')[0]}!`);
     } catch (err) {
-      console.log("Login error:", err);
+      console.log('Login error:', err);
     }
   }
 }

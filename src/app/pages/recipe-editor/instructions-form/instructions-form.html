@@ -1,9 +1,8 @@
 <form [formGroup]="instructionsForm" class="md:w-3/4">
   <div formArrayName="instructions" class="mb-2">
-    
     <!-- Display when recipe already has instructions -->
-    <div 
-      cdkDropList 
+    <div
+      cdkDropList
       (cdkDropListDropped)="handleReorder($event)"
       *ngIf="instructions && instructions.length > 0; else emptyInstructions"
       class="flex flex-col gap-1"
@@ -14,46 +13,52 @@
         class="instruction-row"
       >
         <!-- Edit mode -->
-        <div
-          cdkDrag 
-          *ngIf="editable" 
-          class="flex flex-row gap-1"
-        >
-          <div class="flex justify-between gap-2 w-full rounded-sm bg-light-blue shadow-sm px-1 py-1">
+        <div cdkDrag *ngIf="editable" class="flex flex-row gap-1">
+          <div
+            class="flex justify-between gap-2 w-full rounded-sm bg-light-blue shadow-sm px-1 py-1"
+          >
             <div class="w-full">
               <div class="editing-options-editmode flex flex-row justify-between mb-1">
                 <label class="font-body font-medium text-base">{{ i + 1 }}.</label>
-                <button 
+                <button
                   class="remove-button font-body font-medium text-xl"
-                  type="button" 
-                  (click)="removeInstruction(i)">&times;</button>
+                  type="button"
+                  (click)="removeInstruction(i)"
+                >
+                  &times;
+                </button>
               </div>
 
               <!-- Instruction step field-->
               <div class="flex flex-col w-full mb-1">
-                <textarea 
-                  matInput 
+                <textarea
+                  matInput
                   placeholder="Step {{ i + 1 }}..."
                   formControlName="step"
-                  class="form-field font-normal text-base w-full rounded-sm">
+                  class="form-field font-normal text-base w-full rounded-sm"
+                >
                 </textarea>
               </div>
 
               <!-- Instruction notes field -->
               <div class="flex flex-col w-full">
                 <div class="flex flex-col px-1 py-1 border border-dark rounded-sm">
-                  <details 
+                  <details
                     closed
-                    matRipple 
+                    matRipple
                     matRippleColor="rgba(162, 211, 255, 0.5)"
-                    [matRippleAnimation]="{enterDuration: 800, exitDuration: 800}"
+                    [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
                     [matRippleUnbounded]="true"
                     [matRippleRadius]="30"
                     class="group"
                   >
-                    <summary class="flex justify-between font-heading font-medium text-sm tracking-wider color-dark-gray px-0 list-none">
-                      NOTES 
-                      <span class="color-dark-gray transition-transform group-open:rotate-180">&#9661;</span>
+                    <summary
+                      class="flex justify-between font-heading font-medium text-sm tracking-wider color-dark-gray px-0 list-none"
+                    >
+                      NOTES
+                      <span class="color-dark-gray transition-transform group-open:rotate-180"
+                        >&#9661;</span
+                      >
                     </summary>
                     <div class="flex rounded-b-sm mt-1">
                       <textarea
@@ -68,7 +73,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Drag handle -->
           <div cdkDragHandle class="drag-handle flex items-center cursor-move active:bg-gray-200">
             <mat-icon>drag_indicator</mat-icon>
@@ -76,10 +81,7 @@
         </div>
 
         <!-- View mode -->
-        <div 
-          *ngIf="!editable" 
-          class="flex flex-col border-b border-light"
-        >
+        <div *ngIf="!editable" class="flex flex-col border-b border-light">
           <div class="flex gap-1 w-full mb-1">
             <div class="step-label w-2 shrink-0">
               <p class="font-body font-black text-base">{{ i + 1 }}</p>
@@ -87,30 +89,21 @@
 
             <div class="flex flex-col">
               <!-- Instruction step field -->
-              <div 
-                class="step-text flex-1"
-                *ngIf="instruction.value.step; else emptyInstruction" 
-              >
+              <div class="step-text flex-1" *ngIf="instruction.value.step; else emptyInstruction">
                 <p class="font-body text-base mb-1">{{ instruction.value.step }}</p>
               </div>
 
               <!-- Instruction notes field -->
-              <div 
-                class=""
-                *ngIf="instruction.value.notes && instruction.value.notes.length > 0"
-              >
+              <div class="" *ngIf="instruction.value.notes && instruction.value.notes.length > 0">
                 <p class="font-body text-sm color-dark-gray whitespace-pre-line">
                   {{ instruction.value.notes }}
                 </p>
               </div>
             </div>
 
-
             <ng-template #emptyInstruction>
               <div class="">
-                <p class="font-body text-base italic color-dark-gray">
-                  Instruction draft
-                </p>
+                <p class="font-body text-base italic color-dark-gray">Instruction draft</p>
               </div>
             </ng-template>
           </div>
@@ -129,7 +122,9 @@
   <button
     *ngIf="editable"
     class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border-2 border-light"
-    type="button" 
+    type="button"
     (click)="addInstruction()"
-  >Step +</button>
+  >
+    Step +
+  </button>
 </form>

@@ -1,16 +1,11 @@
 import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
-import { 
-  FormArray, 
-  FormBuilder,
-  FormGroup, 
-  ReactiveFormsModule
-} from '@angular/forms';
-import { 
-  CdkDrag, 
-  CdkDragDrop, 
-  CdkDropList, 
-  DragDropModule, 
-  moveItemInArray 
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,25 +25,25 @@ import { ToastService } from '../../../services/toast.service';
     CdkDrag,
     CdkDropList,
     DragDropModule,
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
-  ]
+  ],
 })
 export class IngredientsForm implements OnDestroy {
   @Input() initialIngredients: IngredientRow[] = [];
   @Input() editable = true;
   @Output() ingredientsChange = new EventEmitter<IngredientRow[]>();
-  
+
   ingredientsForm: FormGroup;
   newIngredientIndex: number | null = null;
   private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) {
     this.ingredientsForm = this.fb.group({
       ingredients: this.fb.array([this.createIngredient()]),
@@ -58,24 +53,22 @@ export class IngredientsForm implements OnDestroy {
   ngOnInit() {
     // Populates FormArray with initialIngredients input, if provided
     if (this.initialIngredients.length) {
-      const ingredientsFormArray = this.ingredientsForm.get('ingredients') as FormArray<IngredientRow>;
+      const ingredientsFormArray = this.ingredientsForm.get(
+        'ingredients',
+      ) as FormArray<IngredientRow>;
       ingredientsFormArray.clear(); // Removes form controls unrelated to initialIngredients
-      this.initialIngredients.forEach(row => ingredientsFormArray.push(row));
+      this.initialIngredients.forEach((row) => ingredientsFormArray.push(row));
     }
   }
 
   /**
-   * Handles the drag-and-drop event for reordering ingredients. Triggered when a user 
-   * drops a dragged item (ingredient form group) within the drop zone (cdkDropList), 
+   * Handles the drag-and-drop event for reordering ingredients. Triggered when a user
+   * drops a dragged item (ingredient form group) within the drop zone (cdkDropList),
    * this function updates the form to reflect the new sequential order.
    */
   handleReorder(event: CdkDragDrop<FormGroup[]>) {
-    // Built-in utility func to update form array order 
-    moveItemInArray(
-      this.ingredients.controls,
-      event.previousIndex,
-      event.currentIndex
-    );
+    // Built-in utility func to update form array order
+    moveItemInArray(this.ingredients.controls, event.previousIndex, event.currentIndex);
 
     this.emitChange();
   }
@@ -94,9 +87,10 @@ export class IngredientsForm implements OnDestroy {
     });
 
     // Clear customUnit when unit changes to anything other than 'custom'
-    group.get('unit')?.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(unitValue => {
+    group
+      .get('unit')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((unitValue) => {
         if (unitValue !== 'custom') {
           group.get('customUnit')?.setValue('', { emitEvent: false });
         }
@@ -104,7 +98,7 @@ export class IngredientsForm implements OnDestroy {
 
     // Also clear customUnit for initial state if unit is not 'custom'
     const currentUnit = group.get('unit')?.value;
-    
+
     if (currentUnit && currentUnit !== 'custom') {
       group.get('customUnit')?.setValue('');
     }
@@ -115,7 +109,7 @@ export class IngredientsForm implements OnDestroy {
   addIngredient(removedItemIndex?: number, removedItemValue?: Partial<IngredientValue>) {
     if (removedItemIndex !== undefined) {
       this.ingredients.insert(removedItemIndex, this.createIngredient(removedItemValue));
-      
+
       // Notifies parent when an ingredient has been added back
       this.emitChange();
       return;
@@ -137,12 +131,12 @@ export class IngredientsForm implements OnDestroy {
 
     const reinsertIngredient = () => {
       this.addIngredient(index, removedItemValue);
-    }
+    };
 
     // Toast notification upon removal
     this.toastService.notifyUndoable(
       `${removedItemValue.name || 'Ingredient'} removed.`,
-      reinsertIngredient
+      reinsertIngredient,
     );
 
     // Notifies parent when ingredient has been removed or reinserted

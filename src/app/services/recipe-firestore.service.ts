@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { 
-    addDoc, 
-    collection,
-    collectionData,
-    collectionGroup,
-    CollectionReference,
-    deleteDoc,
-    doc,
-    Firestore,
-    getDoc,
-    getDocs,
-    query,
-    serverTimestamp,
-    updateDoc,
-    where
+import {
+  addDoc,
+  collection,
+  collectionData,
+  collectionGroup,
+  CollectionReference,
+  deleteDoc,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { recipeConverter, Recipe } from '../models/recipe.model';
@@ -39,27 +39,31 @@ export class RecipeFirestoreService {
     // Converts ref (or query) into Observable and listens for changes
     return collectionData(recipesQuery, { idField: 'id' }) as Observable<Recipe[]>;
   }
-  
+
   addRecipe(uid: string, recipe: Recipe) {
     const recipesRef = this.getUserRecipesRef(uid);
-    
+
     return addDoc(recipesRef, {
       ...recipe,
       createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
+      updatedAt: serverTimestamp(),
     });
   }
 
   updateRecipe(uid: string, recipeId: string, data: Partial<Recipe>) {
-    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(recipeConverter);
-    return updateDoc(recipeDoc, { 
-        ...data, 
-        updatedAt: serverTimestamp()
+    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(
+      recipeConverter,
+    );
+    return updateDoc(recipeDoc, {
+      ...data,
+      updatedAt: serverTimestamp(),
     });
   }
 
   deleteRecipe(uid: string, recipeId: string) {
-    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(recipeConverter);
+    const recipeDoc = doc(this.firestore, `users/${uid}/recipes/${recipeId}`).withConverter(
+      recipeConverter,
+    );
     return deleteDoc(recipeDoc);
   }
 
@@ -73,18 +77,15 @@ export class RecipeFirestoreService {
       // Search across all 'recipe' collections where isPublic = true
       const recipesRef = collectionGroup(this.firestore, 'recipes');
 
-      const q = query(
-        recipesRef,
-        where('isPublic', '==', true)
-      ).withConverter(recipeConverter);
+      const q = query(recipesRef, where('isPublic', '==', true)).withConverter(recipeConverter);
 
       const snapshot = await getDocs(q);
-  
+
       // Find matching recipe
-      const matchingDoc = snapshot.docs.find(doc => doc.id === recipeId);
+      const matchingDoc = snapshot.docs.find((doc) => doc.id === recipeId);
       return matchingDoc || null;
     } catch (err) {
-      console.error("ERROR:", err);
+      console.error('ERROR:', err);
       return null;
     }
   }

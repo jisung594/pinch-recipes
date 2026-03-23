@@ -1,9 +1,9 @@
 #recipe-name {
-    height: 40px;
-    min-width: 400px;
-    margin: 24px 0;
+  height: 40px;
+  min-width: 400px;
+  margin: 24px 0;
 
-    &::placeholder {
-        font-size: 24px;
-    }
+  &::placeholder {
+    font-size: 24px;
+  }
 }

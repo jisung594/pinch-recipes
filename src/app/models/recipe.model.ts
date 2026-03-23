@@ -1,7 +1,4 @@
-import { 
-  FirestoreDataConverter, 
-  DocumentData 
-} from '@angular/fire/firestore';
+import { FirestoreDataConverter, DocumentData } from '@angular/fire/firestore';
 
 export interface Ingredient {
   name: string;
@@ -21,8 +18,8 @@ export interface Recipe {
   id?: string; // Firestore auto-generated ID
   title: string;
   yield: {
-    amount: number,
-    unit: string
+    amount: number;
+    unit: string;
   };
   ingredients: Ingredient[];
   instructions: Instruction[];
@@ -51,5 +48,5 @@ export const recipeConverter: FirestoreDataConverter<Recipe> = {
       createdAt: data['createdAt'],
       updatedAt: data['updatedAt'],
     };
-  }
+  },
 };
