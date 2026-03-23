@@ -22,39 +22,5 @@
     ></app-profile-form>
   </div>
 
-  <div class="main-recipes">
-    <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-1">Recipes</h1>
-    <div class="flex flex-col gap-2 border border-light px-2 py-2 rounded-sm mb-6">
-      <p *ngIf="!mainRecipes.length" class="font-body font-normal text-sm color-dark-gray">
-        No recipes yet.
-      </p>
-      <a
-        [routerLink]="['/recipes', r.id]"
-        *ngFor="let r of mainRecipes"
-        class="block font-body font-normal text-base border-b border-light"
-      >
-        {{ r.title || 'Untitled' }}
-      </a>
-    </div>
-  </div>
-
-  <div class="archived-recipes flex flex-col rounded-sm px-1 py-1 border border-light">
-    <details closed class="group">
-      <summary class="flex justify-between list-none font-body font-medium text-sm">
-        Archived
-        <span class="transition-transform group-open:rotate-180">&#9661;</span>
-      </summary>
-      <div class="flex flex-col gap-2 mt-3">
-        <a
-          [routerLink]="['/recipes', r.id]"
-          *ngFor="let r of archivedRecipes"
-          class="block font-body font-normal text-base color-dark-gray underline-offset-10 hover:underline"
-        >
-          {{ r.title || 'Untitled' }}
-        </a>
-      </div>
-    </details>
-  </div>
   <div class="h-8"></div>
-  <!-- Spacer div -->
 </div>
