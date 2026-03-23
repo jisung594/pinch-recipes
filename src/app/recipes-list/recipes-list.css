@@ -1,0 +1,4 @@
+.recipe-item:hover,
+.recipe-item:active {
+    border-color: var(--cta-blue);
+}

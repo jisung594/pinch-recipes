@@ -6,11 +6,6 @@
     </p>
   </div>
 
-  <!-- Loading state -->
-  <div *ngIf="!currentUserId" class="text-center py-8">
-    <p class="font-body color-dark-gray italic">Loading recipes...</p>
-  </div>
-
   <!-- Empty state -->
   <div *ngIf="currentUserId && filteredRecipes.length === 0" class="text-center py-8">
     <p class="font-body color-dark-gray italic">
@@ -24,15 +19,14 @@
 
   <!-- Recipe list -->
   <div class="flex flex-col gap-1">
-    <div
+    <a
       *ngFor="let recipe of filteredRecipes"
-      class="recipe-card border border-light rounded-sm px-2 py-1 hover:border-med-blue transition-colors"
+      [routerLink]="['/recipes', recipe.id]"
+      class="recipe-item border border-light rounded-sm px-2 py-1 transition-colors block"
     >
       <h3 class="font-body font-normal text-base">
-        <a [routerLink]="['/recipes', recipe.id]">
-          {{ recipe.title }}
-        </a>
+        {{ recipe.title }}
       </h3>
-    </div>
+    </a>
   </div>
 </div>
