@@ -19,6 +19,11 @@ export const routes: Routes = [
       import('./auth/forgot-password/forgot-password').then((module) => module.ForgotPassword),
   },
   {
+    path: 'recipes',
+    loadComponent: () =>
+      import('./recipe-index/recipe-index').then((module) => module.RecipeIndex),
+  },
+  {
     path: 'recipes/new',
     loadComponent: () =>
       import('./pages/recipe-editor/recipe-editor').then((module) => module.RecipeEditor),

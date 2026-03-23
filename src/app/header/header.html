@@ -19,6 +19,7 @@
       >
         <a routerLink="/">home</a>
         <a routerLink="recipes/new">new recipe</a>
+        <a routerLink="/recipes">recipes</a>
         <a routerLink="/profile">profile</a>
       </div>
       <app-account-menu></app-account-menu>
@@ -60,6 +61,7 @@
       >
         <a routerLink="/" (click)="toggleMenu()">home</a>
         <a routerLink="recipes/new" (click)="toggleMenu()">new recipe</a>
+        <a routerLink="/recipes" (click)="toggleMenu()">recipes</a>
         <a routerLink="/profile" (click)="toggleMenu()">profile</a>
       </div>
       <app-account-menu (requestClose)="toggleMenu()"></app-account-menu>
