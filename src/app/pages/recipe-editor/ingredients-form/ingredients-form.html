@@ -28,7 +28,7 @@
                 type="button" 
                 (click)="removeIngredient(i)">&times;</button>
             </div>
-            <div class="flex flex-col gap-1 px-1 py-0.5 border border-dark rounded-sm">
+            <div class="flex flex-col gap-1 px-1 py-1 border border-dark rounded-sm">
               <!-- Closed by default, unless new ingredient is added -->
               <details
                 matRipple 
@@ -39,8 +39,8 @@
                 [attr.open]="i === newIngredientIndex ? true : null" 
                 class="group"
               >
-                <summary class="flex justify-between font-heading font-medium text-sm tracking-wide color-dark-gray px-0 list-none">
-                  Details 
+                <summary class="flex justify-between font-heading font-medium text-sm tracking-wider color-dark-gray px-0 list-none">
+                  DETAILS 
                   <span class="color-dark-gray transition-transform group-open:rotate-180">&#9661;</span>
                 </summary>
                 <div class="flex rounded-b-sm mt-1">
@@ -52,7 +52,7 @@
                           matInput 
                           placeholder="1 1/3" 
                           formControlName="quantity"
-                          class="form-field font-normal text-base w-full mt-1 bg-white placeholder:italic"
+                          class="form-field font-normal text-base w-full mt-1"
                         >
                       </div>
                       <div class="flex flex-col w-1/2">
@@ -60,7 +60,7 @@
                         <select
                           required
                           formControlName="unit"
-                          class="form-field font-normal text-base w-full mt-1 bg-white appearance-none"
+                          class="form-field font-normal text-base w-full mt-1 appearance-none"
                           [ngClass]="{'color-dark-gray italic': ingredient.get('unit')?.value === 'custom' || !ingredient.get('unit')?.value}"
                         >
                           <option value="" selected>Select unit</option>
@@ -86,7 +86,7 @@
                           type="text" 
                           placeholder="'cloves'"
                           formControlName="customUnit" 
-                          class="form-field font-normal text-base w-full mt-1 bg-white placeholder:italic"
+                          class="form-field font-normal text-base w-full mt-1"
                         >
                       </div>
                     </div>
@@ -96,7 +96,7 @@
                         matInput 
                         placeholder="whole milk" 
                         formControlName="name"
-                        class="form-field font-normal text-base w-full mt-1 bg-white placeholder:italic"
+                        class="form-field font-normal text-base w-full mt-1"
                       >
                     </div>
                   </div>

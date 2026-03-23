@@ -35,13 +35,13 @@
                   matInput 
                   placeholder="Step {{ i + 1 }}..."
                   formControlName="step"
-                  class="form-field font-normal text-base w-full bg-white placeholder:italic rounded-sm">
+                  class="form-field font-normal text-base w-full rounded-sm">
                 </textarea>
               </div>
 
               <!-- Instruction notes field -->
               <div class="flex flex-col w-full">
-                <div class="flex flex-col px-1 py-0.5 border border-dark rounded-sm">
+                <div class="flex flex-col px-1 py-1 border border-dark rounded-sm">
                   <details 
                     closed
                     matRipple 
@@ -51,8 +51,8 @@
                     [matRippleRadius]="30"
                     class="group"
                   >
-                    <summary class="flex justify-between font-heading font-medium text-sm tracking-wide color-dark-gray px-0 list-none">
-                      Notes 
+                    <summary class="flex justify-between font-heading font-medium text-sm tracking-wider color-dark-gray px-0 list-none">
+                      NOTES 
                       <span class="color-dark-gray transition-transform group-open:rotate-180">&#9661;</span>
                     </summary>
                     <div class="flex rounded-b-sm mt-1">
@@ -60,7 +60,7 @@
                         matInput
                         placeholder="Notes for Step {{ i + 1 }}..."
                         formControlName="notes"
-                        class="form-field font-normal px-1 py-1 text-base w-full bg-white placeholder:italic"
+                        class="form-field font-normal px-1 py-1 text-base w-full"
                       ></textarea>
                     </div>
                   </details>
