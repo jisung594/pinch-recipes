@@ -218,6 +218,8 @@ textarea:focus {
   background-color: var(--lightest-gray);
 }
 
+.recipe-card:hover,
+.recipe-card:active,
 .new-recipe-button:hover,
 .new-recipe-button:active,
 .add-item-button:hover,
@@ -233,6 +235,8 @@ textarea:focus {
 .menu-button:active,
 .close-button:active {
   border-color: var(--orange);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
 /* --- Animations --- */
@@ -249,6 +253,25 @@ textarea:focus {
 
 .animate-fade-in-up {
   animation: fadeInUp 1.2s ease-out;
+}
+
+/* Prevent layout shift during search */
+.recipes-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  /* Responsive minimum height */
+  @media (min-width: 768px) {
+    min-height: 250px;
+  }
+  @media (min-width: 1024px) {
+    min-height: 300px;
+  }
+}
+
+.recipes-list {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  min-height: 100%;
 }
 
 /* .animate-fade-in {
