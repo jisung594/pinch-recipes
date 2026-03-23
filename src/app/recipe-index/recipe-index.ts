@@ -26,6 +26,7 @@ export class RecipeIndex implements OnInit {
   currentUserId: string | null = null;
   selectedIngredient = '';
   ingredientSearchTerm = '';
+  recipeSearchTerm = '';
   ingredientSuggestions: string[] = [];
   uniqueIngredients: string[] = [];
   filteredRecipes: Recipe[] = [];
@@ -72,6 +73,11 @@ export class RecipeIndex implements OnInit {
     this.uniqueIngredients = Array.from(ingredients).sort();
   }
 
+  // Recipe search
+  onRecipeSearchChange(searchTerm: string): void {
+    this.applyCombinedFilters();
+  }
+
   // Ingredient filtering with search suggestions
   onIngredientSearchChange(searchTerm: string): void {
     this.ingredientSearchTerm = searchTerm;
@@ -87,8 +93,8 @@ export class RecipeIndex implements OnInit {
       this.showIngredientSuggestions = false;
     }
     
-    // Apply filter as user types
-    this.applyIngredientFilter(searchTerm);
+    // Apply combined filters
+    this.applyCombinedFilters();
   }
 
   selectIngredientSuggestion(suggestion: string): void {
@@ -96,7 +102,31 @@ export class RecipeIndex implements OnInit {
     this.selectedIngredient = suggestion;
     this.showIngredientSuggestions = false;
     this.selectedSuggestionIndex = -1;
-    this.applyIngredientFilter(suggestion);
+    this.applyCombinedFilters();
+  }
+
+  // Combined filtering logic
+  private applyCombinedFilters(): void {
+    let filtered = [...this.mainRecipes];
+    
+    // Apply recipe title search
+    if (this.recipeSearchTerm.trim()) {
+      const search = this.recipeSearchTerm.toLowerCase();
+      filtered = filtered.filter(recipe => 
+        recipe.title.toLowerCase().includes(search)
+      );
+    }
+    
+    // Apply ingredient filter
+    if (this.ingredientSearchTerm.trim()) {
+      filtered = filtered.filter(recipe => 
+        recipe.ingredients.some(ing => 
+          ing.name.toLowerCase().includes(this.ingredientSearchTerm.toLowerCase())
+        )
+      );
+    }
+    
+    this.filteredRecipes = filtered;
   }
 
   // Keyboard navigation for suggestions
@@ -150,7 +180,7 @@ export class RecipeIndex implements OnInit {
     this.ingredientSearchTerm = '';
     this.selectedIngredient = '';
     this.showIngredientSuggestions = false;
-    this.filteredRecipes = [...this.mainRecipes];
+    this.applyCombinedFilters();
   }
 
   // Close suggestions when clicking outside

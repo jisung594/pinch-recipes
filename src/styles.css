@@ -90,6 +90,7 @@ body {
   border-color: var(--red);
 }
 
+.ingredient-filter,
 .search-bar,
 .form-field {
   font-family: var(--font-body);

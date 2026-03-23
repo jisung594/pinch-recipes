@@ -1,6 +1,19 @@
 <div class="recipe-index">
   <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-4">Recipes</h1>
   
+  <!-- Search Section -->
+  <div class="search-section border-b-2 border-dotted border-light pb-4 mb-4">
+    <p class="font-heading font-normal text-lg lg:text-xl mb-1">Search your recipes:</p>
+    
+    <input
+      [(ngModel)]="recipeSearchTerm"
+      (ngModelChange)="onRecipeSearchChange($event)"
+      type="text"
+      placeholder="Maple Dijon Roasted Chicken"
+      class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
+    />
+  </div>
+  
   <!-- Filter Section -->
   <div class="filter-section mb-4" (clickOutside)="onClickOutside()">
     <div class="flex flex-col gap-1">
@@ -13,7 +26,7 @@
           (ngModelChange)="onIngredientSearchChange($event)"
           (keydown)="onSuggestionKeydown($event)"
           placeholder="e.g., chicken, garlic, basil"
-          class="px-2 py-1 border border-light rounded-sm font-body text-sm w-1/2"
+          class="ingredient-filter px-2 py-1 border border-light rounded-sm font-body text-sm w-1/2"
         />
         
         <!-- Clear button -->
@@ -57,10 +70,10 @@
   <div class="main-recipes">
     <div class="flex flex-col gap-2 rounded-sm mb-6">
       <p *ngIf="!filteredRecipes.length" class="font-body font-normal text-sm color-dark-gray">
-        {{ selectedIngredient ? 'No recipes found with this ingredient.' : 'No recipes yet.' }}
+        {{ recipeSearchTerm || selectedIngredient ? 'No recipes found.' : 'No recipes yet.' }}
       </p>
 
-      <app-recipes-list [recipes]="filteredRecipes"></app-recipes-list>
+      <app-recipes-list [recipes]="filteredRecipes" [searchTerm]="recipeSearchTerm"></app-recipes-list>
     </div>
   </div>
 
