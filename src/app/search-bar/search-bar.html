@@ -1,0 +1,11 @@
+<div class="border-b-4 border-dotted border-light pb-4 mb-2">
+  <p class="font-heading font-normal text-lg lg:text-xl mb-1">Search your recipes:</p>
+
+  <input 
+    [(ngModel)]="searchTerm" 
+    (ngModelChange)="searchTermChange.emit($event)"
+    type="text"
+    placeholder="Maple Dijon Roasted Chicken"
+    class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
+  />
+</div>
