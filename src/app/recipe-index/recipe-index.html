@@ -1,14 +1,66 @@
 <div class="recipe-index">
-  <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-1">Recipes</h1>
+  <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-4">Recipes</h1>
+  
+  <!-- Filter Section -->
+  <div class="filter-section mb-4" (clickOutside)="onClickOutside()">
+    <div class="flex flex-col gap-1">
+      <label class="font-heading text-base font-medium">Filter by ingredient:</label>
+      <div class="relative flex-1">
+        <!-- Search input-->
+        <input 
+          type="text"
+          [(ngModel)]="ingredientSearchTerm"
+          (ngModelChange)="onIngredientSearchChange($event)"
+          (keydown)="onSuggestionKeydown($event)"
+          placeholder="e.g., chicken, garlic, basil"
+          class="px-2 py-1 border border-light rounded-sm font-body text-sm w-1/2"
+        />
+        
+        <!-- Clear button -->
+        <button 
+          *ngIf="ingredientSearchTerm"
+          (click)="clearIngredientFilter()"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 color-dark-gray"
+          type="button">
+          <mat-icon class="text-sm">clear</mat-icon>
+        </button>
+        
+        <!-- Ingredient Suggestions -->
+        <div 
+          *ngIf="showIngredientSuggestions && ingredientSuggestions.length > 0" 
+          class="absolute top-full left-0 right-0 bg-white border border-light rounded-sm mt-1 shadow-md z-10">
+          <div 
+            *ngFor="let suggestion of ingredientSuggestions; let i = index" 
+            class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-light last:border-b-0"
+            [class.bg-light-blue]="i === selectedSuggestionIndex"
+            (click)="selectIngredientSuggestion(suggestion)">
+            {{ suggestion }}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Current filter indicator -->
+    <div *ngIf="selectedIngredient" class="flex items-center gap-2 mt-2">
+      <span class="font-body font-normal text-sm color-dark-gray">
+        Filtering by: <b>{{ selectedIngredient }}</b>
+      </span>
+      <button 
+        (click)="clearIngredientFilter()"
+        class="color-blue hover:color-dark text-sm underline">
+        Clear filter
+      </button>
+    </div>
+  </div>
   
   <!-- Main recipes section -->
   <div class="main-recipes">
-    <div class="flex flex-col gap-2 border border-light px-2 py-2 rounded-sm mb-6">
-      <p *ngIf="!mainRecipes.length" class="font-body font-normal text-sm color-dark-gray">
-        No recipes yet.
+    <div class="flex flex-col gap-2 rounded-sm mb-6">
+      <p *ngIf="!filteredRecipes.length" class="font-body font-normal text-sm color-dark-gray">
+        {{ selectedIngredient ? 'No recipes found with this ingredient.' : 'No recipes yet.' }}
       </p>
 
-      <app-recipes-list [recipes]="mainRecipes"></app-recipes-list>
+      <app-recipes-list [recipes]="filteredRecipes"></app-recipes-list>
     </div>
   </div>
 
