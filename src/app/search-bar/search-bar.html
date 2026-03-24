@@ -1,11 +1,36 @@
 <div class="border-b-2 border-dotted border-light pb-4 mb-2">
   <p class="font-heading font-normal text-lg lg:text-xl mb-1">Search your recipes:</p>
 
-  <input
-    [(ngModel)]="searchTerm"
-    (ngModelChange)="searchTermChange.emit($event)"
-    type="text"
-    placeholder="Maple Dijon Roasted Chicken"
-    class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
-  />
+  <div class="relative">
+    <input
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange($event)"
+      (keydown)="onSuggestionKeydown($event)"
+      type="text"
+      placeholder="Maple Dijon Roasted Chicken"
+      class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
+    />
+    
+    <!-- Clear button -->
+    <button 
+      *ngIf="searchTerm"
+      (click)="selectSuggestion('')"
+      class="absolute right-2 top-1/2 -translate-y-1/2 leading-none color-dark-gray"
+      type="button">
+      <mat-icon class="text-sm">clear</mat-icon>
+    </button>
+    
+    <!-- Search Suggestions -->
+    <div 
+      *ngIf="showSearchSuggestions && searchSuggestions.length > 0" 
+      class="absolute top-full left-0 right-0 bg-white border border-light rounded-sm mt-1 shadow-md z-10">
+      <div 
+        *ngFor="let suggestion of searchSuggestions; let i = index" 
+        class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-light last:border-b-0"
+        [class.bg-light-blue]="i === selectedSuggestionIndex"
+        (click)="selectSuggestion(suggestion)">
+        {{ suggestion }}
+      </div>
+    </div>
+  </div>
 </div>
