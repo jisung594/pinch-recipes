@@ -24,13 +24,11 @@ export class RecipeIndex implements OnInit {
   archivedRecipes: Recipe[] = [];
   private destroy$ = new Subject<void>();
   currentUserId: string | null = null;
-  selectedIngredient = '';
-  ingredientSearchTerm = '';
   recipeSearchTerm = '';
-  ingredientSuggestions: string[] = [];
+  searchSuggestions: string[] = [];
   uniqueIngredients: string[] = [];
   filteredRecipes: Recipe[] = [];
-  showIngredientSuggestions = false;
+  showSearchSuggestions = false;
   selectedSuggestionIndex = -1;
 
   constructor(
@@ -55,6 +53,9 @@ export class RecipeIndex implements OnInit {
       this.mainRecipes = recipes.filter((recipe) => !recipe.archived);
       this.archivedRecipes = recipes.filter((recipe) => recipe.archived === true || recipe.archived === undefined);
       
+      // Build search index for fast search and suggestions
+      this.recipeIndexService.buildIndex(this.mainRecipes);
+      
       // Extract unique ingredients for filtering
       this.extractUniqueIngredients();
       
@@ -73,81 +74,78 @@ export class RecipeIndex implements OnInit {
     this.uniqueIngredients = Array.from(ingredients).sort();
   }
 
-  // Recipe search
+  // Unified search with suggestions
   onRecipeSearchChange(searchTerm: string): void {
-    this.applyCombinedFilters();
-  }
-
-  // Ingredient filtering with search suggestions
-  onIngredientSearchChange(searchTerm: string): void {
-    this.ingredientSearchTerm = searchTerm;
+    this.recipeSearchTerm = searchTerm;
     
     if (searchTerm.length >= 2) {
-      // Get suggestions from unique ingredients
-      this.ingredientSuggestions = this.uniqueIngredients.filter(ingredient =>
-        ingredient.toLowerCase().includes(searchTerm.toLowerCase())
-      ).slice(0, 8);
-      this.showIngredientSuggestions = true;
+      // Get suggestions from search index service (includes titles, ingredients, instructions)
+      this.searchSuggestions = this.recipeIndexService.getSuggestions(searchTerm, 8);
+      this.showSearchSuggestions = true;
     } else {
-      this.ingredientSuggestions = [];
-      this.showIngredientSuggestions = false;
+      this.searchSuggestions = [];
+      this.showSearchSuggestions = false;
     }
     
-    // Apply combined filters
-    this.applyCombinedFilters();
+    // Apply search filtering
+    this.applySearchFilter();
   }
 
-  selectIngredientSuggestion(suggestion: string): void {
-    this.ingredientSearchTerm = suggestion;
-    this.selectedIngredient = suggestion;
-    this.showIngredientSuggestions = false;
+  selectSuggestion(suggestion: string): void {
+    this.recipeSearchTerm = suggestion;
+    this.showSearchSuggestions = false;
     this.selectedSuggestionIndex = -1;
-    this.applyCombinedFilters();
+    this.applySearchFilter();
   }
 
-  // Combined filtering logic
-  private applyCombinedFilters(): void {
-    let filtered = [...this.mainRecipes];
-    
-    // Apply recipe title search
-    if (this.recipeSearchTerm.trim()) {
-      const search = this.recipeSearchTerm.toLowerCase();
-      filtered = filtered.filter(recipe => 
-        recipe.title.toLowerCase().includes(search)
-      );
+  clearSearch(): void {
+    this.recipeSearchTerm = '';
+    this.showSearchSuggestions = false;
+    this.selectedSuggestionIndex = -1;
+    this.applySearchFilter();
+  }
+
+  // Search filtering logic (supports comma-separated multi-term search)
+  private applySearchFilter(): void {
+    if (!this.recipeSearchTerm.trim()) {
+      this.filteredRecipes = [...this.mainRecipes];
+      return;
     }
+
+    const searchTerms = this.recipeSearchTerm
+      .split(',')
+      .map(term => term.trim().toLowerCase())
+      .filter(term => term.length > 0);
     
-    // Apply ingredient filter (supports multiple ingredients)
-    if (this.ingredientSearchTerm.trim()) {
-      const ingredients = this.ingredientSearchTerm
-        .split(',')
-        .map(ing => ing.trim().toLowerCase())
-        .filter(ing => ing.length > 0);
-      
-      if (ingredients.length > 0) {
-        filtered = filtered.filter(recipe => 
-          ingredients.every(searchIngredient => 
-            recipe.ingredients.some(ing => 
-              ing.name.toLowerCase().includes(searchIngredient)
-            )
-          )
-        );
-      }
+    if (searchTerms.length === 0) {
+      this.filteredRecipes = [...this.mainRecipes];
+      return;
     }
-    
-    this.filteredRecipes = filtered;
+
+    // Filter recipes that match ALL search terms
+    this.filteredRecipes = this.mainRecipes.filter(recipe => 
+      searchTerms.every(searchTerm => 
+        recipe.title.toLowerCase().includes(searchTerm) ||
+        recipe.ingredients.some(ing => 
+          ing.name.toLowerCase().includes(searchTerm)
+        ) ||
+        recipe.instructions.some(inst => 
+          inst.step.toLowerCase().includes(searchTerm)
+        )
+      )
+    );
   }
 
   // Keyboard navigation for suggestions
   onSuggestionKeydown(event: KeyboardEvent): void {
-    if (!this.showIngredientSuggestions || this.ingredientSuggestions.length === 0) return;
+    if (!this.showSearchSuggestions || this.searchSuggestions.length === 0) return;
 
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
         this.selectedSuggestionIndex = Math.min(
           this.selectedSuggestionIndex + 1,
-          this.ingredientSuggestions.length - 1
+          this.searchSuggestions.length - 1
         );
         break;
       case 'ArrowUp':
@@ -161,40 +159,21 @@ export class RecipeIndex implements OnInit {
       case 'Tab':
         event.preventDefault();
         if (this.selectedSuggestionIndex >= 0) {
-          this.selectIngredientSuggestion(
-            this.ingredientSuggestions[this.selectedSuggestionIndex]
+          this.selectSuggestion(
+            this.searchSuggestions[this.selectedSuggestionIndex]
           );
         }
         break;
       case 'Escape':
-        this.showIngredientSuggestions = false;
+        this.showSearchSuggestions = false;
         this.selectedSuggestionIndex = -1;
         break;
     }
   }
 
-  private applyIngredientFilter(searchTerm: string): void {
-    if (!searchTerm.trim()) {
-      this.filteredRecipes = [...this.mainRecipes];
-    } else {
-      this.filteredRecipes = this.mainRecipes.filter(recipe => 
-        recipe.ingredients.some(ing => 
-          ing.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    }
-  }
-
-  clearIngredientFilter(): void {
-    this.ingredientSearchTerm = '';
-    this.selectedIngredient = '';
-    this.showIngredientSuggestions = false;
-    this.applyCombinedFilters();
-  }
-
   // Close suggestions when clicking outside
   onClickOutside(): void {
-    this.showIngredientSuggestions = false;
+    this.showSearchSuggestions = false;
   }
 
   ngOnDestroy() {

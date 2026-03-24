@@ -65,17 +65,31 @@ export class RecipeIndexService {
     this.recipeIndex = [];
   }
 
-  /** Get search suggestions based on title matches */
+  /** Get search suggestions based on title and ingredient matches */
   getSuggestions(query: string, limit: number = 5): string[] {
     if (!query.trim() || query.length < 2) {
       return [];
     }
 
     const search = query.toLowerCase();
-    return this.recipeIndex
+    const suggestions = new Set<string>();
+    
+    // Add title matches
+    this.recipeIndex
       .filter((index) => index.titleLower.includes(search))
-      .map((index) => index.title)
-      .slice(0, limit);
+      .forEach((index) => suggestions.add(index.title));
+    
+    // Add ingredient matches (prioritize ingredients over titles)
+    this.recipeIndex.forEach((index) => {
+      index.ingredientsLower.forEach(ing => {
+        if (ing.includes(search)) {
+          suggestions.add(ing); // Add the ingredient name, not recipe title
+        }
+      });
+    });
+    
+    // Convert to array and limit
+    return Array.from(suggestions).slice(0, limit);
   }
 
   /** Get popular terms from recipe titles */

@@ -5,64 +5,44 @@
   <div class="search-section border-b-2 border-dotted border-light pb-4 mb-4">
     <p class="font-heading font-normal text-lg lg:text-xl mb-1">Search your recipes:</p>
     
-    <input
-      [(ngModel)]="recipeSearchTerm"
-      (ngModelChange)="onRecipeSearchChange($event)"
-      type="text"
-      placeholder="Maple Dijon Roasted Chicken"
-      class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
-    />
-  </div>
-  
-  <!-- Filter Section -->
-  <div class="filter-section mb-4" (clickOutside)="onClickOutside()">
-    <div class="flex flex-col gap-1">
-      <label class="font-heading text-base font-medium">Filter by ingredient:</label>
-      <div class="relative flex-1">
-        <!-- Search input-->
-        <input 
-          type="text"
-          [(ngModel)]="ingredientSearchTerm"
-          (ngModelChange)="onIngredientSearchChange($event)"
-          (keydown)="onSuggestionKeydown($event)"
-          placeholder="e.g., chicken, garlic, basil"
-          class="ingredient-filter px-2 py-1 border border-light rounded-sm font-body text-sm w-1/2"
-        />
-        
-        <!-- Clear button -->
-        <button 
-          *ngIf="ingredientSearchTerm"
-          (click)="clearIngredientFilter()"
-          class="absolute right-2 top-1/2 transform -translate-y-1/2 color-dark-gray"
-          type="button">
-          <mat-icon class="text-sm">clear</mat-icon>
-        </button>
-        
-        <!-- Ingredient Suggestions -->
+    <div class="relative">
+      <input
+        [(ngModel)]="recipeSearchTerm"
+        (ngModelChange)="onRecipeSearchChange($event)"
+        (keydown)="onSuggestionKeydown($event)"
+        type="text"
+        placeholder="Maple Dijon Roasted Chicken"
+        class="search-bar w-full px-2 py-1 border border-light rounded-sm font-body font-normal text-lg lg:text-xl"
+      />
+      
+      <!-- Clear button -->
+      <button 
+        *ngIf="recipeSearchTerm"
+        (click)="clearSearch()"
+        class="absolute right-2 flex items-center justify-center h-full color-dark-gray"
+        type="button">
+        <mat-icon class="text-sm">clear</mat-icon>
+      </button>
+      
+      <!-- Search Suggestions -->
+      <div 
+        *ngIf="showSearchSuggestions && searchSuggestions.length > 0" 
+        class="absolute top-full left-0 right-0 bg-white border border-light rounded-sm mt-1 shadow-md z-10">
         <div 
-          *ngIf="showIngredientSuggestions && ingredientSuggestions.length > 0" 
-          class="absolute top-full left-0 right-0 bg-white border border-light rounded-sm mt-1 shadow-md z-10">
-          <div 
-            *ngFor="let suggestion of ingredientSuggestions; let i = index" 
-            class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-light last:border-b-0"
-            [class.bg-light-blue]="i === selectedSuggestionIndex"
-            (click)="selectIngredientSuggestion(suggestion)">
-            {{ suggestion }}
-          </div>
+          *ngFor="let suggestion of searchSuggestions; let i = index" 
+          class="suggestion-item px-2 py-1 hover:bg-gray-100 cursor-pointer font-body text-sm border-b border-light last:border-b-0"
+          [class.bg-light-blue]="i === selectedSuggestionIndex"
+          (click)="selectSuggestion(suggestion)">
+          {{ suggestion }}
         </div>
       </div>
     </div>
     
-    <!-- Current filter indicator -->
-    <div *ngIf="selectedIngredient" class="flex items-center gap-2 mt-2">
-      <span class="font-body font-normal text-sm color-dark-gray">
-        Filtering by: <b>{{ selectedIngredient }}</b>
-      </span>
-      <button 
-        (click)="clearIngredientFilter()"
-        class="color-blue hover:color-dark text-sm underline">
-        Clear filter
-      </button>
+    <!-- Search hint -->
+    <div class="mt-2">
+      <p class="font-body text-xs color-dark-gray">
+        Search by title, ingredient, or instruction (e.g., "beef shank, thyme, braise")
+      </p>
     </div>
   </div>
   
@@ -70,7 +50,7 @@
   <div class="main-recipes">
     <div class="flex flex-col gap-2 rounded-sm mb-6">
       <p *ngIf="!filteredRecipes.length" class="font-body font-normal text-sm color-dark-gray">
-        {{ recipeSearchTerm || selectedIngredient ? 'No recipes found.' : 'No recipes yet.' }}
+        {{ recipeSearchTerm ? 'No recipes found.' : 'No recipes yet.' }}
       </p>
 
       <app-recipes-list [recipes]="filteredRecipes" [searchTerm]="recipeSearchTerm"></app-recipes-list>
