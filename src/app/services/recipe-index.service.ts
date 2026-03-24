@@ -42,18 +42,27 @@ export class RecipeIndexService {
       return this.recipeIndex.map((index) => index.id);
     }
 
-    const search = query.toLowerCase();
+    // Handle comma-separated multi-term search
+    const searchTerms = query
+      .split(',')
+      .map(term => term.trim().toLowerCase())
+      .filter(term => term.length > 0);
+    
+    if (searchTerms.length === 0) {
+      return this.recipeIndex.map((index) => index.id);
+    }
+
     return this.recipeIndex
-      .filter((index) => this.matchesQuery(index, search))
+      .filter((index) => this.matchesQuery(index, searchTerms))
       .map((index) => index.id);
   }
 
   /** Check if recipe index matches search query */
-  private matchesQuery(index: RecipeIndex, search: string): boolean {
-    return (
-      index.titleLower.includes(search) ||
-      index.ingredientsLower.some((ing) => ing.includes(search)) ||
-      index.instructionsLower.some((inst) => inst.includes(search))
+  private matchesQuery(index: RecipeIndex, searchTerms: string[]): boolean {
+    return searchTerms.every(searchTerm => 
+      index.titleLower.includes(searchTerm) ||
+      index.ingredientsLower.some((ing) => ing.includes(searchTerm)) ||
+      index.instructionsLower.some((inst) => inst.includes(searchTerm))
     );
   }
 
