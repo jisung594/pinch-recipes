@@ -19,6 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 export class RecipesList implements OnInit, OnDestroy, OnChanges {
   @Input() searchTerm = '';
   @Input() recipes: Recipe[] = [];
+  @Input() limit: number | null = null;
 
   private destroy$ = new Subject<void>();
   currentUserId: string | null = null;
@@ -56,12 +57,26 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
   }
 
   get filteredRecipes(): Recipe[] {
+    let recipes: Recipe[];
+    
     if (!this.searchTerm.trim()) {
-      return this.allRecipes;
+      recipes = this.allRecipes;
+    } else {
+      const matchingIds = this.recipeIndexService.search(this.searchTerm);
+      recipes = this.allRecipes.filter((recipe) => matchingIds.includes(recipe.id || ''));
     }
-
-    const matchingIds = this.recipeIndexService.search(this.searchTerm);
-    return this.allRecipes.filter((recipe) => matchingIds.includes(recipe.id || ''));
+    
+    // Sort by most recent creation date when showing limited results
+    if (this.limit && this.limit > 0) {
+      recipes = recipes.sort((a, b) => {
+        const dateA = a.createdAt?.toMillis?.() || a.createdAt?.getTime?.() || 0;
+        const dateB = b.createdAt?.toMillis?.() || b.createdAt?.getTime?.() || 0;
+        return dateB - dateA; // Most recent first
+      });
+      return recipes.slice(0, this.limit);
+    }
+    
+    return recipes;
   }
 
   ngOnChanges() {

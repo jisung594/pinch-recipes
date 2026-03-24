@@ -11,7 +11,22 @@
 
       <!-- Search results -->
       <div class="mt-6 recipes-container">
-        <app-recipes-list [searchTerm]="searchTerm"></app-recipes-list>
+        <!-- Section header -->
+        <div *ngIf="!searchTerm" class="mb-2">
+          <h2 class="font-heading font-semibold text-lg color-dark mb-1">Recent Recipes</h2>
+        </div>
+        
+        <!-- Recipe list with limit for recent view -->
+        <app-recipes-list [searchTerm]="searchTerm" [limit]="searchTerm ? null : 3"></app-recipes-list>
+        
+        <!-- Show all button when not searching -->
+        <div *ngIf="!searchTerm" class="mt-4 flex justify-end">
+          <a 
+            routerLink="/recipes" 
+            class="font-body text-sm color-blue hover:opacity-80 underline underline-offset-4">
+            View all recipes →
+          </a>
+        </div>
       </div>
     </div>
     <!-- Display for guest users -->
