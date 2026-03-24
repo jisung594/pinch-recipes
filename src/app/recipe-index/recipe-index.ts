@@ -117,13 +117,22 @@ export class RecipeIndex implements OnInit {
       );
     }
     
-    // Apply ingredient filter
+    // Apply ingredient filter (supports multiple ingredients)
     if (this.ingredientSearchTerm.trim()) {
-      filtered = filtered.filter(recipe => 
-        recipe.ingredients.some(ing => 
-          ing.name.toLowerCase().includes(this.ingredientSearchTerm.toLowerCase())
-        )
-      );
+      const ingredients = this.ingredientSearchTerm
+        .split(',')
+        .map(ing => ing.trim().toLowerCase())
+        .filter(ing => ing.length > 0);
+      
+      if (ingredients.length > 0) {
+        filtered = filtered.filter(recipe => 
+          ingredients.every(searchIngredient => 
+            recipe.ingredients.some(ing => 
+              ing.name.toLowerCase().includes(searchIngredient)
+            )
+          )
+        );
+      }
     }
     
     this.filteredRecipes = filtered;
