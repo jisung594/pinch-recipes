@@ -9,19 +9,49 @@
       <span>signup</span>
     </a>
   </div>
-  <div *ngIf="user" class="logged-in">
-    <div *ngIf="userProfile$ | async as profile" class="mb-2 lg:hidden">
-      <span class="font-body font-normal text-base md:text-2xl text-black">
-        Hello, {{ profile.displayName || profile.firstName || 'maker' }}.
-      </span>
+  <div *ngIf="user" class="logged-in flex items-center gap-4 relative">
+    <!-- Account icon -->
+    <div 
+      (click)="onAccountIconClick()"
+      class="flex items-center justify-center w-4 h-4 rounded-full bg-light-gray hover:bg-light-blue transition-colors cursor-pointer"
+    >
+      <mat-icon class="text-sm color-dark">account_circle</mat-icon>
     </div>
-    <div class="">
-      <button
-        (click)="handleSignOut()"
-        class="signout-button font-body font-semibold text-sm text-black tracking-wide px-2 py-0.5 border-2 border-light rounded-sm"
-      >
-        SIGN OUT
-      </button>
+    
+    <!-- Dropdown menu -->
+    <div
+      *ngIf="isDropdownOpen"
+      class="absolute right-2 md:right-0 bottom-full flex flex-col gap-1 w-32 px-2 py-1 bg-light-gray border border-dark rounded-sm shadow-lg z-50 lg:top-full lg:mt-2 lg:bottom-auto lg:mb-auto"
+    >
+      <!-- User info -->
+      <div *ngIf="userProfile$ | async as profile" class="px-1 py-2 border-b border-dark">
+        <p class="font-heading font-semibold text-base color-dark mb-1">
+          Hello, {{ profile.displayName || profile.firstName || 'User' }}.
+        </p>
+        <p class="font-body text-xs color-gray-500 truncate">
+          {{ user.email }}
+        </p>
+      </div>
+
+      <!-- Menu items -->
+      <div class="">
+        <a
+          routerLink="/profile"
+          (click)="closeDropdown()"
+          class="flex items-center gap-2 px-1 py-1 text-sm font-body font-normal transition-colors"
+        >
+          <mat-icon class="text-xs">person</mat-icon>
+          Edit Profile
+        </a>
+        <div class="flex justify-end px-1 py-1">
+          <button
+            (click)="handleSignOut()"
+            class="signout-button font-body font-semibold text-sm color-dark tracking-wide px-2 py-0.5 border-2 border-dark rounded-sm"
+          >
+            SIGN OUT
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

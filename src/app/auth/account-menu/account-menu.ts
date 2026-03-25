@@ -18,6 +18,7 @@ export class AccountMenu implements OnInit {
 
   user: User | null = null;
   userProfile$!: Observable<UserProfile | null>;
+  isDropdownOpen = false;
 
   constructor(private authService: AuthService) {
     this.userProfile$ = this.authService.userProfile$;
@@ -36,6 +37,14 @@ export class AccountMenu implements OnInit {
     } catch (err) {
       console.log('ERROR:', err);
     }
+  }
+
+  onAccountIconClick() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
   }
 
   async handleSignOut() {
