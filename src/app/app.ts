@@ -11,5 +11,5 @@ import { Header } from './header/header';
   imports: [CommonModule, RouterModule, Header],
 })
 export class App {
-  protected readonly title = signal('bakers-logbook');
+  protected readonly title = signal('pinch-recipes');
 }

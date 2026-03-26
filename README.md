@@ -2,8 +2,8 @@
 
 A recipe management tool for home bakers to create, organize, and refine recipes. Designed to feel like a manual logbook — simple, structured, and built to evolve over time. This project was built to both create a practical tool I use in my day-to-day life as a home baker and spend time working in Angular after using React professionally.
 
-Live site: https://bakers-logbook.web.app \
-A sample **[public recipe](https://bakers-logbook.web.app/recipes/PUBLIC_RECIPE_ID)** without creating an account
+Live site: https://pinch.com \
+A sample **[public recipe](https://pinch.com/demo)** without creating an account
 
 ## Built with
 

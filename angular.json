@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bakers-logbook": {
+    "pinch-recipes": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
@@ -87,10 +87,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "bakers-logbook:build:production"
+              "buildTarget": "pinch-recipes:build:production"
             },
             "development": {
-              "buildTarget": "bakers-logbook:build:development"
+              "buildTarget": "pinch-recipes:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/bakers-logbook/browser",
+    "public": "dist/pinch-recipes/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
