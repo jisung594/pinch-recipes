@@ -6,10 +6,11 @@ import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 import { Observable } from 'rxjs';
 import { UserProfile } from '../../models/user-profile.model';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 @Component({
   selector: 'app-account-menu',
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, ClickOutsideDirective],
   templateUrl: './account-menu.html',
   styleUrl: './account-menu.css',
 })

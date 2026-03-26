@@ -9,7 +9,7 @@
       <span>signup</span>
     </a>
   </div>
-  <div *ngIf="user" class="logged-in flex items-center gap-4 relative">
+  <div *ngIf="user" class="logged-in flex items-center gap-4 relative" (clickOutside)="closeDropdown()">
     <!-- Account icon -->
     <div 
       (click)="onAccountIconClick()"
