@@ -6,12 +6,24 @@
         <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide">Profile</h1>
       </div>
       <div *ngIf="isEditingProfile" class="editing-options-editmode">
-        <button (click)="saveProfile()" type="button" mat-icon-button matTooltip="Done Editing">
+        <button
+          (click)="saveProfile()" 
+          type="button" 
+          mat-icon-button 
+          matTooltip="Done Editing"
+          [disabled]="isDemo$ | async"
+          [class.demo-disabled]="isDemo$ | async">
           <mat-icon class="color-dark-gray icon-sm">visibility</mat-icon>
         </button>
       </div>
       <div *ngIf="!isEditingProfile" class="editing-options-viewmode">
-        <button (click)="editProfile()" type="button" mat-icon-button matTooltip="Click to Edit">
+        <button
+          (click)="editProfile()" 
+          type="button" 
+          mat-icon-button 
+          matTooltip="Click to Edit"
+          [disabled]="isDemo$ | async"
+          [class]="(isDemo$ | async) ? 'demo-disabled cursor-not-allowed opacity-40' : ''">
           <mat-icon aria-label="Edit" class="color-dark-gray icon-sm">edit</mat-icon>
         </button>
       </div>

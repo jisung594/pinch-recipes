@@ -47,6 +47,15 @@ export class Login {
     return this.loginForm.get('password');
   }
 
+  async loginAsDemo() {
+    try {
+      await this.authService.signInAsDemo();
+      this.router.navigate(['/']);
+    } catch (err) {
+      console.error('Demo login failed:', err);
+    }
+  }
+
   async handleSignIn() {
     try {
       const { email, password } = this.loginForm.value;

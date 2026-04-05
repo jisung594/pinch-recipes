@@ -1,0 +1,23 @@
+.demo-section {
+  background: linear-gradient(135deg, rgba(var(--med-blue-rgb), 0.35), var(--light-blue));
+}
+
+.demo-button {
+  background-color: var(--cta-blue);
+  border: 1px solid var(--cta-blue);
+  transition: all 0.2s ease-in;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.05em;
+}
+
+.demo-button:hover {
+  background-color: white;
+  color: var(--cta-blue);
+}
+
