@@ -225,10 +225,9 @@
       <button
         type="button"
         class="font-body font-medium text-xs md:text-sm tracking-widest color-red px-1 py-0.5 bg-white shadow-md rounded-sm flex items-center gap-0.5"
-        (click)="!isDemo && confirmDelete()"
-        [disabled]="isDemo"
-        [class.opacity-40]="isDemo"
-        [class.cursor-not-allowed]="isDemo"
+        [ngClass]="{ 'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe }"
+        (click)="!isDemoMode && !isDemoRecipe && confirmDelete()"
+        [disabled]="isDemoMode || isDemoRecipe"
       >
         <mat-icon class="text-sm">delete_outline</mat-icon>
         DELETE
@@ -237,10 +236,9 @@
         *ngIf="recipeId"
         type="button"
         class="font-body font-medium text-xs md:text-sm tracking-widest px-1 py-0.5 bg-white shadow-md rounded-sm"
-        (click)="!isDemo && toggleArchive()"
-        [disabled]="isDemo"
-        [class.opacity-40]="isDemo"
-        [class.cursor-not-allowed]="isDemo"
+        [ngClass]="{ 'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe }"
+        (click)="!isDemoMode && !isDemoRecipe && toggleArchive()"
+        [disabled]="isDemoMode || isDemoRecipe"
       >
         {{ archived ? 'RESTORE' : 'ARCHIVE' }}
       </button>
@@ -258,10 +256,9 @@
       <button
         type="button"
         class="font-body font-semibold text-sm md:text-base tracking-widest px-2 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm"
-        (click)="!isDemo && saveRecipe()"
-        [disabled]="isDemo"
-        [class.opacity-40]="isDemo"
-        [class.cursor-not-allowed]="isDemo"
+        [ngClass]="{ 'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe }"
+        (click)="!isDemoMode && !isDemoRecipe && saveRecipe()"
+        [disabled]="isDemoMode || isDemoRecipe"
       >
         SAVE
       </button>

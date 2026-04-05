@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { AuthService } from '../../services/auth.service';
@@ -47,7 +49,10 @@ export class RecipeEditor implements OnInit {
   @Input() isPublic: boolean = false;
   @Input() archived: boolean = false;
   @Input() editable: boolean = false;
-  @Input() isDemo: boolean = false;
+  @Input() isDemoRecipe: boolean = false;
+  
+  isDemo$!: Observable<boolean>;
+  isDemoMode = false;
 
   recipeForm!: FormGroup;
   isEditingTitle = false;
@@ -62,7 +67,25 @@ export class RecipeEditor implements OnInit {
     private firestoreService: RecipeFirestoreService,
     private toastService: ToastService,
     private router: Router,
-  ) {}
+  ) {
+    // Combines demo account state (isDemoMode) and demo recipe flag (isDemoRecipe) to determine UI mode.
+    // isDemoMode: from AuthService (demo account login)
+    // isDemoRecipe: from @Input() (recipe at /demo route)
+    // result => isDemoMode = true if either demo account OR demo recipe
+    this.isDemo$ = combineLatest([
+      this.authService.isDemoMode,
+      new Observable<boolean>(observer => {
+        observer.next(this.isDemoRecipe);
+      })
+    ]).pipe(
+      map(([authDemo, inputDemo]) => authDemo || inputDemo)
+    );
+    
+    // Subscribe to update the local property
+    this.isDemo$.subscribe(isDemo => {
+      this.isDemoMode = isDemo;
+    });
+  }
 
   ngOnInit() {
     // Display edit mode, if new recipe
