@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,28 +16,24 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
-export class Profile implements OnInit, OnDestroy {
+export class Profile implements OnInit {
   isEditingProfile = false;
   editedProfileData?: UserProfile;
+  isDemo$!: Observable<boolean>;
   userProfile$!: Observable<UserProfile | null>;
   private currentUser?: User | null;
-  private subscriptions = new Subscription();
 
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
-  ) {}
-
-  async ngOnInit() {
-    const sub = this.authService.authState$.subscribe((user) => {
-      this.currentUser = user;
-    });
-
-    this.subscriptions.add(sub);
+  ) {
+    this.isDemo$ = this.authService.isDemoMode;
   }
 
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+  async ngOnInit() {
+    this.authService.authState$.subscribe((user) => {
+      this.currentUser = user;
+    });
   }
 
   onProfileChange(profileData: UserProfile) {
