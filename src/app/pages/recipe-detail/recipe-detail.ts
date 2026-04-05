@@ -29,7 +29,7 @@ export class RecipeDetail {
   isPublic = false;
   archived = false;
   editable = false;
-  isDemo = false;
+  isDemoRecipe = false;
   demoRecipeId = 'dTGRZu6HOXFLz3ksCy8P';
 
   constructor(
@@ -40,12 +40,12 @@ export class RecipeDetail {
   ) {}
 
   async ngOnInit() {
-    this.isDemo = this.route.snapshot.data['isDemo'] ?? false;
+    this.isDemoRecipe = this.route.snapshot.data['isDemo'] ?? false;
 
     // Use hardcoded demo ID if on /demo route, otherwise read from URL
-    this.recipeId = this.isDemo ? this.demoRecipeId : this.route.snapshot.paramMap.get('id');
+    this.recipeId = this.isDemoRecipe ? this.demoRecipeId : this.route.snapshot.paramMap.get('id');
 
-    if (this.isDemo) {
+    if (this.isDemoRecipe) {
       // Skip auth and load public recipe directly
       const snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
 
@@ -62,20 +62,18 @@ export class RecipeDetail {
     this.authSub = this.authService.authState$.subscribe(async (user) => {
       let snapshot;
 
-      this.recipeId = this.route.snapshot.paramMap.get('id')!;
-
       if (user) {
         // Load as recipe author first
-        snapshot = await this.firestoreService.getRecipeById(user.uid, this.recipeId);
+        snapshot = await this.firestoreService.getRecipeById(user.uid, this.recipeId!);
         this.isAuthor = true;
 
         // Load as anonymous when user is not recipe author
         if (!snapshot.exists()) {
-          snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId);
+          snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
         }
       } else {
         // Load as anonymmous (not logged in)
-        snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId);
+        snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
       }
 
       if (snapshot && snapshot.exists()) {
