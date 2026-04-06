@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
@@ -21,7 +21,7 @@ export class AccountMenu implements OnInit {
   userProfile$!: Observable<UserProfile | null>;
   isDropdownOpen = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.userProfile$ = this.authService.userProfile$;
   }
 
@@ -51,6 +51,8 @@ export class AccountMenu implements OnInit {
   async handleSignOut() {
     try {
       await this.authService.signOut();
+      this.router.navigate(['/login']);
+      this.triggerCloseMenu();
       this.user = null;
       console.log('Signed out');
     } catch (err) {
