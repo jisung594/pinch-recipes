@@ -38,7 +38,7 @@ export class Home implements OnInit {
       if (profile) {
         this.welcomeText = `Hello, ${profile?.displayName || profile?.firstName || 'maker'}.`;
       } else {
-        this.welcomeText = 'PINCH a recipe journal for iterating from trial and error to tried and true';
+        this.welcomeText = 'PINCH';
       }
       this.showButtons = true;
     });

@@ -17,9 +17,7 @@ export interface RecipeIndex {
 export class RecipeIndexService {
   private recipeIndex: RecipeIndex[] = [];
 
-  constructor() {
-    console.log('***** RecipeIndexService initialized *****');
-  }
+  constructor() {}
 
   /** Build search index for recipes*/
   buildIndex(recipes: Recipe[]): void {
@@ -32,8 +30,6 @@ export class RecipeIndexService {
       instructions: recipe.instructions.map((inst) => inst.step),
       instructionsLower: recipe.instructions.map((inst) => inst.step.toLowerCase()),
     }));
-
-    console.log(`***** Indexed ${recipes.length} recipes *****`);
   }
 
   /** Search recipes using the index */
