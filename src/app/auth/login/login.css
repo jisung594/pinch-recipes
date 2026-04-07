@@ -1,5 +1,6 @@
 .demo-section {
-  background: linear-gradient(135deg, rgba(var(--med-blue-rgb), 0.35), var(--light-blue));
+  background-color: var(--light-blue);
+  /* background: linear-gradient(135deg, rgba(var(--med-blue-rgb), 0.35), var(--light-blue)); */
 }
 
 .demo-button {

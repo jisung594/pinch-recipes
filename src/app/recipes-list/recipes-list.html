@@ -22,7 +22,7 @@
     <a
       *ngFor="let recipe of filteredRecipes"
       [routerLink]="['/recipes', recipe.id]"
-      class="recipe-item border border-light rounded-sm px-2 py-1 transition-colors block"
+      class="recipe-item border border-dark rounded-sm px-2 py-1 transition-colors block"
     >
       <h3 class="font-body font-normal text-base">
         {{ recipe.title }}

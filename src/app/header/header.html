@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between px-2 py-2 md:px-6 md:py-4 bg-white">
+<div class="flex items-center justify-between px-2 py-2 md:px-6 md:py-4">
   <div class="flex">
     <img class="w-8 md:w-10" src="assets/pinch_logo.svg" alt="Pinch logo" routerLink="/" />
   </div>
@@ -8,7 +8,7 @@
       mat-icon-button
       matTooltip="Click to Open Menu"
       (click)="toggleMenu()"
-      class="menu-button lg:hidden flex px-1 py-0.5 rounded-sm border-2 lg:border-0 border-light"
+      class="menu-button lg:hidden flex px-1 py-0.5 rounded-sm border lg:border-0 border-light"
     >
       <mat-icon aria-label="hamburger-menu">menu</mat-icon>
     </button>
@@ -47,7 +47,7 @@
           mat-icon-button
           matTooltip="Click to Close Menu"
           (click)="toggleMenu()"
-          class="close-button lg:hidden flex px-1 py-0.5 rounded-sm border-2 lg:border-0 border-light"
+          class="close-button lg:hidden flex px-1 py-0.5 rounded-sm border lg:border-0 border-dark"
         >
           <mat-icon aria-label="close" class="">close</mat-icon>
         </button>
