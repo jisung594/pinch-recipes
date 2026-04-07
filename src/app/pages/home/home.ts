@@ -17,13 +17,10 @@ import { RecipesList } from '../../recipes-list/recipes-list';
   imports: [CommonModule, RouterModule, MatIconModule, SearchBar, RecipesList],
 })
 export class Home implements OnInit {
-  private typingInterval?: ReturnType<typeof setInterval>;
   private profileSubscription?: Subscription;
   user: User | null = null;
   userProfile$!: Observable<UserProfile | null>;
   welcomeText = '';
-  typingSpeed = 120;
-  showCursor = true;
   showButtons = false;
   searchTerm = '';
 
@@ -38,50 +35,16 @@ export class Home implements OnInit {
   ngOnInit() {
     // To unsubscribe from later
     this.profileSubscription = this.userProfile$.subscribe((profile) => {
-      let fullText = '';
-
       if (profile) {
-        fullText = 'Hi,' + '\n' + (profile?.displayName || profile?.firstName || 'maker') + '.';
+        this.welcomeText = `Hello, ${profile?.displayName || profile?.firstName || 'maker'}.`;
       } else {
-        fullText = 'Recipes,' + '\n' + 'by you.';
+        this.welcomeText = 'PINCH a recipe journal for iterating from trial and error to tried and true';
       }
-      this.typeText(fullText);
+      this.showButtons = true;
     });
   }
 
-  typeText(fullText: string) {
-    // Clear any existing interval
-    if (this.typingInterval) {
-      clearInterval(this.typingInterval);
-    }
-
-    // Reset display
-    this.welcomeText = '';
-    this.showCursor = true;
-    this.showButtons = false;
-
-    let index = 0;
-    this.typingInterval = setInterval(() => {
-      if (index < fullText.length) {
-        this.welcomeText += fullText[index];
-        index++;
-      } else {
-        clearInterval(this.typingInterval!);
-        this.showCursor = false;
-
-        // Pause briefly before buttons are shown
-        setTimeout(() => {
-          this.showButtons = true;
-        }, 500);
-      }
-    }, this.typingSpeed);
-  }
-
   ngOnDestroy() {
-    if (this.typingInterval) {
-      clearInterval(this.typingInterval);
-    }
-
     if (this.profileSubscription) {
       this.profileSubscription.unsubscribe();
     }

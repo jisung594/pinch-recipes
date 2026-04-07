@@ -1,8 +1,8 @@
 <div class="flex flex-col">
   <!-- Main content - always displayed -->
-  <div class="homepage px-1 py-4 lg:px-4 lg:py-8">
-    <h1 class="font-heading font-bold text-7xl lg:text-9xl mb-6 lg:mb-10 whitespace-pre-line">
-      {{ welcomeText }}<span *ngIf="showCursor" class="animate-pulse">|</span>
+  <div class="homepage">
+    <h1 class="font-heading font-bold text-7xl md:text-8xl lg:text-9xl mb-6 lg:mb-10 whitespace-pre-line">
+      {{ welcomeText }}<span class="animate-pulse">+</span>
     </h1>
     <!-- Display for logged-in users -->
     <div *ngIf="user && showButtons" class="animate-fade-in-up">
