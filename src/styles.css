@@ -36,19 +36,17 @@
   --light-blue: #f4faff;
   --med-blue: #a2d3ff;
   --med-blue-rgb: 162, 211, 255;
-  --light-gray: #f2f2f2;
   --lightest-gray: #f9f9f9;
+  --light-gray: #d9d9d9;
   --dark-gray: #767676;
   --border-radius: 2px;
   --spacing: 0.75rem;
 }
-html,
-body {
-  height: 100%;
-}
+
 body {
   margin: 0;
-  background-color: white;
+  background: linear-gradient(135deg, rgba(var(--med-blue-rgb), 0.35), white);
+  min-height: 100vh;
 }
 
 .color-light-gray {
@@ -97,7 +95,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   font-weight: 400;
-  background-color: var(--light-gray);
+  background-color: white;
   border-radius: var(--radius-sm);
   padding-block: calc(var(--spacing) * 1);
   padding-inline: calc(var(--spacing) * 1);
@@ -110,12 +108,12 @@ body {
   &::placeholder {
     color: var(--dark-gray);
     font-style: italic;
+
   }
 
   /* When field is not empty */
   &:not(:placeholder-shown) {
     font-weight: 500;
-    background-color: white;
   }
 }
 
@@ -123,11 +121,9 @@ body {
   /* Specific styling for select elements (no placeholders) */
   &:where(select):invalid {
     font-weight: 400;
-    background-color: var(--light-gray);
   }
   &:where(select):valid {
     font-weight: 500;
-    background-color: white;
   }
 }
 
