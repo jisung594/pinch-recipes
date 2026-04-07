@@ -1,14 +1,14 @@
 <form [formGroup]="recipeForm" class="recipe-editor">
   <!-- Edit mode - title -->
   <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-2 mb-1">
-    <div class="flex grow my-1">
+    <div class="flex grow my-1 border-b border-light">
       <input
         type="text"
         id="recipe-title"
         formControlName="title"
         [readonly]="!isEditingTitle"
         placeholder="Untitled Recipe"
-        class="w-full font-heading font-medium text-4xl md:text-6xl tracking-wide border-b border-light color-dark-gray"
+        class="w-full font-heading font-medium text-4xl md:text-6xl tracking-wide color-dark-gray"
       />
     </div>
     <div class="editing-options-editmode flex my-1 md:my-3">
@@ -21,8 +21,8 @@
   <!-- View mode - title -->
   <ng-template #viewModeTitle>
     <div class="flex gap-2 mb-1">
-      <div class="flex grow my-1">
-        <h1 class="font-heading font-bold text-4xl md:text-6xl tracking-wide border-b border-light">
+      <div class="flex grow my-1 border-b border-light">
+        <h1 class="font-heading font-bold text-4xl md:text-6xl tracking-wide">
           {{ recipeForm.get('title')?.value || 'Untitled Recipe' }}
         </h1>
       </div>
@@ -52,14 +52,14 @@
                 id="yield-amount"
                 placeholder="'6'"
                 formControlName="yieldAmount"
-                class="font-body font-normal text-base w-4 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"
+                class="font-body font-normal text-base w-4 rounded-sm bg-white shadow-sm px-1 py-0.5"
               />
               <input
                 type="text"
                 id="yield-unit"
                 placeholder="'loaves'"
                 formControlName="yieldUnit"
-                class="font-body font-normal text-base w-6 rounded-sm bg-light-blue shadow-sm px-1 py-0.5"
+                class="font-body font-normal text-base w-6 rounded-sm bg-white shadow-sm px-1 py-0.5"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@
   <!-- Options fixed footer (only for recipe authors) -->
   <div
     *ngIf="isAuthor || !recipeId"
-    class="flex justify-between fixed bottom-0 left-0 right-0 px-2 py-2 md:px-6 md:py-4 bg-white"
+    class="flex justify-between fixed bottom-0 left-0 right-0 px-2 py-2 md:px-6 bg-white"
   >
     <!-- Delete / Archive options -->
     <div

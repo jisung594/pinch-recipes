@@ -1,9 +1,7 @@
-#recipe-name {
-  height: 40px;
-  min-width: 400px;
-  margin: 24px 0;
+.ingredient-row-view {
+  border-bottom: 1px solid var(--light-gray);
+}
 
-  &::placeholder {
-    font-size: 24px;
-  }
+.ingredient-row-view:last-child {
+  border-bottom: none;
 }

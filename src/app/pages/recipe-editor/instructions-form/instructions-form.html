@@ -10,7 +10,7 @@
       <div
         *ngFor="let instruction of instructions.controls; let i = index"
         [formGroupName]="i"
-        class="instruction-row"
+        [class]="editable ? 'instruction-row-edit' : 'instruction-row-view'"
       >
         <!-- Edit mode -->
         <div cdkDrag *ngIf="editable" class="flex flex-row gap-1">
@@ -81,7 +81,7 @@
         </div>
 
         <!-- View mode -->
-        <div *ngIf="!editable" class="flex flex-col border-b border-light">
+        <div *ngIf="!editable" class="flex flex-col">
           <div class="flex gap-1 w-full mb-1">
             <div class="step-label w-2 shrink-0">
               <p class="font-body font-black text-base">{{ i + 1 }}</p>
@@ -121,7 +121,7 @@
 
   <button
     *ngIf="editable"
-    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border-2 border-light"
+    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border border-dark"
     type="button"
     (click)="addInstruction()"
   >

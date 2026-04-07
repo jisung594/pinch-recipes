@@ -10,7 +10,7 @@
       <div
         *ngFor="let ingredient of ingredients.controls; let i = index"
         [formGroupName]="i"
-        class="ingredient-row"
+        [class]="editable ? 'ingredient-row-edit' : 'ingredient-row-view'"
       >
         <!-- Edit mode -->
         <div cdkDrag *ngIf="editable" class="flex flex-row gap-1">
@@ -126,7 +126,7 @@
         </div>
 
         <!-- View mode -->
-        <div *ngIf="!editable" class="flex border-b border-light">
+        <div *ngIf="!editable" class="flex">
           <div class="flex mb-1">
             <div class="mr-2">
               <p class="font-body font-black text-base">&bullet;</p>
@@ -136,7 +136,6 @@
                 ingredient.value.quantity || ingredient.value.unit || ingredient.value.name;
                 else emptyIngredient
               "
-              class=""
             >
               <p class="font-body text-base">
                 {{ ingredient.value.quantity }}
@@ -145,7 +144,7 @@
               </p>
             </div>
             <ng-template #emptyIngredient>
-              <div class="">
+              <div>
                 <p class="font-body text-base italic color-dark-gray">Ingredient draft</p>
               </div>
             </ng-template>
@@ -162,7 +161,7 @@
 
   <button
     *ngIf="editable"
-    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border-2 border-light"
+    class="add-item-button font-body font-medium text-sm px-2 py-0.5 rounded-sm border border-dark"
     type="button"
     (click)="addIngredient()"
   >

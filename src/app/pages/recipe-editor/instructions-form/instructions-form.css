@@ -1,0 +1,7 @@
+.instruction-row-view {
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.instruction-row-view:last-child {
+  border-bottom: none;
+}
