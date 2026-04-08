@@ -6,7 +6,7 @@ import { Recipe } from '../models/recipe.model';
 import { RecipeFirestoreService } from '../services/recipe-firestore.service';
 import { RecipeIndexService } from '../services/recipe-index.service';
 import { AuthService } from '../services/auth.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -22,6 +22,7 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
   @Input() limit: number | null = null;
 
   private destroy$ = new Subject<void>();
+  private authSub?: Subscription;
   currentUserId: string | null = null;
   private allRecipes: Recipe[] = [];
 
@@ -37,7 +38,7 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
       this.allRecipes = this.recipes;
       this.recipeIndexService.buildIndex(this.recipes);
     } else {
-      this.authService.authState$.subscribe((user) => {
+      this.authSub = this.authService.authState$.subscribe((user) => {
         this.currentUserId = user?.uid || null;
         this.loadRecipes();
       });
@@ -88,6 +89,11 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
+    // Clean up auth subscription to prevent memory leak
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
+    
     this.destroy$.next();
     this.destroy$.complete();
   }

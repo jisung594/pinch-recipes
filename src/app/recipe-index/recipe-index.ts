@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,7 @@ import { Recipe } from '../models/recipe.model';
 import { RecipeFirestoreService } from '../services/recipe-firestore.service';
 import { RecipeIndexService } from '../services/recipe-index.service';
 import { AuthService } from '../services/auth.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -18,11 +18,12 @@ import { takeUntil } from 'rxjs/operators';
   styleUrl: './recipe-index.css',
   imports: [CommonModule, RouterModule, MatIconModule, FormsModule, RecipesList],
 })
-export class RecipeIndex implements OnInit {
+export class RecipeIndex implements OnInit, OnDestroy {
   recipes$?: Observable<Recipe[]>;
   mainRecipes: Recipe[] = [];
   archivedRecipes: Recipe[] = [];
   private destroy$ = new Subject<void>();
+  private authSub?: Subscription;
   currentUserId: string | null = null;
   recipeSearchTerm = '';
   searchSuggestions: string[] = [];
@@ -38,7 +39,7 @@ export class RecipeIndex implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authService.authState$.subscribe((user) => {
       this.currentUserId = user?.uid || null;
       this.loadRecipes();
     });
@@ -177,6 +178,11 @@ export class RecipeIndex implements OnInit {
   }
 
   ngOnDestroy() {
+    // Clean up auth subscription to prevent memory leak
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
+    
     this.destroy$.next();
     this.destroy$.complete();
   }

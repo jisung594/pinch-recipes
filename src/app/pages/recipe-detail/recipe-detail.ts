@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ import { Recipe } from '../../models/recipe.model';
   templateUrl: './recipe-detail.html',
   styleUrl: './recipe-detail.css',
 })
-export class RecipeDetail {
+export class RecipeDetail implements OnDestroy {
   isAuthor = false;
   private authSub?: Subscription; // only accessed/relevant within this scope
   recipe: Recipe | null = null;
@@ -104,5 +104,12 @@ export class RecipeDetail {
 
     this.isPublic = recipe.isPublic;
     this.archived = recipe.archived;
+  }
+
+  ngOnDestroy() {
+    // Clean up auth subscription to prevent memory leak
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
   }
 }
