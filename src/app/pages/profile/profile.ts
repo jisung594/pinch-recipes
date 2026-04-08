@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,12 +16,13 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
-export class Profile implements OnInit {
+export class Profile implements OnInit, OnDestroy {
   isEditingProfile = false;
   editedProfileData?: UserProfile;
   isDemo$!: Observable<boolean>;
   userProfile$!: Observable<UserProfile | null>;
   private currentUser?: User | null;
+  private authSub?: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -31,9 +32,16 @@ export class Profile implements OnInit {
   }
 
   async ngOnInit() {
-    this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authService.authState$.subscribe((user) => {
       this.currentUser = user;
     });
+  }
+
+  ngOnDestroy() {
+    // Clean up auth subscription to prevent memory leak
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
   }
 
   onProfileChange(profileData: UserProfile) {

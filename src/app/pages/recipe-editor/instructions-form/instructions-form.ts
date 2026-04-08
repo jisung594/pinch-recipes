@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   CdkDrag,
@@ -30,7 +30,7 @@ import { ToastService } from '../../../services/toast.service';
   templateUrl: './instructions-form.html',
   styleUrl: './instructions-form.css',
 })
-export class InstructionsForm {
+export class InstructionsForm implements OnDestroy {
   @Input() initialInstructions: InstructionRow[] = [];
   @Input() editable = true;
   @Output() instructionsChange = new EventEmitter<InstructionRow[]>();
@@ -136,5 +136,10 @@ export class InstructionsForm {
   // Emits change to instructions for RecipeForm (parent) to handle
   emitChange() {
     this.instructionsChange.emit(this.instructions.controls as InstructionRow[]);
+  }
+
+  ngOnDestroy() {
+    // Clean up form to prevent memory leaks
+    this.instructionsForm.reset();
   }
 }
