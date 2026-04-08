@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
@@ -39,7 +39,7 @@ import { Recipe } from '../../models/recipe.model';
   templateUrl: './recipe-editor.html',
   styleUrl: './recipe-editor.css',
 })
-export class RecipeEditor implements OnInit {
+export class RecipeEditor implements OnInit, OnDestroy {
   @Input() isAuthor = false;
   @Input() recipeId: string | null = null;
   @Input() title: string = '';
@@ -53,6 +53,7 @@ export class RecipeEditor implements OnInit {
   
   isDemo$!: Observable<boolean>;
   isDemoMode = false;
+  private demoSub?: Subscription;
 
   recipeForm!: FormGroup;
   isEditingTitle = false;
@@ -82,7 +83,7 @@ export class RecipeEditor implements OnInit {
     );
     
     // Subscribe to update the local property
-    this.isDemo$.subscribe(isDemo => {
+    this.demoSub = this.isDemo$.subscribe(isDemo => {
       this.isDemoMode = isDemo;
     });
   }
@@ -260,6 +261,16 @@ export class RecipeEditor implements OnInit {
     } catch (err) {
       console.error('Delete failed:', err);
       this.toastService.notify('Failed to delete recipe.');
+    }
+  }
+
+  ngOnDestroy() {
+    // Clean up subscription and form to prevent memory leaks
+    if (this.demoSub) {
+      this.demoSub.unsubscribe();
+    }
+    if (this.recipeForm) {
+      this.recipeForm.reset();
     }
   }
 }
