@@ -18,6 +18,7 @@ import { InstructionsForm } from './instructions-form/instructions-form';
 import { AuthService } from '../../services/auth.service';
 import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
 import { ToastService } from '../../services/toast.service';
+import { LoggerService } from '../../services/logger.service';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
 import { InstructionRow } from './instructions-form/instructions-form.types';
@@ -68,6 +69,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
     private firestoreService: RecipeFirestoreService,
     private toastService: ToastService,
     private router: Router,
+    private logger: LoggerService,
   ) {
     // Combines demo account state (isDemoMode) and demo recipe flag (isDemoRecipe) to determine UI mode.
     // isDemoMode: from AuthService (demo account login)
@@ -169,7 +171,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
         this.archived = !this.archived;
 
-        console.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
+        this.logger.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
 
         // Toast notification upon change
         this.toastService.notify(
@@ -177,7 +179,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
         );
       }
     } catch (err) {
-      console.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
+      this.logger.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
     }
   }
 
@@ -208,7 +210,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
       // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
         await this.firestoreService.updateRecipe(user.uid, this.recipeId, recipeData);
-        console.log('Recipe updated successfully.');
+        this.logger.log('Recipe updated successfully.');
 
         // Toast notification upon update
         this.toastService.notify(`${recipeData.title || 'Recipe'} saved successfully.`);
@@ -229,13 +231,13 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
         this.currentRecipeId = newDocRef.id;
         this.router.navigate(['/recipes', this.currentRecipeId]);
-        console.log('Recipe created successfully.');
+        this.logger.log('Recipe created successfully.');
 
         // Toast notification upon creation
         this.toastService.notify(`${recipeData.title || 'Recipe'} created successfully.`);
       }
     } catch (err) {
-      console.error('Error saving recipe:', err);
+      this.logger.error('Error saving recipe:', err);
     }
   }
 
@@ -255,11 +257,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
       if (user) {
         await this.firestoreService.deleteRecipe(user.uid, this.recipeId);
-        console.log('Recipe deleted successfully.');
+        this.logger.log('Recipe deleted successfully.');
         this.router.navigate(['/profile']);
       }
     } catch (err) {
-      console.error('Delete failed:', err);
+      this.logger.error('Delete failed:', err);
       this.toastService.notify('Failed to delete recipe.');
     }
   }

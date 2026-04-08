@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { AccountMenu } from '../auth/account-menu/account-menu';
-import { User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-header',
