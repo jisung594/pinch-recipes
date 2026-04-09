@@ -1,5 +1,5 @@
 <div class="recipe-index">
-  <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-4">Recipes</h1>
+  <h1 class="font-heading font-semibold text-xl md:text-2xl tracking-wide mb-4">RECIPES</h1>
   
   <!-- Search Section -->
   <div class="search-section border-b-2 border-dotted border-light pb-4 mb-4">
@@ -58,10 +58,10 @@
   </div>
 
   <!-- Archived recipes section -->
-  <div class="archived-recipes flex flex-col rounded-sm px-1 py-1 border border-light">
+  <div class="archived-recipes flex flex-col rounded-sm px-2 py-1 border border-light">
     <details closed class="group">
       <summary class="flex justify-between list-none font-body font-medium text-sm">
-        Archived
+        archived
         <span class="transition-transform group-open:rotate-180">&#9661;</span>
       </summary>
       <div class="flex flex-col gap-2 mt-3">
@@ -72,6 +72,9 @@
         >
           {{ r.title || 'Untitled' }}
         </a>
+        <p *ngIf="!archivedRecipes.length" class="font-body font-normal text-sm color-dark-gray px-1 py-1">
+          No archived recipes.
+        </p>
       </div>
     </details>
   </div>
