@@ -67,6 +67,9 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
       recipes = this.allRecipes.filter((recipe) => matchingIds.includes(recipe.id || ''));
     }
     
+    // Filter out archived recipes from main list
+    recipes = recipes.filter(recipe => !recipe.archived);
+    
     // Sort by most recent creation date when showing limited results
     if (this.limit && this.limit > 0) {
       recipes = recipes.sort((a, b) => {
