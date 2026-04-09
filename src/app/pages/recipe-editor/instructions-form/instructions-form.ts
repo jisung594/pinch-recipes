@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { InstructionRow, InstructionValue } from './instructions-form.types';
 import { ToastService } from '../../../services/toast.service';
 
@@ -25,7 +27,6 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatRippleModule,
   ],
   templateUrl: './instructions-form.html',
   styleUrl: './instructions-form.css',
@@ -36,6 +37,7 @@ export class InstructionsForm implements OnDestroy {
   @Output() instructionsChange = new EventEmitter<InstructionRow[]>();
 
   instructionsForm: FormGroup;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,11 @@ export class InstructionsForm implements OnDestroy {
   ) {
     this.instructionsForm = this.fb.group({
       instructions: this.fb.array([this.createInstruction(undefined, 0)]),
+    });
+
+    // Auto-emit changes when form values change
+    this.instructionsForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.emitChange();
     });
   }
 
@@ -139,7 +146,9 @@ export class InstructionsForm implements OnDestroy {
   }
 
   ngOnDestroy() {
-    // Clean up form to prevent memory leaks
+    // Clean up form and subscriptions to prevent memory leaks
+    this.destroy$.next();
+    this.destroy$.complete();
     this.instructionsForm.reset();
   }
 }

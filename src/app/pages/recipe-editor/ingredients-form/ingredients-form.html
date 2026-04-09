@@ -37,11 +37,6 @@
             <div class="flex flex-col gap-1 px-1 py-1 border border-dark rounded-sm">
               <!-- Closed by default, unless new ingredient is added -->
               <details
-                matRipple
-                matRippleColor="rgba(162, 211, 255, 0.5)"
-                [matRippleAnimation]="{ enterDuration: 800, exitDuration: 800 }"
-                [matRippleUnbounded]="true"
-                [matRippleRadius]="30"
                 [attr.open]="i === newIngredientIndex ? true : null"
                 class="group"
               >

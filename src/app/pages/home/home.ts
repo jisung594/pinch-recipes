@@ -18,6 +18,7 @@ import { RecipesList } from '../../recipes-list/recipes-list';
 })
 export class Home implements OnInit {
   private profileSubscription?: Subscription;
+  private authSub?: Subscription;
   user: User | null = null;
   userProfile$!: Observable<UserProfile | null>;
   welcomeText = '';
@@ -27,7 +28,7 @@ export class Home implements OnInit {
   constructor(private authService: AuthService) {
     this.userProfile$ = this.authService.userProfile$;
 
-    this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authService.authState$.subscribe((user) => {
       this.user = user;
     });
   }
@@ -47,6 +48,9 @@ export class Home implements OnInit {
   ngOnDestroy() {
     if (this.profileSubscription) {
       this.profileSubscription.unsubscribe();
+    }
+    if (this.authSub) {
+      this.authSub.unsubscribe();
     }
   }
 }

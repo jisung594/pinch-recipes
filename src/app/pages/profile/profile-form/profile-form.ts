@@ -18,6 +18,7 @@ export class ProfileForm implements OnInit, OnDestroy {
   userProfile$!: Observable<UserProfile | null>;
   profileForm: FormGroup;
   private subscription?: Subscription;
+  private formChangesSub?: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +31,7 @@ export class ProfileForm implements OnInit, OnDestroy {
     });
 
     // Emits whenever form changes
-    this.profileForm.valueChanges.subscribe((value) => {
+    this.formChangesSub = this.profileForm.valueChanges.subscribe((value) => {
       this.profileChange.emit(value);
     });
   }
@@ -48,5 +49,6 @@ export class ProfileForm implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+    this.formChangesSub?.unsubscribe();
   }
 }

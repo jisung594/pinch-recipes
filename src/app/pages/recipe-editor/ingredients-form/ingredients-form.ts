@@ -10,7 +10,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IngredientRow, IngredientValue } from './ingredients-form.types';
@@ -29,7 +28,6 @@ import { ToastService } from '../../../services/toast.service';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatRippleModule,
   ],
 })
 export class IngredientsForm implements OnDestroy {
