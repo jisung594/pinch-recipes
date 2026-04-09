@@ -1,10 +1,10 @@
 <form [formGroup]="profileForm" class="mb-6">
   <!-- Edit mode -->
   <div *ngIf="isEditingProfile">
-    <div class="flex border border-light px-2 py-2 rounded-sm">
+    <div class="flex border border-light px-4 py-4 rounded-sm">
       <div class="flex flex-col gap-1">
         <div class="">
-          <label class="font-body font-normal text-sm">Display name</label>
+          <label class="font-heading font-normal text-base uppercase">Display name</label>
           <input
             matInput
             placeholder="Muffin Man"
@@ -13,7 +13,7 @@
           />
         </div>
         <div class="">
-          <label class="font-body font-normal text-sm">First name</label>
+          <label class="font-heading font-normal text-base uppercase">First name</label>
           <input
             matInput
             placeholder="John"
@@ -22,7 +22,7 @@
           />
         </div>
         <div class="">
-          <label class="font-body font-normal text-sm">Last name</label>
+          <label class="font-heading font-normal text-base uppercase">Last name</label>
           <input
             matInput
             placeholder="Doe"
@@ -38,7 +38,7 @@
   <div *ngIf="!isEditingProfile">
     <div
       *ngIf="userProfile$ | async as profile"
-      class="flex border border-light px-2 py-2 rounded-sm"
+      class="flex border border-dark px-4 py-4 rounded-sm"
     >
       <div
         *ngIf="!profile.displayName && !profile.firstName && !profile.lastName; else profileData"
@@ -46,14 +46,14 @@
         <p class="font-body font-normal text-sm color-dark-gray">No profile yet.</p>
       </div>
       <ng-template #profileData>
-        <div *ngIf="profile" class="flex flex-col gap-2">
+        <div *ngIf="profile" class="flex flex-col gap-3">
           <div *ngIf="profile.displayName" class="flex flex-col">
-            <label class="font-body font-normal text-sm mb-0.5">Display name</label>
-            <p class="font-body font-medium text-lg">{{ profile.displayName }}</p>
+            <label class="font-heading font-normal text-base uppercase mb-1">Display name</label>
+            <p class="font-body font-semibold text-2xl">{{ profile.displayName }}</p>
           </div>
           <div *ngIf="profile.firstName || profile.lastName" class="flex flex-col">
-            <label class="font-body font-normal text-sm mb-0.5">Full name</label>
-            <p class="font-body font-medium text-lg">
+            <label class="font-heading font-normal text-base uppercase mb-1">Full name</label>
+            <p class="font-body font-semibold text-2xl">
               {{ profile.firstName }} {{ profile.lastName }}
             </p>
           </div>
