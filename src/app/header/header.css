@@ -27,3 +27,11 @@
 .menu-leave {
   animation: slideOut 0.5s ease-in;
 }
+
+.menu-options a {
+  transition: color 0.2s ease;
+}
+
+.menu-options a:hover {
+  color: var(--cta-blue);
+}

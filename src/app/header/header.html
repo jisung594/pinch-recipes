@@ -29,7 +29,7 @@
 <!-- Open nav menu on small screens -->
 <div
   *ngIf="isMenuOpen"
-  class="fixed inset-0 z-50 bg-white"
+  class="fixed inset-0 z-50 bg-lightest-gray"
   animate.enter="menu-enter"
   animate.leave="menu-leave"
 >
@@ -49,7 +49,7 @@
           mat-icon-button
           matTooltip="Click to Close Menu"
           (click)="toggleMenu()"
-          class="close-button lg:hidden flex px-1 py-0.5 rounded-sm border lg:border-0 border-dark"
+          class="close-button lg:hidden flex px-1 py-0.5 rounded-sm border lg:border-0 border-light"
         >
           <mat-icon aria-label="close" class="">close</mat-icon>
         </button>
