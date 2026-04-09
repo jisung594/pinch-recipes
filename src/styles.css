@@ -17,6 +17,10 @@
   background-color: var(--light-gray);
 }
 
+@utility bg-lightest-gray {
+  background-color: var(--lightest-gray);
+}
+
 @utility bg-dark-gray {
   background-color: var(--dark-gray);
 }
