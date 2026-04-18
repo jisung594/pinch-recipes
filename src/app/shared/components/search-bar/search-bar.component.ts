@@ -2,13 +2,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { RecipeIndexService } from '../services/recipe-index.service';
+import { RecipeIndexService } from '../../../services/recipe-index.service';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  templateUrl: './search-bar.html',
-  styleUrl: './search-bar.css',
+  templateUrl: './search-bar.component.html',
+  styleUrl: './search-bar.component.css',
   imports: [CommonModule, FormsModule, MatIconModule],
 })
 export class SearchBar {

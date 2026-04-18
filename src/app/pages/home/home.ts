@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
 import { Observable, Subscription } from 'rxjs';
 import { UserProfile } from '../../models/user-profile.model';
-import { SearchBar } from '../../search-bar/search-bar';
+import { SearchBar } from '../../shared/components/search-bar/search-bar.component';
 import { RecipesList } from '../../recipes-list/recipes-list';
 
 @Component({
