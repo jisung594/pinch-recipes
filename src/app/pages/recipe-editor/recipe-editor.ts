@@ -15,9 +15,8 @@ import { Observable, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
+import { RecipeFacadeService } from '../../features/recipes/services/recipe.facade';
 import { AuthService } from '../../services/auth.service';
-import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
-import { ToastService } from '../../services/toast.service';
 import { LoggerService } from '../../services/logger.service';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
@@ -65,9 +64,8 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
+    private recipeFacade: RecipeFacadeService,
     private authService: AuthService,
-    private firestoreService: RecipeFirestoreService,
-    private toastService: ToastService,
     private router: Router,
     private logger: LoggerService,
   ) {
@@ -167,16 +165,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
     try {
       if (user && this.recipeId) {
-        await this.firestoreService.updateRecipe(user.uid, this.recipeId, recipeData);
+        await this.recipeFacade.updateRecipe(this.recipeId!, recipeData);
 
         this.archived = !this.archived;
 
         this.logger.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
-
-        // Toast notification upon change
-        this.toastService.notify(
-          `${recipeData.title || 'Recipe'} has been ${recipeData.archived ? 'archived' : 'restored'}.`,
-        );
       }
     } catch (err) {
       this.logger.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
@@ -200,25 +193,21 @@ export class RecipeEditor implements OnInit, OnDestroy {
     const user = await this.authService.getCurrentUser();
 
     if (!user) {
-      this.toastService.notify('Please create an account or login to save recipes.');
-
-      console.warn('You must be signed in to save recipes.');
+      // Facade will handle toast notification for auth error
+      console.warn('Please create an account or login to save recipes.');
       return;
     }
 
     try {
       // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
-        await this.firestoreService.updateRecipe(user.uid, this.recipeId, recipeData);
+        await this.recipeFacade.updateRecipe(this.recipeId, recipeData);
         this.logger.log('Recipe updated successfully.');
-
-        // Toast notification upon update
-        this.toastService.notify(`${recipeData.title || 'Recipe'} saved successfully.`);
 
         return;
       } else {
         // Creates new recipe if none exists
-        const newDocRef = await this.firestoreService.addRecipe(user.uid, {
+        const newRecipeId = await this.recipeFacade.saveRecipe({
           ...recipeData,
           title: recipeData.title!, // Non-null assertion (safe, since it's checked above)
           ingredients: recipeData.ingredients ?? [],
@@ -229,12 +218,13 @@ export class RecipeEditor implements OnInit, OnDestroy {
           createdAt: new Date(),
         });
 
-        this.currentRecipeId = newDocRef.id;
-        this.router.navigate(['/recipes', this.currentRecipeId]);
+        if (newRecipeId) {
+          this.currentRecipeId = newRecipeId;
+          this.router.navigate(['/recipes', newRecipeId]);
+        } else {
+          this.router.navigate(['/recipes']);
+        }
         this.logger.log('Recipe created successfully.');
-
-        // Toast notification upon creation
-        this.toastService.notify(`${recipeData.title || 'Recipe'} created successfully.`);
       }
     } catch (err) {
       this.logger.error('Error saving recipe:', err);
@@ -256,13 +246,12 @@ export class RecipeEditor implements OnInit, OnDestroy {
       const user = await this.authService.getCurrentUser();
 
       if (user) {
-        await this.firestoreService.deleteRecipe(user.uid, this.recipeId);
+        await this.recipeFacade.deleteRecipe(this.recipeId!);
         this.logger.log('Recipe deleted successfully.');
         this.router.navigate(['/profile']);
       }
     } catch (err) {
       this.logger.error('Delete failed:', err);
-      this.toastService.notify('Failed to delete recipe.');
     }
   }
 

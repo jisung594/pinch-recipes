@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { RecipesList } from '../recipes-list/recipes-list';
 import { Recipe } from '../models/recipe.model';
-import { RecipeFirestoreService } from '../services/recipe-firestore.service';
+import { RecipeFacadeService } from '../features/recipes/services/recipe.facade';
 import { RecipeIndexService } from '../services/recipe-index.service';
 import { AuthService } from '../services/auth.service';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -33,7 +33,7 @@ export class RecipeIndex implements OnInit, OnDestroy {
   selectedSuggestionIndex = -1;
 
   constructor(
-    private recipeService: RecipeFirestoreService,
+    private recipeFacade: RecipeFacadeService,
     private recipeIndexService: RecipeIndexService,
     private authService: AuthService,
   ) {}
@@ -48,7 +48,8 @@ export class RecipeIndex implements OnInit, OnDestroy {
   private loadRecipes(): void {
     if (!this.currentUserId) return;
 
-    this.recipes$ = this.recipeService.getUserRecipes(this.currentUserId);
+    // Use facade's recipes observable
+    this.recipes$ = this.recipeFacade.recipes$;
     this.recipes$.pipe(takeUntil(this.destroy$)).subscribe((recipes) => {
       // Separate main and archived recipes
       this.mainRecipes = recipes.filter((recipe) => !recipe.archived);
@@ -63,6 +64,9 @@ export class RecipeIndex implements OnInit, OnDestroy {
       // Initialize filtered recipes
       this.filteredRecipes = [...this.mainRecipes];
     });
+    
+    // Load recipes via facade
+    this.recipeFacade.loadRecipes();
   }
 
   private extractUniqueIngredients(): void {

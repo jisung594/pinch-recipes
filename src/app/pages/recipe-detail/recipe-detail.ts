@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { RecipeFirestoreService } from '../../services/recipe-firestore.service';
+import { RecipeFacadeService } from '../../features/recipes/services/recipe.facade';
 import { RecipeEditor } from '../recipe-editor/recipe-editor';
 import { IngredientRow } from '../recipe-editor/ingredients-form/ingredients-form.types';
 import { InstructionRow } from '../recipe-editor/instructions-form/instructions-form.types';
@@ -36,7 +36,7 @@ export class RecipeDetail implements OnDestroy {
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
-    private firestoreService: RecipeFirestoreService,
+    private recipeFacade: RecipeFacadeService,
   ) {}
 
   async ngOnInit() {
@@ -47,7 +47,7 @@ export class RecipeDetail implements OnDestroy {
 
     if (this.isDemoRecipe) {
       // Skip auth and load public recipe directly
-      const snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
+      const snapshot = await this.recipeFacade.getPublicRecipeById(this.recipeId!);
 
       if (snapshot && snapshot.exists()) {
         this.isAuthor = true;
@@ -64,22 +64,22 @@ export class RecipeDetail implements OnDestroy {
 
       if (user) {
         // Load as recipe author first
-        snapshot = await this.firestoreService.getRecipeById(user.uid, this.recipeId!);
+        snapshot = await this.recipeFacade.getRecipeById(this.recipeId!);
         this.isAuthor = true;
 
         // Load as anonymous when user is not recipe author
         if (!snapshot.exists()) {
-          snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
+          snapshot = await this.recipeFacade.getPublicRecipeById(this.recipeId!);
         }
       } else {
         // Load as anonymmous (not logged in)
-        snapshot = await this.firestoreService.getPublicRecipeById(this.recipeId!);
+        snapshot = await this.recipeFacade.getPublicRecipeById(this.recipeId!);
       }
 
       if (snapshot && snapshot.exists()) {
         this.recipe = snapshot.data();
 
-        this.initRows(this.recipe);
+        this.initRows(this.recipe!);
       }
     });
   }

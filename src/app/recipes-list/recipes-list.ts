@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Recipe } from '../models/recipe.model';
-import { RecipeFirestoreService } from '../services/recipe-firestore.service';
+import { RecipeFacadeService } from '../features/recipes/services/recipe.facade';
 import { RecipeIndexService } from '../services/recipe-index.service';
 import { AuthService } from '../services/auth.service';
 import { Subject, Subscription } from 'rxjs';
@@ -27,35 +27,28 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
   private allRecipes: Recipe[] = [];
 
   constructor(
-    private firestoreService: RecipeFirestoreService,
+    private recipeFacade: RecipeFacadeService,
     private recipeIndexService: RecipeIndexService,
     private authService: AuthService,
   ) {}
 
   ngOnInit() {
-    // Use provided recipes if available, otherwise fetch from Firestore
+    // Use provided recipes if available, otherwise fetch from Facade
     if (this.recipes.length > 0) {
       this.allRecipes = this.recipes;
       this.recipeIndexService.buildIndex(this.recipes);
     } else {
-      this.authSub = this.authService.authState$.subscribe((user) => {
-        this.currentUserId = user?.uid || null;
-        this.loadRecipes();
-      });
-    }
-  }
-
-  private loadRecipes(): void {
-    if (!this.currentUserId) return;
-
-    this.firestoreService
-      .getUserRecipes(this.currentUserId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((recipes) => {
+      // Subscribe to recipes from facade
+      this.recipeFacade.recipes$.pipe(takeUntil(this.destroy$)).subscribe((recipes) => {
         this.allRecipes = recipes;
         this.recipeIndexService.buildIndex(recipes);
       });
+      
+      // Load recipes via facade
+      this.recipeFacade.loadRecipes();
+    }
   }
+
 
   get filteredRecipes(): Recipe[] {
     let recipes: Recipe[];
