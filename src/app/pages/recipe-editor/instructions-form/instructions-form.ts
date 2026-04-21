@@ -14,7 +14,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { InstructionRow, InstructionValue } from './instructions-form.types';
-import { ToastService } from '../../../services/toast.service';
+import { UIFacadeService } from '../../../features/ui/services/ui.facade';
 
 @Component({
   selector: 'app-instructions-form',
@@ -41,7 +41,7 @@ export class InstructionsForm implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private toastService: ToastService,
+    private uiFacade: UIFacadeService,
   ) {
     this.instructionsForm = this.fb.group({
       instructions: this.fb.array([this.createInstruction(undefined, 0)]),
@@ -131,7 +131,7 @@ export class InstructionsForm implements OnDestroy {
     };
 
     // Toast notification upon removal
-    this.toastService.notifyUndoable(
+    this.uiFacade.showUndoable(
       `${removedItemValue.step || 'Step'} removed.`,
       reinsertInstruction,
     );

@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IngredientRow, IngredientValue } from './ingredients-form.types';
-import { ToastService } from '../../../services/toast.service';
+import { UIFacadeService } from '../../../features/ui/services/ui.facade';
 
 @Component({
   selector: 'app-ingredients-form',
@@ -41,7 +41,7 @@ export class IngredientsForm implements OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private toastService: ToastService,
+    private uiFacade: UIFacadeService,
   ) {
     this.ingredientsForm = this.fb.group({
       ingredients: this.fb.array([this.createIngredient()]),
@@ -132,7 +132,7 @@ export class IngredientsForm implements OnDestroy {
     };
 
     // Toast notification upon removal
-    this.toastService.notifyUndoable(
+    this.uiFacade.showUndoable(
       `${removedItemValue.name || 'Ingredient'} removed.`,
       reinsertIngredient,
     );
