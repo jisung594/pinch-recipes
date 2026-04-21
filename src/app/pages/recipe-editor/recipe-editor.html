@@ -1,4 +1,59 @@
 <form [formGroup]="recipeForm" class="recipe-editor">
+  <!-- State Machine Status Banner -->
+  <div class="status-banner mb-2" *ngIf="status$ | async as status">
+    <!-- Loading State -->
+    <div *ngIf="status.status === 'loading_data'" class="flex items-center gap-2 p-1 bg-light-blue border border-med-blue rounded-lg">
+      <mat-icon class="color-cta-blue">hourglass_empty</mat-icon>
+      <span class="color-dark-gray">{{ status.message || 'Loading...' }}</span>
+    </div>
+    
+    <!-- Editing State -->
+    <div *ngIf="status.status === 'editing'" class="flex items-center gap-2 p-1 bg-orange/10 border border-orange/30 rounded-sm">
+      <mat-icon class="color-orange">edit</mat-icon>
+      <span class="color-dark-gray">{{ status.message || 'Editing...' }}</span>
+    </div>
+    
+    <!-- Syncing State -->
+    <div *ngIf="status.status === 'syncing'" class="flex items-center gap-2 p-1 bg-light-blue border border-med-blue rounded-sm">
+      <mat-icon class="color-cta-blue animate-spin">sync</mat-icon>
+      <span class="color-dark-gray">{{ status.message || 'Saving...' }}</span>
+    </div>
+    
+    <!-- Success State -->
+    <div *ngIf="status.status === 'success'" class="flex items-center gap-2 p-1 bg-green-50 border border-green-200 rounded-sm">
+      <mat-icon class="color-cta-blue">check_circle</mat-icon>
+      <span class="color-cta-blue">{{ status.message || 'Success!' }}</span>
+    </div>
+    
+    <!-- Error State -->
+    <div *ngIf="status.status === 'error'" class="flex items-center gap-2 p-1 bg-red-50 border border-red-200 rounded-sm">
+      <mat-icon class="color-red">error</mat-icon>
+      <span class="color-red">{{ status.message || 'An error occurred' }}</span>
+    </div>
+    
+    <!-- Confirm Discard State -->
+    <div *ngIf="status.status === 'confirm_discard'" class="flex items-center justify-between gap-2 p-1 bg-orange/10 border border-orange/30 rounded-lg">
+      <div class="flex items-center gap-2">
+        <mat-icon class="color-orange">warning</mat-icon>
+        <span class="color-dark-gray">{{ status.message || 'You have unsaved changes' }}</span>
+      </div>
+      <div class="flex gap-2">
+        <button (click)="recipeFacade.discardChanges()" type="button" class="px-3 py-1 text-sm bg-orange text-white rounded hover:bg-cta-blue">
+          Discard
+        </button>
+        <button (click)="recipeFacade.cancelDiscard()" type="button" class="px-3 py-1 text-sm bg-dark-gray text-white rounded hover:bg-med-blue">
+          Keep Editing
+        </button>
+      </div>
+    </div>
+    
+    <!-- Abort State -->
+    <div *ngIf="status.status === 'abort'" class="flex items-center gap-2 p-3 bg-lightest-gray border border-light-gray rounded-lg">
+      <mat-icon class="color-dark-gray">cancel</mat-icon>
+      <span class="color-dark-gray">{{ status.message || 'Operation cancelled' }}</span>
+    </div>
+  </div>
+
   <!-- Edit mode - title -->
   <div *ngIf="isEditingTitle; else viewModeTitle" class="flex gap-2 mb-2">
     <div class="flex grow pb-1 border-b border-light">
@@ -255,12 +310,24 @@
     >
       <button
         type="button"
-        class="font-body font-semibold text-sm md:text-base tracking-widest px-2 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm"
-        [ngClass]="{ 'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe }"
-        (click)="!isDemoMode && !isDemoRecipe && saveRecipe()"
-        [disabled]="isDemoMode || isDemoRecipe"
+        class="font-body font-semibold text-sm md:text-base tracking-widest px-2 py-0.5 bg-white border-2 border-orange shadow-md rounded-sm flex items-center gap-2"
+        [ngClass]="{ 
+          'opacity-40 cursor-not-allowed': isDemoMode || isDemoRecipe || isSyncing,
+          'border-cta-blue bg-light-blue': isSyncing
+        }"
+        (click)="!isDemoMode && !isDemoRecipe && !isSyncing && saveRecipe()"
+        [disabled]="isDemoMode || isDemoRecipe || isSyncing"
       >
-        SAVE
+        <!-- Syncing state -->
+        <ng-container *ngIf="isSyncing">
+          <span class="color-dark-gray">SAVING</span>
+          <mat-icon class="color-cta-blue animate-spin">sync</mat-icon>
+        </ng-container>
+        
+        <!-- Normal state -->
+        <ng-container *ngIf="!isSyncing">
+          <span>SAVE</span>
+        </ng-container>
       </button>
     </div>
   </div>
