@@ -94,7 +94,6 @@ export class RecipeFacadeService {
         status: 'error', 
         message: 'Failed to load recipes.' 
       });
-      this.toastService.notify('Failed to load recipes.');
       console.error('Recipe load error:', error);
     }
   }
@@ -164,9 +163,8 @@ export class RecipeFacadeService {
       }
       const docRef = await this.recipeFirestoreService.addRecipe(user.uid, recipe);
 
-      // On success: set status to success and show success toast
+      // On success: set status to success
       this.statusSubject.next({ status: 'success', message: 'Recipe saved successfully!' });
-      this.toastService.notify('Recipe saved successfully!');
 
       // Reset to idle after a delay
       setTimeout(() => {
@@ -182,7 +180,6 @@ export class RecipeFacadeService {
         status: 'error', 
         message: 'Failed to save recipe. Please try again.' 
       });
-      this.toastService.notify('Failed to save recipe. Please try again.');
       console.error('Recipe save error:', error);
       return null;
     }
@@ -206,9 +203,8 @@ export class RecipeFacadeService {
       }
       await this.recipeFirestoreService.updateRecipe(user.uid, recipeId, recipe);
 
-      // On success: set status to success and show success toast
+      // On success: set status to success
       this.statusSubject.next({ status: 'success', message: 'Recipe updated successfully!' });
-      this.toastService.notify('Recipe updated successfully!');
 
       // Reset to idle after a delay
       setTimeout(() => {
@@ -221,7 +217,6 @@ export class RecipeFacadeService {
         status: 'error', 
         message: 'Failed to update recipe. Please try again.' 
       });
-      this.toastService.notify('Failed to update recipe. Please try again.');
       console.error('Recipe update error:', error);
     }
   }
@@ -243,9 +238,8 @@ export class RecipeFacadeService {
       }
       await this.recipeFirestoreService.deleteRecipe(user.uid, recipeId);
 
-      // On success: set status to success and show success toast
+      // On success: set status to success
       this.statusSubject.next({ status: 'success', message: 'Recipe deleted successfully!' });
-      this.toastService.notify('Recipe deleted successfully!');
 
       // Reset to idle after a delay
       setTimeout(() => {
@@ -258,7 +252,6 @@ export class RecipeFacadeService {
         status: 'error', 
         message: 'Failed to delete recipe. Please try again.' 
       });
-      this.toastService.notify('Failed to delete recipe. Please try again.');
       console.error('Recipe delete error:', error);
     }
   }
@@ -340,6 +333,14 @@ export class RecipeFacadeService {
   }
 
   /**
+   * Cancel discard and return to editing
+   * @returns void
+   */
+  cancelDiscard(): void {
+    this.statusSubject.next({ status: 'editing', message: 'Continuing to edit...' });
+  }
+
+  /**
    * Handle navigation away from editor
    * @returns boolean - Returns true if navigation should proceed
    */
@@ -387,11 +388,7 @@ export class RecipeFacadeService {
     try {
       // Validate recipe first
       if (!this.validateRecipe(recipe)) {
-        this.statusSubject.next({ 
-          status: 'error', 
-          message: 'Please fill in all required fields.' 
-        });
-        this.toastService.notify('Please fill in all required fields.');
+        this.statusSubject.next({ status: 'error', message: 'Please fill in all required fields.' });
         return null;
       }
 
@@ -425,7 +422,6 @@ export class RecipeFacadeService {
         status: 'error', 
         message: 'Failed to save recipe. Please try again.' 
       });
-      this.toastService.notify('Failed to save recipe. Please try again.');
       console.error('Recipe save error:', error);
       return null;
     }
