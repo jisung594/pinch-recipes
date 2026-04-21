@@ -54,6 +54,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
   isDemo$!: Observable<boolean>;
   isDemoMode = false;
   private demoSub?: Subscription;
+  private syncingSub?: Subscription;
 
   recipeForm!: FormGroup;
   isEditingTitle = false;
@@ -62,13 +63,35 @@ export class RecipeEditor implements OnInit, OnDestroy {
   isEditingInstructions = false;
   currentRecipeId: string | null = null;
 
+  // State observables from RecipeFacade
+  isLoading$!: Observable<boolean>;
+  isEditing$!: Observable<boolean>;
+  isSyncing$!: Observable<boolean>;
+  hasError$!: Observable<boolean>;
+  status$!: Observable<any>;
+  
+  // Computed property for template usage
+  isSyncing = false;
+
   constructor(
     private fb: FormBuilder,
-    private recipeFacade: RecipeFacadeService,
+    public recipeFacade: RecipeFacadeService,
     private authService: AuthService,
     private router: Router,
     private appFacade: AppFacadeService,
   ) {
+    // Expose state observables for template use
+    this.isLoading$ = this.recipeFacade.isLoading$;
+    this.isEditing$ = this.recipeFacade.isEditing$;
+    this.isSyncing$ = this.recipeFacade.isSyncing$;
+    this.hasError$ = this.recipeFacade.hasError$;
+    this.status$ = this.recipeFacade.status$;
+    
+    // Subscribe to isSyncing for template usage
+    this.syncingSub = this.isSyncing$.subscribe(syncing => {
+      this.isSyncing = syncing;
+    });
+    
     // Combines demo account state (isDemoMode) and demo recipe flag (isDemoRecipe) to determine UI mode.
     // isDemoMode: from AuthService (demo account login)
     // isDemoRecipe: from @Input() (recipe at /demo route)
@@ -259,6 +282,9 @@ export class RecipeEditor implements OnInit, OnDestroy {
     // Clean up subscription and form to prevent memory leaks
     if (this.demoSub) {
       this.demoSub.unsubscribe();
+    }
+    if (this.syncingSub) {
+      this.syncingSub.unsubscribe();
     }
     if (this.recipeForm) {
       this.recipeForm.reset();
