@@ -139,6 +139,29 @@ export class AuthFacadeService {
   }
 
   /**
+   * Sign in as demo user
+   * @returns Promise<void> - Resolves when sign in is complete
+   */
+  async signInAsDemo(): Promise<void> {
+    try {
+      this.statusSubject.next({ status: 'syncing', message: 'Signing in as demo user...' });
+      
+      await this.authService.signInAsDemo();
+      
+      this.statusSubject.next({ status: 'success', message: 'Signed in as demo user!' });
+      this.toastService.notify('Welcome to Pinch Demo! 🍞');
+      
+    } catch (error) {
+      this.statusSubject.next({ 
+        status: 'error', 
+        message: 'Failed to sign in as demo user.' 
+      });
+      console.error('Demo sign in error:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Sign out current user
    * @returns Promise<void> - Resolves when sign out is complete
    */

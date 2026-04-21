@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Recipe } from '../../../models/recipe.model';
 import { RecipeFirestoreService } from '../../../services/recipe-firestore.service';
 import { ToastService } from '../../../services/toast.service';
 import { AuthService } from '../../../services/auth.service';
 
 export interface RecipeStatus {
-  status: 'idle' | 'syncing' | 'error' | 'success';
+  status: 'idle' | 'loading_data' | 'editing' | 'syncing' | 'success' | 'error' | 'confirm_discard' | 'abort';
   message?: string;
+}
+
+export interface RecipeEditorState {
+  isLoading: boolean;
+  isEditing: boolean;
+  isSyncing: boolean;
+  hasError: boolean;
+  isIdle: boolean;
+  isNew: boolean;
+  isDirty: boolean;
+  canDiscard: boolean;
 }
 
 @Injectable({
@@ -22,6 +34,31 @@ export class RecipeFacadeService {
   
   private recipesSubject = new BehaviorSubject<Recipe[]>([]);
   public recipes$ = this.recipesSubject.asObservable();
+  
+  // Granular state observables for template consumption
+  public isLoading$ = this.statusSubject.pipe(
+    map(status => status.status === 'loading_data')
+  );
+  
+  public isEditing$ = this.statusSubject.pipe(
+    map(status => status.status === 'editing')
+  );
+  
+  public isSyncing$ = this.statusSubject.pipe(
+    map(status => status.status === 'syncing')
+  );
+  
+  public hasError$ = this.statusSubject.pipe(
+    map(status => status.status === 'error')
+  );
+  
+  public isIdle$ = this.statusSubject.pipe(
+    map(status => status.status === 'idle')
+  );
+  
+  public isNew$ = new BehaviorSubject<boolean>(false);
+  public isDirty$ = new BehaviorSubject<boolean>(false);
+  public canDiscard$ = this.isDirty$;
 
   constructor(
     private recipeFirestoreService: RecipeFirestoreService,
@@ -223,6 +260,174 @@ export class RecipeFacadeService {
       });
       this.toastService.notify('Failed to delete recipe. Please try again.');
       console.error('Recipe delete error:', error);
+    }
+  }
+
+  // ===== STATE TRANSITION METHODS =====
+
+  /**
+   * Initialize recipe editor for new or existing recipe
+   * @param recipeId - Optional recipe ID for existing recipes
+   * @returns Promise<void> - Resolves when initialization is complete
+   */
+  async initRecipe(recipeId?: string): Promise<void> {
+    try {
+      if (recipeId) {
+        // Loading existing recipe
+        this.statusSubject.next({ status: 'loading_data', message: 'Loading recipe...' });
+        this.isNew$.next(false);
+        
+        const user = await this.authService.getCurrentUser();
+        if (!user) {
+          throw new Error('User not authenticated');
+        }
+        
+        const snapshot = await this.getRecipeById(recipeId);
+        if (snapshot && snapshot.exists()) {
+          const recipe = snapshot.data();
+          this.currentRecipeSubject.next(recipe);
+          this.statusSubject.next({ status: 'idle' });
+          this.isDirty$.next(false);
+        } else {
+          throw new Error('Recipe not found');
+        }
+      } else {
+        // New recipe
+        this.isNew$.next(true);
+        this.currentRecipeSubject.next(null);
+        this.statusSubject.next({ status: 'editing', message: 'Creating new recipe...' });
+        this.isDirty$.next(true);
+      }
+    } catch (error) {
+      this.statusSubject.next({ 
+        status: 'error', 
+        message: 'Failed to load recipe.' 
+      });
+      console.error('Recipe initialization error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Enter editing mode (dirty state)
+   * @returns void
+   */
+  editRecipe(): void {
+    this.statusSubject.next({ status: 'editing', message: 'Editing recipe...' });
+    this.isDirty$.next(true);
+  }
+
+  /**
+   * Discard changes and return to idle state
+   * @returns void
+   */
+  discardChanges(): void {
+    this.statusSubject.next({ status: 'idle' });
+    this.isDirty$.next(false);
+    
+    // If it was a new recipe, clear it
+    if (this.isNew$.value) {
+      this.currentRecipeSubject.next(null);
+    }
+  }
+
+  /**
+   * Show confirmation dialog for unsaved changes
+   * @returns void
+   */
+  confirmDiscard(): void {
+    this.statusSubject.next({ status: 'confirm_discard', message: 'You have unsaved changes.' });
+  }
+
+  /**
+   * Handle navigation away from editor
+   * @returns boolean - Returns true if navigation should proceed
+   */
+  async handleNavigationAway(): Promise<boolean> {
+    if (this.isDirty$.value) {
+      this.confirmDiscard();
+      return false; // Navigation blocked until user confirms
+    }
+    return true; // Navigation allowed
+  }
+
+  /**
+   * Abort current operation (for cleanup)
+   * @returns void
+   */
+  abort(): void {
+    this.statusSubject.next({ status: 'abort', message: 'Operation aborted.' });
+    
+    // Reset after a brief moment
+    setTimeout(() => {
+      this.statusSubject.next({ status: 'idle' });
+      this.isDirty$.next(false);
+    }, 100);
+  }
+
+  /**
+   * Validate recipe before saving
+   * @param recipe - Recipe to validate
+   * @returns boolean - True if valid, false otherwise
+   */
+  private validateRecipe(recipe: Recipe): boolean {
+    return !!(
+      recipe.title?.trim() &&
+      recipe.ingredients?.length > 0 &&
+      recipe.instructions?.length > 0
+    );
+  }
+
+  /**
+   * Enhanced save with validation and state management
+   * @param recipe - Recipe to save
+   * @returns Promise<string | null> - Recipe ID or null if failed
+   */
+  async saveRecipeWithValidation(recipe: Recipe): Promise<string | null> {
+    try {
+      // Validate recipe first
+      if (!this.validateRecipe(recipe)) {
+        this.statusSubject.next({ 
+          status: 'error', 
+          message: 'Please fill in all required fields.' 
+        });
+        this.toastService.notify('Please fill in all required fields.');
+        return null;
+      }
+
+      // Set to syncing state
+      this.statusSubject.next({ status: 'syncing', message: 'Saving recipe...' });
+
+      let result: string | null;
+      
+      if (this.isNew$.value) {
+        // Create new recipe
+        result = await this.saveRecipe(recipe);
+      } else {
+        // Update existing recipe
+        const recipeId = this.currentRecipeSubject.value?.id;
+        if (!recipeId) {
+          throw new Error('No recipe ID found for update');
+        }
+        await this.updateRecipe(recipeId, recipe);
+        result = recipeId;
+      }
+
+      if (result) {
+        this.isDirty$.next(false);
+        this.isNew$.next(false);
+      }
+
+      return result;
+
+    } catch (error) {
+      this.statusSubject.next({ 
+        status: 'error', 
+        message: 'Failed to save recipe. Please try again.' 
+      });
+      this.toastService.notify('Failed to save recipe. Please try again.');
+      console.error('Recipe save error:', error);
+      return null;
     }
   }
 }
