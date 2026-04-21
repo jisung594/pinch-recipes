@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ToastService } from '../../../services/toast.service';
+import { environment } from '../../../../environments/environment';
 
 export interface UIStatus {
   status: 'idle' | 'success' | 'error';
@@ -13,6 +15,19 @@ export interface UIStatus {
 export class UIFacadeService {
   private statusSubject = new BehaviorSubject<UIStatus>({ status: 'idle' });
   public status$ = this.statusSubject.asObservable();
+
+  // Granular state observables for template consumption
+  public isSuccess$ = this.statusSubject.pipe(
+    map((status: UIStatus) => status.status === 'success')
+  );
+  
+  public hasError$ = this.statusSubject.pipe(
+    map((status: UIStatus) => status.status === 'error')
+  );
+  
+  public isIdle$ = this.statusSubject.pipe(
+    map((status: UIStatus) => status.status === 'idle')
+  );
 
   constructor(
     private toastService: ToastService,

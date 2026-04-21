@@ -17,7 +17,7 @@ import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { RecipeFacadeService } from '../../features/recipes/services/recipe.facade';
 import { AuthService } from '../../services/auth.service';
-import { LoggerService } from '../../services/logger.service';
+import { AppFacadeService } from '../../features/app/services/app.facade';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
 import { InstructionRow } from './instructions-form/instructions-form.types';
@@ -67,7 +67,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
     private recipeFacade: RecipeFacadeService,
     private authService: AuthService,
     private router: Router,
-    private logger: LoggerService,
+    private appFacade: AppFacadeService,
   ) {
     // Combines demo account state (isDemoMode) and demo recipe flag (isDemoRecipe) to determine UI mode.
     // isDemoMode: from AuthService (demo account login)
@@ -169,10 +169,10 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
         this.archived = !this.archived;
 
-        this.logger.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
+        this.appFacade.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
       }
     } catch (err) {
-      this.logger.error(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
+      this.appFacade.logError(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
     }
   }
 
@@ -202,7 +202,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
       // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
         await this.recipeFacade.updateRecipe(this.recipeId, recipeData);
-        this.logger.log('Recipe updated successfully.');
+        this.appFacade.log('Recipe updated successfully.');
 
         return;
       } else {
@@ -224,10 +224,10 @@ export class RecipeEditor implements OnInit, OnDestroy {
         } else {
           this.router.navigate(['/recipes']);
         }
-        this.logger.log('Recipe created successfully.');
+        this.appFacade.log('Recipe created successfully.');
       }
     } catch (err) {
-      this.logger.error('Error saving recipe:', err);
+      this.appFacade.logError('Error saving recipe:', err);
     }
   }
 
@@ -247,11 +247,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
       if (user) {
         await this.recipeFacade.deleteRecipe(this.recipeId!);
-        this.logger.log('Recipe deleted successfully.');
+        this.appFacade.log('Recipe deleted successfully.');
         this.router.navigate(['/profile']);
       }
     } catch (err) {
-      this.logger.error('Delete failed:', err);
+      this.appFacade.logError('Delete failed:', err);
     }
   }
 
