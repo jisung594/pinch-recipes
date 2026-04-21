@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../services/auth.service';
+import { AuthFacadeService } from '../features/auth/services/auth.facade';
 import { Observable } from 'rxjs';
 import { AccountMenu } from '../auth/account-menu/account-menu';
 import type { User } from 'firebase/auth';
@@ -18,8 +18,8 @@ export class Header {
   user$!: Observable<User | null>;
   isMenuOpen = false;
 
-  constructor(private authService: AuthService) {
-    this.user$ = this.authService.authState$;
+  constructor(private authFacade: AuthFacadeService) {
+    this.user$ = this.authFacade.authState$;
   }
 
   toggleMenu() {

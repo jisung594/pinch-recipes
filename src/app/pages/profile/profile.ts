@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from 'firebase/auth';
 import { Observable, Subscription } from 'rxjs';
-import { ToastService } from '../../services/toast.service';
 import { ProfileForm } from '../profile/profile-form/profile-form';
 import { UserProfile } from '../../models/user-profile.model';
-import { AuthService } from '../../services/auth.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 
 @Component({
   selector: 'app-profile',
@@ -25,14 +24,13 @@ export class Profile implements OnInit, OnDestroy {
   private authSub?: Subscription;
 
   constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
+    private authFacade: AuthFacadeService,
   ) {
-    this.isDemo$ = this.authService.isDemoMode;
+    this.isDemo$ = this.authFacade.isDemoMode$;
   }
 
   async ngOnInit() {
-    this.authSub = this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authFacade.authState$.subscribe((user) => {
       this.currentUser = user;
     });
   }
@@ -57,11 +55,10 @@ export class Profile implements OnInit, OnDestroy {
 
     try {
       if (this.currentUser && this.editedProfileData) {
-        await this.authService.updateProfile(this.currentUser.uid, this.editedProfileData);
+        await this.authFacade.updateProfile(this.currentUser.uid, this.editedProfileData);
         this.isEditingProfile = false;
       }
-
-      this.toastService.notify('Profile updated successfully.');
+      // Facade handles toast notification
     } catch (err) {
       console.error('Error updating profile:', err);
     }

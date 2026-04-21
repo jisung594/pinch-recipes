@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { ToastService } from '../../services/toast.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,8 +15,7 @@ export class ForgotPassword {
   forgotPwForm: FormGroup;
 
   constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
+    private authFacade: AuthFacadeService,
     private fb: FormBuilder,
     private router: Router,
   ) {
@@ -40,9 +38,9 @@ export class ForgotPassword {
   async handleResetPassword() {
     try {
       const { email } = this.forgotPwForm.value;
-      await this.authService.resetPassword(email);
+      await this.authFacade.resetPassword(email);
       this.router.navigate(['/login']);
-      this.toastService.notify('Check your email (including spam) for the password reset link.');
+      // Facade handles toast notification
     } catch (err) {
       // if (err instanceof FirebaseError) {
       //   this.errorCode = err.code;

@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { FirebaseError } from '@firebase/util';
-import { AuthService } from '../../services/auth.service';
-import { ToastService } from '../../services/toast.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 import { User } from 'firebase/auth';
 
 @Component({
@@ -21,8 +20,7 @@ export class Login {
   loginForm: FormGroup;
 
   constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
+    private authFacade: AuthFacadeService,
     private fb: FormBuilder,
     private router: Router,
   ) {
@@ -49,7 +47,7 @@ export class Login {
 
   async loginAsDemo() {
     try {
-      await this.authService.signInAsDemo();
+      await this.authFacade.signInAsDemo();
       this.router.navigate(['/']);
     } catch (err) {
       console.error('Demo login failed:', err);
@@ -59,9 +57,9 @@ export class Login {
   async handleSignIn() {
     try {
       const { email, password } = this.loginForm.value;
-      await this.authService.signIn(email, password);
+      await this.authFacade.signIn(email, password);
       this.router.navigate(['/']);
-      this.toastService.notify(`Welcome back, ${email.split('@')[0]}!`); // placeholder
+      // Facade handles toast notification
     } catch (err) {
       if (err instanceof FirebaseError) {
         this.errorCode = err.code;
@@ -72,9 +70,9 @@ export class Login {
 
   async handleGoogleSignIn() {
     try {
-      const userCreds = await this.authService.signInWithGoogle();
+      await this.authFacade.signInWithGoogle();
       this.router.navigate(['/']);
-      this.toastService.notify(`Welcome back, ${userCreds.user.displayName?.split(' ')[0]}!`);
+      // Facade handles toast notification
     } catch (err) {
       console.log('Login error:', err);
     }

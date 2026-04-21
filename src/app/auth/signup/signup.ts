@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { FirebaseError } from '@firebase/util';
-import { AuthService } from '../../services/auth.service';
-import { ToastService } from '../../services/toast.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 import { User } from 'firebase/auth';
 
 @Component({
@@ -21,8 +20,7 @@ export class Signup {
   signupForm: FormGroup;
 
   constructor(
-    private authService: AuthService,
-    private toastService: ToastService,
+    private authFacade: AuthFacadeService,
     private fb: FormBuilder,
     private router: Router,
   ) {
@@ -61,9 +59,9 @@ export class Signup {
   async handleSignUp() {
     try {
       const { firstName, lastName, displayName, email, password } = this.signupForm.value;
-      await this.authService.signUp(firstName, lastName, displayName, email, password);
+      await this.authFacade.signUp(firstName, lastName, displayName, email, password);
       this.router.navigate(['/']);
-      this.toastService.notify('You have been registered. Welcome to Pinch! 🍞');
+      // Facade handles toast notification
     } catch (err) {
       if (err instanceof FirebaseError) {
         this.errorCode = err.code;
@@ -74,9 +72,9 @@ export class Signup {
 
   async handleGoogleSignIn() {
     try {
-      const userCreds = await this.authService.signInWithGoogle();
+      await this.authFacade.signInWithGoogle();
       this.router.navigate(['/']);
-      this.toastService.notify('Welcome to Pinch! 🍞');
+      // Facade handles toast notification
     } catch (err) {
       console.log('Login error:', err);
     }

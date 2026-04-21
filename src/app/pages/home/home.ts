@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../services/auth.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 import { User } from 'firebase/auth';
 import { Observable, Subscription } from 'rxjs';
 import { UserProfile } from '../../models/user-profile.model';
@@ -25,10 +25,10 @@ export class Home implements OnInit {
   showButtons = false;
   searchTerm = '';
 
-  constructor(private authService: AuthService) {
-    this.userProfile$ = this.authService.userProfile$;
+  constructor(private authFacade: AuthFacadeService) {
+    this.userProfile$ = this.authFacade.userProfile$;
 
-    this.authSub = this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authFacade.authState$.subscribe((user) => {
       this.user = user;
     });
   }
