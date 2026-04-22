@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 import { IngredientsForm } from './ingredients-form/ingredients-form';
 import { InstructionsForm } from './instructions-form/instructions-form';
 import { RecipeFacadeService } from '../../features/recipes/services/recipe.facade';
-import { AuthService } from '../../services/auth.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 import { AppFacadeService } from '../../features/app/services/app.facade';
 import { mapIngredientRows, mapInstructionRows } from './recipe.utils';
 import { IngredientRow } from './ingredients-form/ingredients-form.types';
@@ -76,7 +76,7 @@ export class RecipeEditor implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     public recipeFacade: RecipeFacadeService,
-    private authService: AuthService,
+    private authFacade: AuthFacadeService,
     private router: Router,
     private appFacade: AppFacadeService,
   ) {
@@ -93,11 +93,11 @@ export class RecipeEditor implements OnInit, OnDestroy {
     });
     
     // Combines demo account state (isDemoMode) and demo recipe flag (isDemoRecipe) to determine UI mode.
-    // isDemoMode: from AuthService (demo account login)
+    // isDemoMode: from AuthFacade (demo account login)
     // isDemoRecipe: from @Input() (recipe at /demo route)
     // result => isDemoMode = true if either demo account OR demo recipe
     this.isDemo$ = combineLatest([
-      this.authService.isDemoMode,
+      this.authFacade.isDemoMode$,
       new Observable<boolean>(observer => {
         observer.next(this.isDemoRecipe);
       })
@@ -177,17 +177,17 @@ export class RecipeEditor implements OnInit, OnDestroy {
   }
 
   async toggleArchive() {
-    const recipeData: Partial<Recipe> = {
-      title: this.title,
+    const recipeData = {
+      title: this.recipeForm.get('title')?.value || '',
+      yield: this.recipeForm.get('yield')?.value || { amount: 1, unit: 'unit' },
       ingredients: mapIngredientRows(this.ingredients),
       instructions: mapInstructionRows(this.instructions),
+      isPublic: this.isPublic,
       archived: !this.archived,
     };
 
-    const user = await this.authService.getCurrentUser();
-
     try {
-      if (user && this.recipeId) {
+      if (this.recipeId) {
         await this.recipeFacade.updateRecipe(this.recipeId!, recipeData);
 
         this.archived = !this.archived;
@@ -213,21 +213,20 @@ export class RecipeEditor implements OnInit, OnDestroy {
       isPublic: formValue.isPublic || false,
     };
 
-    const user = await this.authService.getCurrentUser();
-
-    if (!user) {
-      // Facade will handle toast notification for auth error
-      console.warn('Please create an account or login to save recipes.');
-      return;
-    }
-
     try {
       // Updates firestore doc directly if recipe exists
       if (this.recipeId) {
         await this.recipeFacade.updateRecipe(this.recipeId, recipeData);
         this.appFacade.log('Recipe updated successfully.');
 
-        return;
+        setTimeout(() => {
+          if (this.isAuthor) {
+            this.router.navigate(['/recipes', this.recipeId]);
+          } else {
+            this.router.navigate(['/recipes']);
+          }
+          this.appFacade.log('Recipe created successfully.');
+        }, 1000);
       } else {
         // Creates new recipe if none exists
         const newRecipeId = await this.recipeFacade.saveRecipe({
@@ -266,13 +265,9 @@ export class RecipeEditor implements OnInit, OnDestroy {
     if (!this.isAuthor || !this.recipeId) return;
 
     try {
-      const user = await this.authService.getCurrentUser();
-
-      if (user) {
-        await this.recipeFacade.deleteRecipe(this.recipeId!);
-        this.appFacade.log('Recipe deleted successfully.');
-        this.router.navigate(['/profile']);
-      }
+      await this.recipeFacade.deleteRecipe(this.recipeId!);
+      this.appFacade.log('Recipe deleted successfully.');
+      this.router.navigate(['/profile']);
     } catch (err) {
       this.appFacade.logError('Delete failed:', err);
     }

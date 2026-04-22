@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 import { RecipeFacadeService } from '../../features/recipes/services/recipe.facade';
 import { RecipeEditor } from '../recipe-editor/recipe-editor';
 import { IngredientRow } from '../recipe-editor/ingredients-form/ingredients-form.types';
@@ -34,7 +34,7 @@ export class RecipeDetail implements OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService,
+    private authFacade: AuthFacadeService,
     private fb: FormBuilder,
     private recipeFacade: RecipeFacadeService,
   ) {}
@@ -59,7 +59,7 @@ export class RecipeDetail implements OnDestroy {
     }
 
     // Subscribes to auth state to get current user / data for given recipe id
-    this.authSub = this.authService.authState$.subscribe(async (user) => {
+    this.authSub = this.authFacade.authState$.subscribe(async (user) => {
       let snapshot;
 
       if (user) {
