@@ -1,0 +1,7 @@
+# Pinch Project Rules
+
+- Use JSDoc syntax for all public-facing method doc blocks.
+- Architecture: Enforce the Facade pattern. Components talk to Facades, never Infrastructure services.
+- Types: Strict typing is mandatory. No 'any'. Explicit return types on all functions.
+- RxJS: Use the async pipe in templates to manage subscriptions.
+- State: All async actions must trigger updates to the relevant `status$` observable.
