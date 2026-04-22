@@ -7,7 +7,7 @@ import { RecipesList } from '../recipes-list/recipes-list';
 import { Recipe } from '../models/recipe.model';
 import { RecipeFacadeService } from '../features/recipes/services/recipe.facade';
 import { RecipeIndexService } from '../services/recipe-index.service';
-import { AuthService } from '../services/auth.service';
+import { AuthFacadeService } from '../features/auth/services/auth.facade';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -35,11 +35,11 @@ export class RecipeIndex implements OnInit, OnDestroy {
   constructor(
     private recipeFacade: RecipeFacadeService,
     private recipeIndexService: RecipeIndexService,
-    private authService: AuthService,
+    private authFacade: AuthFacadeService,
   ) {}
 
   ngOnInit() {
-    this.authSub = this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authFacade.authState$.subscribe((user) => {
       this.currentUserId = user?.uid || null;
       this.loadRecipes();
     });
