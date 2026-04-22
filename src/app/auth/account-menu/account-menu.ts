@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, OnInit, OnDestroy } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../services/auth.service';
+import { AuthFacadeService } from '../../features/auth/services/auth.facade';
 import { User } from 'firebase/auth';
 import { Observable, Subscription } from 'rxjs';
 import { UserProfile } from '../../models/user-profile.model';
@@ -22,13 +22,13 @@ export class AccountMenu implements OnInit, OnDestroy {
   isDropdownOpen = false;
   private authSub?: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.userProfile$ = this.authService.userProfile$;
+  constructor(private authFacade: AuthFacadeService, private router: Router) {
+    this.userProfile$ = this.authFacade.userProfile$;
   }
 
   // Called after input properties are set, but before DOM is ready
   ngOnInit() {
-    this.authSub = this.authService.authState$.subscribe((user) => {
+    this.authSub = this.authFacade.authState$.subscribe((user) => {
       this.user = user;
     });
   }
@@ -51,7 +51,7 @@ export class AccountMenu implements OnInit, OnDestroy {
 
   async handleSignOut() {
     try {
-      await this.authService.signOut();
+      await this.authFacade.signOut();
       this.router.navigate(['/login']);
       this.triggerCloseMenu();
       this.user = null;

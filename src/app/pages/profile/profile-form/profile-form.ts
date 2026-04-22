@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
+import { AuthFacadeService } from '../../../features/auth/services/auth.facade';
 import { UserProfile } from '../../../models/user-profile.model';
 import { Observable, Subscription } from 'rxjs';
 
@@ -22,7 +22,7 @@ export class ProfileForm implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authFacade: AuthFacadeService,
   ) {
     this.profileForm = this.fb.group({
       displayName: [''],
@@ -37,7 +37,7 @@ export class ProfileForm implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userProfile$ = this.authService.userProfile$;
+    this.userProfile$ = this.authFacade.userProfile$;
 
     // Populate form with current profile data
     this.subscription = this.userProfile$.subscribe((profile) => {
