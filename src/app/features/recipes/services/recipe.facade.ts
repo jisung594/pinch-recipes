@@ -189,9 +189,10 @@ export class RecipeFacadeService {
    * Update an existing recipe
    * @param recipeId - The ID of the recipe to update
    * @param recipe - The partial recipe data to update
+   * @param customMessage - Optional custom success message
    * @returns Promise<void> - Resolves when update is complete
    */
-  async updateRecipe(recipeId: string, recipe: Partial<Recipe>): Promise<void> {
+  async updateRecipe(recipeId: string, recipe: Partial<Recipe>, customMessage?: string): Promise<void> {
     try {
       // Set status to syncing
       this.statusSubject.next({ status: 'syncing', message: 'Updating recipe...' });
@@ -204,7 +205,10 @@ export class RecipeFacadeService {
       await this.recipeFirestoreService.updateRecipe(user.uid, recipeId, recipe);
 
       // On success: set status to success
-      this.statusSubject.next({ status: 'success', message: 'Recipe updated successfully!' });
+      this.statusSubject.next({ 
+        status: 'success', 
+        message: customMessage || 'Recipe updated successfully!' 
+      });
 
       // Reset to idle after a delay
       setTimeout(() => {
