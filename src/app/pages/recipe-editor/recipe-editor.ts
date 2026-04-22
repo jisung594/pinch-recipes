@@ -188,11 +188,14 @@ export class RecipeEditor implements OnInit, OnDestroy {
 
     try {
       if (this.recipeId) {
-        await this.recipeFacade.updateRecipe(this.recipeId!, recipeData);
+        const action = recipeData.archived ? 'archived' : 'restored';
+        const customMessage = `Recipe ${action}.`;
+        
+        await this.recipeFacade.updateRecipe(this.recipeId!, recipeData, customMessage);
 
         this.archived = !this.archived;
 
-        this.appFacade.log(`Recipe ${recipeData.archived ? 'archived' : 'restored'} successfully.`);
+        this.appFacade.log(`Recipe ${action}.`);
       }
     } catch (err) {
       this.appFacade.logError(`Error ${recipeData.archived ? 'archiving' : 'restoring'} recipe:`, err);
@@ -273,6 +276,72 @@ export class RecipeEditor implements OnInit, OnDestroy {
     }
   }
 
+  // State banner helper methods
+  getStateClasses(status: string): string {
+    const classes = {
+      'loading_data': 'bg-light-blue border border-med-blue',
+      'editing': 'bg-orange/10 border border-orange/30',
+      'syncing': 'bg-light-blue border border-med-blue',
+      'success': 'bg-green-50 border border-green-200',
+      'error': 'bg-red-50 border border-red-200',
+      'confirm_discard': 'bg-orange/10 border border-orange/30',
+      'abort': 'bg-lightest-gray border border-light-gray'
+    };
+    return classes[status as keyof typeof classes] || '';
+  }
+
+  getIconClasses(status: string): string {
+    const classes = {
+      'loading_data': 'color-cta-blue',
+      'editing': 'color-orange',
+      'syncing': 'color-cta-blue',
+      'success': 'color-cta-blue',
+      'error': 'color-red',
+      'confirm_discard': 'color-orange',
+      'abort': 'color-dark-gray'
+    };
+    return classes[status as keyof typeof classes] || '';
+  }
+
+  getTextClasses(status: string): string {
+    const classes = {
+      'loading_data': 'color-dark-gray',
+      'editing': 'color-dark-gray',
+      'syncing': 'color-dark-gray',
+      'success': 'color-cta-blue',
+      'error': 'color-red',
+      'confirm_discard': 'color-dark-gray',
+      'abort': 'color-dark-gray'
+    };
+    return classes[status as keyof typeof classes] || '';
+  }
+
+  getStateIcon(status: string): string {
+    const icons = {
+      'loading_data': 'hourglass_empty',
+      'editing': 'edit',
+      'syncing': 'sync',
+      'success': 'check_circle',
+      'error': 'error',
+      'confirm_discard': 'warning',
+      'abort': 'cancel'
+    };
+    return icons[status as keyof typeof icons] || 'info';
+  }
+
+  getDefaultMessage(status: string): string {
+    const messages = {
+      'loading_data': 'Loading...',
+      'editing': 'Editing...',
+      'syncing': 'Saving...',
+      'success': 'Success!',
+      'error': 'An error occurred',
+      'confirm_discard': 'You have unsaved changes',
+      'abort': 'Operation cancelled'
+    };
+    return messages[status as keyof typeof messages] || '';
+  }
+
   ngOnDestroy() {
     // Clean up subscription and form to prevent memory leaks
     if (this.demoSub) {
@@ -280,9 +349,6 @@ export class RecipeEditor implements OnInit, OnDestroy {
     }
     if (this.syncingSub) {
       this.syncingSub.unsubscribe();
-    }
-    if (this.recipeForm) {
-      this.recipeForm.reset();
     }
   }
 }
