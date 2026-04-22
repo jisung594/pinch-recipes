@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Recipe } from '../models/recipe.model';
 import { RecipeFacadeService } from '../features/recipes/services/recipe.facade';
 import { RecipeIndexService } from '../services/recipe-index.service';
-import { AuthService } from '../services/auth.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -22,14 +21,11 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
   @Input() limit: number | null = null;
 
   private destroy$ = new Subject<void>();
-  private authSub?: Subscription;
-  currentUserId: string | null = null;
   private allRecipes: Recipe[] = [];
 
   constructor(
     private recipeFacade: RecipeFacadeService,
     private recipeIndexService: RecipeIndexService,
-    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -85,11 +81,7 @@ export class RecipesList implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    // Clean up auth subscription to prevent memory leak
-    if (this.authSub) {
-      this.authSub.unsubscribe();
-    }
-    
+    // Clean up subscriptions to prevent memory leak
     this.destroy$.next();
     this.destroy$.complete();
   }

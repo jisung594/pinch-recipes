@@ -7,7 +7,7 @@
   </div>
 
   <!-- Empty state -->
-  <div *ngIf="currentUserId && filteredRecipes.length === 0" class="text-center py-8">
+  <div *ngIf="filteredRecipes.length === 0" class="text-center py-8">
     <p class="font-body color-dark-gray italic">
       {{
         searchTerm.trim()
