@@ -40,6 +40,12 @@ To ensure UI predictability and data integrity, the Recipe Editor follows a stri
 ![Recipe Editor State Transitions](./docs/architecture/recipe-editor-state-transitions.png)
 *State machine ensuring UI predictability during recipe editing operations with proper cleanup and memory management*
 
+### Theme selector sequence (WIP)
+Illustrates the theme selection flow for a signed-in user. The Actor opens the ThemePaletteModal and selects a color, then HeaderComponent delegates the action to UIFacade. ThemeService immediately applies the selection as a CSS variable for preview, then UserFacade persists the chosen color to the user's Firestore profile. The Actor receives confirmation once the save is complete.
+
+![Theme Selector Sequence Diagram](./docs/architecture/theme-selector-sequence.png)
+*Sequence diagram for the theme selector feature (preview, persist, and confirmation).*
+
 
 ### Component Architecture
 
